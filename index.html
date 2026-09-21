@@ -2,1274 +2,1172 @@
 <html lang="ur" dir="rtl">
 
 <head>
-  <meta charset="UTF-8">
 
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="UTF-8">
 
-  <meta name="theme-color" content="#020617">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-  <link rel="manifest" href="./manifest.json">
+<link rel="manifest" href="./manifest.json">
 
-  <title>AZ Flow - Smart App</title>
+<meta name="theme-color" content="#06152e">
 
-  <style>
+<title>AZ Flow - Smart App</title>
 
-    /* =====================================================
-       ROOT
-    ===================================================== */
+<style>
 
-    :root {
-      --primary: #0284c7;
-      --primary-light: #38bdf8;
+/* =====================================================
+   AZ FLOW - MAIN STYLE
+   ===================================================== */
 
-      --dark: #0f172a;
-      --dark-2: #020617;
+:root{
 
-      --bg-gradient:
-        linear-gradient(
-          135deg,
-          #020617 0%,
-          #0f172a 50%,
-          #1e1b4b 100%
-        );
+  --primary:#0284c7;
+  --primary2:#38bdf8;
 
-      --card-bg: #ffffff;
+  --bg:#06152e;
 
-      --text-main: #0f172a;
-      --text-muted: #64748b;
+  --text:#0f172a;
+  --muted:#64748b;
 
-      --profit: #059669;
-      --expense: #e11d48;
-      --pending: #d97706;
+  --profit:#059669;
+  --expense:#e11d48;
+  --pending:#d97706;
 
-      --border: #e2e8f0;
-    }
+}
 
 
-    /* =====================================================
-       BASIC RESET
-    ===================================================== */
+/* RESET */
 
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+*{
 
+  box-sizing:border-box;
 
-    html {
-      scroll-behavior: smooth;
-    }
+  -webkit-tap-highlight-color:transparent;
 
+}
 
-    body {
 
-      font-family:
-        'Segoe UI',
-        Tahoma,
-        Geneva,
-        Verdana,
-        sans-serif;
+html,
+body{
 
-      background: var(--bg-gradient);
+  margin:0;
 
-      min-height: 100vh;
+  padding:0;
 
-      margin: 0;
+  width:100%;
 
-      padding:
-        10px
-        10px
-        75px
-        10px;
+  min-height:100%;
 
-      display: flex;
+  font-family:
+    "Segoe UI",
+    Tahoma,
+    Arial,
+    sans-serif;
 
-      justify-content: center;
+  background:
 
-      align-items: flex-start;
-    }
+    radial-gradient(
+      circle at 20% 10%,
+      rgba(14,165,233,.18),
+      transparent 30%
+    ),
 
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(37,99,235,.20),
+      transparent 30%
+    ),
 
-    button,
-    input,
-    select {
-      font-family: inherit;
-    }
+    linear-gradient(
+      135deg,
+      #020617,
+      #0f172a 50%,
+      #172554
+    );
 
+}
 
-    /* =====================================================
-       PROFESSIONAL SPLASH SCREEN
-    ===================================================== */
 
-    #splashScreen {
+/* =====================================================
+   SPLASH SCREEN
+   ===================================================== */
 
-      position: fixed;
+#splashScreen{
 
-      inset: 0;
+  position:fixed;
 
-      width: 100%;
-      height: 100%;
+  inset:0;
 
-      background:
+  z-index:99999;
 
-        radial-gradient(
-          circle at center,
-          #0c3b68 0%,
-          #061b36 35%,
-          #020617 75%
-        );
+  background:
 
-      display: flex;
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(14,165,233,.20),
+      transparent 28%
+    ),
 
-      justify-content: center;
+    linear-gradient(
+      145deg,
+      #020617 0%,
+      #06152e 45%,
+      #0b2a55 100%
+    );
 
-      align-items: center;
+  display:flex;
 
-      z-index: 999999;
+  align-items:center;
 
-      opacity: 1;
+  justify-content:center;
 
-      visibility: visible;
+  text-align:center;
 
-      transition:
-        opacity 0.6s ease,
-        visibility 0.6s ease;
-    }
+  transition:
+    opacity .6s ease,
+    visibility .6s ease;
 
+}
 
-    #splashScreen.hide {
 
-      opacity: 0;
+#splashScreen.hide{
 
-      visibility: hidden;
+  opacity:0;
 
-      pointer-events: none;
-    }
+  visibility:hidden;
 
+  pointer-events:none;
 
-    .splash-content {
+}
 
-      width: 100%;
 
-      max-width: 360px;
+.splash-content{
 
-      text-align: center;
+  width:100%;
 
-      padding: 20px;
+  max-width:420px;
 
-      animation:
-        splashZoom
-        0.8s
-        ease
-        forwards;
-    }
+  padding:25px;
 
+}
 
-    /* لوگو */
 
-    .splash-logo {
+.splash-logo{
 
-      width: 210px;
+  width:185px;
 
-      height: 210px;
+  height:185px;
 
-      margin: auto;
+  margin:0 auto 22px;
 
-      border-radius: 50%;
+  border-radius:50%;
 
-      display: flex;
+  background:
+    radial-gradient(
+      circle at 40% 30%,
+      #123d70,
+      #031631 70%
+    );
 
-      align-items: center;
+  border:3px solid #19c9ff;
 
-      justify-content: center;
+  box-shadow:
 
-      position: relative;
+    0 0 15px #00bfff,
 
-      background:
+    0 0 45px
+    rgba(0,191,255,.35),
 
-        radial-gradient(
-          circle at 35% 25%,
-          #123e69,
-          #061a36 65%,
-          #020b19
-        );
+    inset 0 0 35px
+    rgba(0,191,255,.15);
 
-      border:
-        5px solid
-        #0ea5e9;
+  display:flex;
 
-      box-shadow:
+  align-items:center;
 
-        0 0 0 5px
-        rgba(14,165,233,0.15),
+  justify-content:center;
 
-        0 0 35px
-        rgba(14,165,233,0.55),
+  overflow:hidden;
 
-        0 20px 50px
-        rgba(0,0,0,0.55);
-    }
+}
 
 
-    .logo-inner {
+.logo-svg{
 
-      width: 180px;
+  width:88%;
 
-      height: 180px;
+  height:88%;
 
-      position: relative;
-    }
+}
 
 
-    .logo-a {
+.splash-title{
 
-      position: absolute;
+  color:#fff;
 
-      left: 30px;
+  font-size:42px;
 
-      top: 20px;
+  font-weight:900;
 
-      font-size: 105px;
+  letter-spacing:1px;
 
-      line-height: 1;
+  margin:0;
 
-      font-weight: 900;
+}
 
-      color: white;
 
-      font-family:
-        Arial,
-        sans-serif;
+.splash-title span{
 
-      transform: skew(-8deg);
-    }
+  color:#22d3ee;
 
+}
 
-    .logo-z {
 
-      position: absolute;
+.splash-subtitle{
 
-      right: 24px;
+  color:#bfdbfe;
 
-      top: 25px;
+  font-size:15px;
 
-      font-size: 80px;
+  margin-top:5px;
 
-      line-height: 1;
+}
 
-      font-weight: 900;
 
-      color: white;
+.splash-loading{
 
-      font-family:
-        Arial,
-        sans-serif;
-    }
+  width:240px;
 
+  height:7px;
 
-    .logo-arrow {
+  background:#123b70;
 
-      position: absolute;
+  border-radius:20px;
 
-      left: 5px;
+  margin:28px auto 12px;
 
-      top: 72px;
+  overflow:hidden;
 
-      width: 165px;
+}
 
-      height: 55px;
 
-      transform:
-        rotate(-11deg);
-    }
+.splash-loading-bar{
 
+  width:0;
 
-    .logo-arrow-line {
+  height:100%;
 
-      position: absolute;
+  background:
 
-      left: 0;
+    linear-gradient(
+      90deg,
+      #06b6d4,
+      #38bdf8,
+      #0284c7
+    );
 
-      bottom: 15px;
+  border-radius:20px;
 
-      width: 130px;
+  animation:
+    loading 1.8s linear forwards;
 
-      height: 16px;
+}
 
-      border-radius: 20px;
 
-      background:
-        linear-gradient(
-          90deg,
-          #0ea5e9,
-          #67e8f9
-        );
+@keyframes loading{
 
-      box-shadow:
-        0 0 12px
-        rgba(56,189,248,0.8);
-    }
+  from{
+    width:0;
+  }
 
+  to{
+    width:100%;
+  }
 
-    .logo-arrow-head {
+}
 
-      position: absolute;
 
-      right: 3px;
+.splash-note{
 
-      top: 0;
+  color:#94a3b8;
 
-      width: 0;
+  font-size:12px;
 
-      height: 0;
+}
 
-      border-top:
-        25px solid transparent;
 
-      border-bottom:
-        25px solid transparent;
+/* =====================================================
+   MAIN BODY
+   ===================================================== */
 
-      border-left:
-        42px solid #38bdf8;
+body{
 
-      filter:
-        drop-shadow(
-          0 0 6px
-          rgba(56,189,248,0.9)
-        );
-    }
+  padding:
+    10px
+    10px
+    80px;
 
+  display:flex;
 
-    .logo-urdu {
+  justify-content:center;
 
-      position: absolute;
+  align-items:flex-start;
 
-      bottom: -2px;
+}
 
-      left: 0;
 
-      width: 100%;
+.container{
 
-      color: white;
+  width:100%;
 
-      font-size: 26px;
+  max-width:500px;
 
-      font-weight: 800;
+  background:#fff;
 
-      white-space: nowrap;
-    }
+  padding:14px;
 
+  border-radius:22px;
 
-    .splash-title {
+  box-shadow:
+    0 20px 50px
+    rgba(0,0,0,.5);
 
-      color: white;
+  margin-top:8px;
 
-      font-size: 30px;
+}
 
-      font-weight: 900;
 
-      margin-top: 22px;
+/* =====================================================
+   HEADER
+   ===================================================== */
 
-      letter-spacing: 1px;
-    }
+.app-header{
 
+  background:
 
-    .splash-title span {
+    linear-gradient(
+      135deg,
+      #020617,
+      #0f172a 60%,
+      #123b70
+    );
 
-      color: #38bdf8;
-    }
+  color:#fff;
 
+  padding:12px;
 
-    .splash-subtitle {
+  border-radius:15px;
 
-      color: #bfdbfe;
+  display:flex;
 
-      font-size: 12px;
+  align-items:center;
 
-      margin-top: 5px;
-    }
+  justify-content:space-between;
 
+  margin-bottom:14px;
 
-    .splash-loader {
+  border:
+    1px solid
+    rgba(56,189,248,.25);
 
-      width: 80px;
+}
 
-      height: 5px;
 
-      background: #0369a1;
+.app-title-area h1{
 
-      border-radius: 10px;
+  margin:0;
 
-      margin:
-        22px
-        auto
-        0;
+  font-size:19px;
 
-      overflow: hidden;
-    }
+  color:#38bdf8;
 
+}
 
-    .splash-loader::after {
 
-      content: "";
+.app-title-area p{
 
-      display: block;
+  margin:
+    3px 0 0;
 
-      width: 35px;
+  font-size:10px;
 
-      height: 100%;
+  color:#cbd5e1;
 
-      background: #38bdf8;
+}
 
-      border-radius: 10px;
 
-      animation:
-        loader
-        1.2s
-        infinite
-        ease-in-out;
-    }
+.app-logo-badge{
 
+  width:43px;
 
-    .splash-welcome {
+  height:43px;
 
-      color: #94a3b8;
+  background:#06152e;
 
-      font-size: 11px;
+  border:
+    2px solid
+    #38bdf8;
 
-      margin-top: 15px;
-    }
+  border-radius:50%;
 
+  display:flex;
 
-    @keyframes splashZoom {
+  align-items:center;
 
-      from {
+  justify-content:center;
 
-        opacity: 0;
+  font-weight:900;
 
-        transform:
-          scale(0.75);
-      }
+  color:#38bdf8;
 
-      to {
+  font-size:14px;
 
-        opacity: 1;
+  box-shadow:
+    0 0 12px
+    rgba(56,189,248,.35);
 
-        transform:
-          scale(1);
-      }
-    }
+}
 
 
-    @keyframes loader {
+/* =====================================================
+   SCREENS
+   ===================================================== */
 
-      0% {
+.app-screen{
 
-        transform:
-          translateX(-50px);
-      }
+  display:none;
 
-      50% {
+}
 
-        transform:
-          translateX(45px);
-      }
 
-      100% {
+.app-screen.active{
 
-        transform:
-          translateX(-50px);
-      }
-    }
+  display:block;
 
+}
 
-    /* =====================================================
-       MAIN CONTAINER
-    ===================================================== */
 
-    .container {
+/* =====================================================
+   SUMMARY
+   ===================================================== */
 
-      width: 100%;
+.summary-box{
 
-      max-width: 480px;
+  display:flex;
 
-      background:
-        var(--card-bg);
+  gap:8px;
 
-      padding: 15px;
+  margin-bottom:15px;
 
-      border-radius: 20px;
+}
 
-      box-shadow:
-        0 20px 40px
-        rgba(0,0,0,0.5);
 
-      margin-top: 10px;
-    }
+.stat-card{
 
+  flex:1;
 
-    /* =====================================================
-       APP HEADER
-    ===================================================== */
+  background:#f8fafc;
 
-    .app-header {
+  border:
+    1px solid
+    #e2e8f0;
 
-      background:
-        #0f172a;
+  padding:10px;
 
-      color: white;
+  border-radius:12px;
 
-      padding: 12px;
+  text-align:center;
 
-      border-radius: 14px;
+}
 
-      display: flex;
 
-      align-items: center;
+.stat-card h3{
 
-      justify-content: space-between;
+  margin:0;
 
-      margin-bottom: 15px;
-    }
+  font-size:11px;
 
+  color:var(--muted);
 
-    .app-title-area h1 {
+}
 
-      margin: 0;
 
-      font-size: 18px;
+.stat-card .amount{
 
-      color:
-        #38bdf8;
-    }
+  font-size:15px;
 
+  font-weight:900;
 
-    .app-title-area p {
+  margin-top:3px;
 
-      margin:
-        3px 0 0;
+}
 
-      font-size: 10px;
 
-      color:
-        #94a3b8;
-    }
+.stat-card.total .amount{
 
+  color:var(--primary);
 
-    .app-logo-badge {
+}
 
-      width: 42px;
 
-      height: 42px;
+.stat-card.profit .amount{
 
-      background:
-        #1e293b;
+  color:var(--profit);
 
-      border:
-        2px solid
-        #38bdf8;
+}
 
-      border-radius: 50%;
 
-      display: flex;
+/* =====================================================
+   FORMS
+   ===================================================== */
 
-      align-items: center;
+.section-title{
 
-      justify-content: center;
+  font-size:14px;
 
-      font-weight: bold;
+  font-weight:900;
 
-      color:
-        #38bdf8;
+  color:#0284c7;
 
-      font-size: 14px;
+  margin-bottom:9px;
 
-      box-shadow:
-        0 0 12px
-        rgba(56,189,248,0.25);
-    }
+}
 
 
-    /* =====================================================
-       SCREENS
-    ===================================================== */
+.form-group{
 
-    .app-screen {
-      display: none;
-    }
+  margin-bottom:9px;
 
+}
 
-    .app-screen.active {
-      display: block;
-    }
 
+.form-group label{
 
-    /* =====================================================
-       SUMMARY
-    ===================================================== */
+  font-size:11px;
 
-    .summary-box {
+  font-weight:700;
 
-      display: flex;
+  color:var(--text);
 
-      gap: 8px;
+  display:block;
 
-      margin-bottom: 15px;
-    }
+  margin-bottom:3px;
 
+}
 
-    .stat-card {
 
-      flex: 1;
+.form-control{
 
-      background:
-        #f8fafc;
+  width:100%;
 
-      border:
-        1px solid
-        #e2e8f0;
+  padding:9px 10px;
 
-      padding: 10px;
+  border:
+    1px solid
+    #cbd5e1;
 
-      border-radius: 12px;
+  border-radius:9px;
 
-      text-align: center;
-    }
+  font-size:12px;
 
+  background:#fff;
 
-    .stat-card h3 {
+  color:#0f172a;
 
-      margin: 0;
+  outline:none;
 
-      font-size: 11px;
+}
 
-      color:
-        var(--text-muted);
-    }
 
+.form-control:focus{
 
-    .stat-card .amount {
+  border-color:#0284c7;
 
-      font-size: 15px;
+  box-shadow:
+    0 0 0 2px
+    rgba(2,132,199,.12);
 
-      font-weight: 800;
+}
 
-      margin-top: 3px;
-    }
 
+.row{
 
-    .stat-card.total .amount {
+  display:flex;
 
-      color:
-        var(--primary);
-    }
+  gap:6px;
 
+}
 
-    .stat-card.profit .amount {
 
-      color:
-        var(--profit);
-    }
+.row .form-group{
 
+  flex:1;
 
-    /* =====================================================
-       FORM
-    ===================================================== */
+}
 
-    .section-title {
 
-      font-size: 13px;
+/* =====================================================
+   BUTTONS
+   ===================================================== */
 
-      font-weight: 800;
+.btn{
 
-      color:
-        var(--primary);
+  width:100%;
 
-      margin-bottom: 8px;
-    }
+  padding:11px;
 
+  border:none;
 
-    .form-group {
+  border-radius:10px;
 
-      margin-bottom: 8px;
-    }
+  font-weight:800;
 
+  font-size:13px;
 
-    .form-group label {
+  cursor:pointer;
 
-      font-size: 11px;
+  color:#fff;
 
-      font-weight: 600;
+  background:var(--primary);
 
-      color:
-        var(--text-main);
+  box-shadow:
+    0 4px 12px
+    rgba(2,132,199,.25);
 
-      display: block;
+  margin-top:5px;
 
-      margin-bottom: 3px;
-    }
+  transition:.2s;
 
+  text-align:center;
 
-    .form-control {
+  text-decoration:none;
 
-      width: 100%;
+  display:block;
 
-      padding:
-        9px
-        10px;
+}
 
-      border:
-        1px solid
-        #cbd5e1;
 
-      border-radius: 8px;
+.btn:active{
 
-      font-size: 12px;
+  transform:scale(.98);
 
-      background:
-        #fff;
+}
 
-      outline: none;
 
-      transition:
-        0.2s;
-    }
+.btn:hover{
 
+  background:#0369a1;
 
-    .form-control:focus {
+}
 
-      border-color:
-        var(--primary);
 
-      box-shadow:
-        0 0 0 2px
-        rgba(2,132,199,0.12);
-    }
+.btn-danger{
 
+  background:var(--expense);
 
-    .row {
+}
 
-      display: flex;
 
-      gap: 6px;
-    }
+.btn-success{
 
+  background:var(--profit);
 
-    .row .form-group {
+}
 
-      flex: 1;
 
-      min-width: 0;
-    }
+.btn-whatsapp{
 
+  background:#16a34a;
 
-    /* =====================================================
-       BUTTONS
-    ===================================================== */
+  box-shadow:
+    0 4px 12px
+    rgba(22,163,74,.25);
 
-    .btn {
+}
 
-      width: 100%;
 
-      padding: 11px;
+.btn-whatsapp:hover{
 
-      border: none;
+  background:#15803d;
 
-      border-radius: 10px;
+}
 
-      font-weight: 700;
 
-      font-size: 13px;
+/* =====================================================
+   CUSTOMER RECORD
+   ===================================================== */
 
-      cursor: pointer;
+.customer-item{
 
-      color: white;
+  background:#f8fafc;
 
-      background:
-        var(--primary);
+  border:
+    1px solid
+    #e2e8f0;
 
-      box-shadow:
-        0 4px 12px
-        rgba(2,132,199,0.3);
+  border-radius:11px;
 
-      margin-top: 5px;
+  padding:10px;
 
-      transition:
-        0.2s;
+  margin-bottom:8px;
 
-      text-align: center;
+  font-size:11px;
 
-      display: block;
+  position:relative;
 
-      text-decoration: none;
-    }
+  overflow:hidden;
 
+}
 
-    .btn:active {
 
-      transform:
-        scale(0.98);
-    }
+.customer-header{
 
+  display:flex;
 
-    .btn:hover {
+  justify-content:space-between;
 
-      background:
-        #0369a1;
-    }
+  align-items:flex-start;
 
+  gap:6px;
 
-    .btn-success {
+  font-weight:800;
 
-      background:
-        var(--profit);
-    }
+  color:var(--text);
 
+  margin-bottom:4px;
 
-    .btn-success:hover {
+  padding-left:45px;
 
-      background:
-        #047857;
-    }
+}
 
 
-    .btn-danger {
+.customer-details{
 
-      background:
-        var(--expense);
-    }
+  color:var(--muted);
 
+  margin-bottom:4px;
 
-    .btn-danger:hover {
+}
 
-      background:
-        #be123c;
-    }
 
+.customer-footer{
 
-    /* =====================================================
-       CUSTOMER RECORD
-    ===================================================== */
+  display:flex;
 
-    .records-scroll {
+  justify-content:space-between;
 
-      max-height: 340px;
+  gap:5px;
 
-      overflow-y: auto;
+  font-weight:800;
 
-      padding-right: 2px;
-    }
+  border-top:
+    1px dashed
+    #cbd5e1;
 
+  padding-top:5px;
 
-    .customer-item {
+  margin-top:5px;
 
-      background:
-        #f8fafc;
+}
 
-      border:
-        1px solid
-        #e2e8f0;
 
-      border-radius: 10px;
+.profit-text{
 
-      padding: 10px;
+  color:var(--profit);
 
-      margin-bottom: 8px;
+}
 
-      font-size: 11px;
 
-      position: relative;
-    }
+.fee-text{
 
+  color:var(--expense);
 
-    .customer-header {
+}
 
-      display: flex;
 
-      justify-content: space-between;
+.status-badge{
 
-      align-items: flex-start;
+  padding:3px 6px;
 
-      font-weight: 700;
+  border-radius:6px;
 
-      color:
-        var(--text-main);
+  font-size:9px;
 
-      margin-bottom: 4px;
+  font-weight:800;
 
-      padding-left: 45px;
+  white-space:nowrap;
 
-      gap: 5px;
-    }
+}
 
 
-    .customer-details {
+.status-done{
 
-      color:
-        var(--text-muted);
+  background:#d1fae5;
 
-      margin-bottom: 4px;
-    }
+  color:#059669;
 
+}
 
-    .customer-footer {
 
-      display: flex;
+.status-pending{
 
-      justify-content: space-between;
+  background:#fef3c7;
 
-      font-weight: 700;
+  color:#d97706;
 
-      border-top:
-        1px dashed
-        #cbd5e1;
+}
 
-      padding-top: 5px;
 
-      margin-top: 5px;
+.action-btns{
 
-      gap: 5px;
-    }
+  position:absolute;
 
+  top:8px;
 
-    .profit-text {
+  left:10px;
 
-      color:
-        var(--profit);
-    }
+  display:flex;
 
+  gap:6px;
 
-    .fee-text {
+}
 
-      color:
-        var(--expense);
-    }
 
+.action-icon-btn{
 
-    .status-badge {
+  background:#fff;
 
-      padding:
-        3px
-        6px;
+  border:
+    1px solid
+    #e2e8f0;
 
-      border-radius: 6px;
+  border-radius:6px;
 
-      font-size: 9px;
+  cursor:pointer;
 
-      font-weight: 700;
+  font-size:12px;
 
-      white-space: nowrap;
-    }
+  padding:3px 5px;
 
+}
 
-    .status-done {
 
-      background:
-        #d1fae5;
+.edit-btn{
 
-      color:
-        var(--profit);
-    }
+  color:var(--primary);
 
+}
 
-    .status-pending {
 
-      background:
-        #fef3c7;
+.delete-btn{
 
-      color:
-        var(--pending);
-    }
+  color:var(--expense);
 
+}
 
-    .action-btns {
 
-      position: absolute;
+.empty-msg{
 
-      top: 8px;
+  text-align:center;
 
-      left: 10px;
+  color:var(--muted);
 
-      display: flex;
+  font-size:11px;
 
-      gap: 6px;
-    }
+  padding:25px 10px;
 
+}
 
-    .action-icon-btn {
 
-      background: none;
+/* =====================================================
+   SETTINGS
+   ===================================================== */
 
-      border: none;
+.settings-box{
 
-      cursor: pointer;
+  background:#f8fafc;
 
-      font-size: 14px;
+  border:
+    1px solid
+    #e2e8f0;
 
-      padding: 0;
-    }
+  padding:12px;
 
+  border-radius:10px;
 
-    .edit-btn {
+  font-size:12px;
 
-      color:
-        var(--primary);
-    }
+  margin-bottom:10px;
 
+}
 
-    .delete-btn {
 
-      color:
-        var(--expense);
+.settings-box h4{
 
-      font-size: 18px;
-    }
+  margin:
+    0 0 5px;
 
+  color:var(--text);
 
-    /* =====================================================
-       SETTINGS
-    ===================================================== */
+  font-size:13px;
 
-    .master-key-box {
+}
 
-      background:
-        #eff6ff;
 
-      border:
-        2px dashed
-        #0284c7;
+.settings-box p{
 
-      padding: 14px;
+  margin:
+    0 0 8px;
 
-      border-radius: 12px;
+  color:var(--muted);
 
-      font-size: 12px;
+  font-size:11px;
 
-      margin-bottom: 12px;
+}
 
-      box-shadow:
-        0 4px 15px
-        rgba(2,132,199,0.15);
-    }
 
+.master-key-box{
 
-    .master-key-box h4 {
+  background:#eff6ff;
 
-      color:
-        #0369a1;
+  border:
+    2px dashed
+    #0284c7;
 
-      margin:
-        0 0 6px;
+  padding:14px;
 
-      font-size: 14px;
+  border-radius:12px;
 
-      font-weight: 800;
-    }
+  margin-bottom:12px;
 
+  box-shadow:
+    0 4px 15px
+    rgba(2,132,199,.12);
 
-    .master-key-box p {
+}
 
-      color:
-        #334155;
 
-      margin:
-        0 0 10px;
+.master-key-box h4{
 
-      font-size: 11px;
+  color:#0369a1;
 
-      line-height: 1.5;
-    }
+  margin:
+    0 0 6px;
 
+  font-size:14px;
 
-    .settings-box {
+  font-weight:900;
 
-      background:
-        #f8fafc;
+}
 
-      border:
-        1px solid
-        #e2e8f0;
 
-      padding: 12px;
+.master-key-box p{
 
-      border-radius: 10px;
+  color:#334155;
 
-      font-size: 12px;
+  margin:
+    0 0 10px;
 
-      margin-bottom: 10px;
-    }
+  font-size:11px;
 
+  line-height:1.5;
 
-    .settings-box h4 {
+}
 
-      margin:
-        0 0 4px;
 
-      color:
-        var(--text-main);
+/* CONTACT BOX */
 
-      font-size: 13px;
-    }
+.contact-box{
 
+  background:
 
-    .settings-box p {
+    linear-gradient(
+      135deg,
+      #ecfdf5,
+      #f0fdf4
+    );
 
-      margin:
-        0 0 8px;
+  border:
+    1px solid
+    #86efac;
 
-      color:
-        var(--text-muted);
+  padding:13px;
 
-      font-size: 11px;
-    }
+  border-radius:12px;
 
+  margin-bottom:10px;
 
-    /* =====================================================
-       EMPTY
-    ===================================================== */
+}
 
-    .empty-msg {
 
-      text-align: center;
+.contact-box h4{
 
-      color:
-        var(--text-muted);
+  color:#166534;
 
-      font-size: 11px;
+  margin:
+    0 0 5px;
 
-      padding: 25px 10px;
-    }
+  font-size:14px;
 
+  font-weight:900;
 
-    /* =====================================================
-       BOTTOM NAVIGATION
-    ===================================================== */
+}
 
-    .bottom-nav {
 
-      position: fixed;
+.contact-box p{
 
-      bottom: 0;
+  color:#475569;
 
-      left: 0;
+  margin:
+    0 0 8px;
 
-      width: 100%;
+  font-size:11px;
 
-      background:
-        #0f172a;
+}
 
-      display: flex;
 
-      justify-content: space-around;
+.contact-number{
 
-      padding:
-        8px
-        0;
+  text-align:center;
 
-      border-top:
-        1px solid
-        rgba(255,255,255,0.1);
+  color:#166534 !important;
 
-      z-index: 1000;
+  font-size:13px !important;
 
-      box-sizing: border-box;
-    }
+  font-weight:900;
 
+}
 
-    .nav-item {
 
-      flex: 1;
+/* =====================================================
+   BOTTOM NAV
+   ===================================================== */
 
-      max-width: 130px;
+.bottom-nav{
 
-      background: none;
+  position:fixed;
 
-      border: none;
+  bottom:0;
 
-      color:
-        #94a3b8;
+  left:0;
 
-      font-size: 11px;
+  width:100%;
 
-      font-weight: 600;
+  background:#020617;
 
-      cursor: pointer;
+  display:flex;
 
-      display: flex;
+  justify-content:space-around;
 
-      flex-direction: column;
+  padding:
+    8px 0
+    calc(8px + env(safe-area-inset-bottom));
 
-      align-items: center;
+  border-top:
+    1px solid
+    rgba(255,255,255,.1);
 
-      gap: 2px;
+  z-index:1000;
 
-      transition:
-        color
-        0.3s;
-    }
+  box-sizing:border-box;
 
+}
 
-    .nav-item span {
 
-      font-size: 18px;
-    }
+.nav-item{
 
+  background:none;
 
-    .nav-item.active {
+  border:none;
 
-      color:
-        #38bdf8;
-    }
+  color:#94a3b8;
 
+  font-size:11px;
 
-    /* =====================================================
-       MOBILE
-    ===================================================== */
+  font-weight:700;
 
-    @media (max-width: 400px) {
+  cursor:pointer;
 
-      .container {
+  display:flex;
 
-        padding: 12px;
+  flex-direction:column;
 
-        border-radius: 16px;
-      }
+  align-items:center;
 
+  gap:2px;
 
-      .row {
+  min-width:80px;
 
-        gap: 4px;
-      }
+}
 
 
-      .form-control {
+.nav-item span{
 
-        font-size: 11px;
+  font-size:19px;
 
-        padding:
-          8px
-          6px;
-      }
+}
 
 
-      .customer-footer {
+.nav-item.active{
 
-        flex-direction: column;
+  color:#38bdf8;
 
-        gap: 3px;
-      }
+}
 
 
-      .splash-logo {
+/* =====================================================
+   MOBILE
+   ===================================================== */
 
-        width: 190px;
+@media(max-width:380px){
 
-        height: 190px;
-      }
-    }
+  .container{
 
-  </style>
+    padding:11px;
+
+  }
+
+
+  .row{
+
+    gap:4px;
+
+  }
+
+
+  .form-control{
+
+    padding:8px;
+
+  }
+
+
+  .customer-footer{
+
+    font-size:10px;
+
+  }
+
+
+  .splash-logo{
+
+    width:160px;
+
+    height:160px;
+
+  }
+
+
+  .splash-title{
+
+    font-size:36px;
+
+  }
+
+}
+
+</style>
 
 </head>
 
@@ -1278,75 +1176,144 @@
 
 
 <!-- =====================================================
-     SPLASH SCREEN
-===================================================== -->
+     SPLASH / LOGO
+     ===================================================== -->
 
 <div id="splashScreen">
 
   <div class="splash-content">
 
+
     <div class="splash-logo">
 
-      <div class="logo-inner">
 
-        <div class="logo-a">
-          A
-        </div>
+      <svg
+        class="logo-svg"
+        viewBox="0 0 300 300"
+        xmlns="http://www.w3.org/2000/svg">
 
-        <div class="logo-z">
-          Z
-        </div>
 
-        <div class="logo-arrow">
+        <defs>
 
-          <div class="logo-arrow-line"></div>
+          <linearGradient
+            id="blueLine"
+            x1="0"
+            y1="1"
+            x2="1"
+            y2="0">
 
-          <div class="logo-arrow-head"></div>
+            <stop
+              offset="0%"
+              stop-color="#00a8ff"/>
 
-        </div>
+            <stop
+              offset="50%"
+              stop-color="#00d9ff"/>
 
-        <div class="logo-urdu">
-          اے زی فلو
-        </div>
+            <stop
+              offset="100%"
+              stop-color="#7dd3fc"/>
 
-      </div>
+          </linearGradient>
+
+        </defs>
+
+
+        <text
+          x="42"
+          y="128"
+          font-family="Arial"
+          font-size="105"
+          font-weight="900"
+          fill="white">A</text>
+
+
+        <text
+          x="139"
+          y="128"
+          font-family="Arial"
+          font-size="105"
+          font-weight="900"
+          fill="white">Z</text>
+
+
+        <path
+          d="M35 170
+             C65 145 85 170 110 150
+             L145 120
+             L173 145
+             L220 88"
+          fill="none"
+          stroke="url(#blueLine)"
+          stroke-width="20"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+
+
+        <path
+          d="M203 92
+             L238 70
+             L231 104"
+          fill="none"
+          stroke="#7dd3fc"
+          stroke-width="10"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+
+
+        <text
+          x="150"
+          y="218"
+          text-anchor="middle"
+          font-family="Tahoma, Arial"
+          font-size="30"
+          font-weight="700"
+          fill="white">اے زی فلو</text>
+
+
+      </svg>
 
     </div>
 
 
-    <div class="splash-title">
+    <h1 class="splash-title">
       AZ Flow <span>⚡</span>
-    </div>
+    </h1>
 
 
     <div class="splash-subtitle">
-      Smart Khata & Customer Manager
+      Smart Khata &amp; Customer Manager
     </div>
 
 
-    <div class="splash-loader"></div>
+    <div class="splash-loading">
+
+      <div class="splash-loading-bar"></div>
+
+    </div>
 
 
-    <div class="splash-welcome">
+    <div class="splash-note">
       آپ کے کاروبار میں آسانی...
     </div>
+
 
   </div>
 
 </div>
 
 
-
 <!-- =====================================================
      MAIN APP
-===================================================== -->
+     ===================================================== -->
 
 <div class="container">
 
 
-  <!-- APP HEADER -->
+  <!-- HEADER -->
 
   <div class="app-header">
+
 
     <div class="app-title-area">
 
@@ -1366,13 +1333,14 @@
       AZ
     </div>
 
-  </div>
 
+  </div>
 
 
   <!-- SUMMARY -->
 
   <div class="summary-box">
+
 
     <div class="stat-card total">
 
@@ -1383,7 +1351,9 @@
       <div
         class="amount"
         id="totalCollected">
+
         Rs. 0
+
       </div>
 
     </div>
@@ -1398,18 +1368,20 @@
       <div
         class="amount"
         id="totalProfit">
+
         Rs. 0
+
       </div>
 
     </div>
 
+
   </div>
 
 
-
-  <!-- ===================================================
-       HOME SCREEN
-  =================================================== -->
+  <!-- =====================================================
+       HOME
+       ===================================================== -->
 
   <div
     id="screenHome"
@@ -1420,8 +1392,6 @@
       ➕ نیا گاہک درج کریں
     </div>
 
-
-    <!-- NAME -->
 
     <div class="form-group">
 
@@ -1438,9 +1408,6 @@
     </div>
 
 
-
-    <!-- PHONES -->
-
     <div class="row">
 
 
@@ -1451,10 +1418,11 @@
         </label>
 
         <input
-          type="tel"
+          type="text"
           id="custPhone1"
           class="form-control"
-          placeholder="پہلا نمبر">
+          placeholder="پہلا نمبر"
+          inputmode="tel">
 
       </div>
 
@@ -1462,14 +1430,15 @@
       <div class="form-group">
 
         <label>
-          موبائل 2 (آپشنل):
+          موبائل 2:
         </label>
 
         <input
-          type="tel"
+          type="text"
           id="custPhone2"
           class="form-control"
-          placeholder="دوسرا نمبر">
+          placeholder="دوسرا نمبر"
+          inputmode="tel">
 
       </div>
 
@@ -1477,23 +1446,21 @@
       <div class="form-group">
 
         <label>
-          موبائل 3 (آپشنل):
+          موبائل 3:
         </label>
 
         <input
-          type="tel"
+          type="text"
           id="custPhone3"
           class="form-control"
-          placeholder="تیسرا نمبر">
+          placeholder="تیسرا نمبر"
+          inputmode="tel">
 
       </div>
 
 
     </div>
 
-
-
-    <!-- WORK -->
 
     <div class="form-group">
 
@@ -1510,9 +1477,6 @@
     </div>
 
 
-
-    <!-- AMOUNT -->
-
     <div class="row">
 
 
@@ -1527,7 +1491,8 @@
           id="custAmount"
           class="form-control"
           placeholder="0"
-          min="0">
+          min="0"
+          inputmode="decimal">
 
       </div>
 
@@ -1543,7 +1508,8 @@
           id="custFee"
           class="form-control"
           placeholder="0"
-          min="0">
+          min="0"
+          inputmode="decimal">
 
       </div>
 
@@ -1551,34 +1517,31 @@
     </div>
 
 
-
-    <!-- STATUS -->
-
     <div class="form-group">
 
       <label>
-        کام کی حالت (Status):
+        کام کی حالت:
       </label>
 
       <select
         id="custStatus"
         class="form-control">
 
+
         <option value="مکمل ہو گیا">
           ✅ کام مکمل ہو گیا
         </option>
 
+
         <option value="جاری ہے">
-          ⏳ کام جاری ہے (باقی ہے)
+          ⏳ کام جاری ہے
         </option>
+
 
       </select>
 
     </div>
 
-
-
-    <!-- SAVE -->
 
     <button
       class="btn"
@@ -1593,10 +1556,9 @@
   </div>
 
 
-
-  <!-- ===================================================
-       RECORDS SCREEN
-  =================================================== -->
+  <!-- =====================================================
+       RECORDS
+       ===================================================== -->
 
   <div
     id="screenRecords"
@@ -1608,27 +1570,24 @@
     </div>
 
 
-    <!-- SEARCH -->
-
-    <div
-      class="form-group"
-      style="margin-bottom:10px;">
+    <div class="form-group">
 
       <input
         type="text"
         id="searchBox"
         class="form-control"
-        placeholder="🔍 نام، کام یا موبائل سے تلاش کریں..."
+        placeholder="🔍 نام، کام یا نمبر سے تلاش کریں..."
         oninput="renderRecords()">
 
     </div>
 
 
-    <!-- RECORD LIST -->
-
     <div
-      class="records-scroll"
-      id="recordsList">
+      id="recordsList"
+      style="
+        max-height:420px;
+        overflow-y:auto;
+      ">
 
     </div>
 
@@ -1636,10 +1595,9 @@
   </div>
 
 
-
-  <!-- ===================================================
-       SETTINGS SCREEN
-  =================================================== -->
+  <!-- =====================================================
+       SETTINGS
+       ===================================================== -->
 
   <div
     id="screenSettings"
@@ -1651,91 +1609,134 @@
     </div>
 
 
-
     <!-- BACKUP -->
 
     <div class="master-key-box">
 
+
       <h4>
-        🔐 ماسٹر پرمیننٹ کی اور بیک اپ
+        🔐 مستقل ڈیٹا اور بیک اپ
       </h4>
 
 
       <p>
-        آپ کا تمام کسٹمر ڈیٹا اسی ڈیوائس میں محفوظ رہتا ہے۔
-        بیک اپ کے ذریعے ڈیٹا فائل میں محفوظ کریں اور ضرورت پڑنے پر واپس Restore کریں۔
+
+        آپ کا کسٹمر ریکارڈ اسی مستقل Storage Key
+        میں محفوظ ہوتا ہے۔
+        عام coding update سے ریکارڈ ختم نہیں ہوگا۔
+        حفاظت کے لیے Backup بھی محفوظ رکھیں۔
+
       </p>
 
 
       <button
         class="btn btn-success"
-        onclick="exportData()"
-        style="margin-bottom:8px;">
+        onclick="exportData()">
 
         📤 ڈیٹا بیک اپ ڈاؤن لوڈ کریں
 
       </button>
 
 
-
       <label
         class="btn"
         style="
           background:#475569;
-          margin-bottom:0;
           cursor:pointer;
         ">
 
-        📥 بیک اپ فائل سے ریسٹور کریں
+        📥 بیک اپ فائل سے Restore کریں
 
 
         <input
           type="file"
           id="importFile"
-          accept=".json"
-          style="display:none;"
+          accept=".json,application/json"
+          style="display:none"
           onchange="importData(event)">
+
 
       </label>
 
+
     </div>
 
+
+    <!-- =================================================
+         CONTACT US
+         ================================================= -->
+
+    <div class="contact-box">
+
+
+      <h4>
+        📞 Contact Us
+      </h4>
+
+
+      <p>
+        کسی بھی مدد، معلومات یا ایپ سے متعلق مسئلے کے لیے
+        WhatsApp پر رابطہ کریں۔
+      </p>
+
+
+      <a
+        href="https://wa.me/923298191689"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-whatsapp">
+
+        💬 WhatsApp پر رابطہ کریں
+
+      </a>
+
+
+      <p class="contact-number">
+
+        WhatsApp:
+        <b>03298191689</b>
+
+      </p>
+
+
+    </div>
 
 
     <!-- APP INFO -->
 
     <div class="settings-box">
 
+
       <h4>
         📱 ایپ کی معلومات
       </h4>
+
 
       <p>
 
         <b>AZ Flow</b>
         ورژن 14.0
-
         <br>
-
-        ایڈمن:
-        Ansar AZ
+        Admin: Ansar AZ
 
       </p>
+
 
     </div>
 
 
-
-    <!-- RESET -->
+    <!-- DELETE DATA -->
 
     <div class="settings-box">
+
 
       <h4>
         ⚠️ ڈیٹا کنٹرول
       </h4>
 
+
       <p>
-        یہ آپشن تمام کسٹمر ریکارڈ ختم کر دے گا۔
+        یہ بٹن تمام کسٹمر ریکارڈ ختم کر دے گا۔
       </p>
 
 
@@ -1747,9 +1748,10 @@
           font-size:11px;
         ">
 
-        🗑️ تمام ڈیٹا ڈیلیٹ کریں
+        تمام ڈیٹا ڈیلیٹ کریں
 
       </button>
+
 
     </div>
 
@@ -1760,17 +1762,16 @@
 </div>
 
 
-
 <!-- =====================================================
      BOTTOM NAVIGATION
-===================================================== -->
+     ===================================================== -->
 
 <div class="bottom-nav">
 
 
   <button
     class="nav-item active"
-    onclick="switchScreen('Home', this)">
+    onclick="switchScreen('Home',this)">
 
     <span>
       🏠
@@ -1781,10 +1782,9 @@
   </button>
 
 
-
   <button
     class="nav-item"
-    onclick="switchScreen('Records', this)">
+    onclick="switchScreen('Records',this)">
 
     <span>
       👥
@@ -1795,10 +1795,9 @@
   </button>
 
 
-
   <button
     class="nav-item"
-    onclick="switchScreen('Settings', this)">
+    onclick="switchScreen('Settings',this)">
 
     <span>
       ⚙️
@@ -1812,33 +1811,31 @@
 </div>
 
 
-
-<!-- =====================================================
-     JAVASCRIPT
-===================================================== -->
-
 <script>
 
+/* =====================================================
+   IMPORTANT STORAGE KEY
 
-  /* =====================================================
-     STORAGE
-  ===================================================== */
+   اسے مستقبل میں تبدیل نہ کریں۔
+   اسی سے پرانا user data برقرار رہتا ہے۔
+   ===================================================== */
 
-  const STORAGE_KEY =
-    'az_flow_permanent_master_records';
-
-
-  let records = [];
-
-  let editingId = null;
+const STORAGE_KEY =
+  "az_flow_permanent_master_records";
 
 
+let records = [];
 
-  /* =====================================================
-     LOAD DATA
-  ===================================================== */
+let editingId = null;
 
-  try {
+
+/* =====================================================
+   LOAD DATA
+   ===================================================== */
+
+function loadData(){
+
+  try{
 
     const savedData =
       localStorage.getItem(
@@ -1846,1555 +1843,1306 @@
       );
 
 
-    if (savedData) {
+    if(savedData){
 
-      const parsedData =
+      const parsed =
         JSON.parse(savedData);
 
 
-      if (Array.isArray(parsedData)) {
+      if(Array.isArray(parsed)){
 
-        records =
-          parsedData;
+        records = parsed;
+
+      }else{
+
+        records = [];
 
       }
 
+    }else{
+
+      records = [];
+
     }
 
-  }
 
-  catch (error) {
+  }catch(error){
 
     console.error(
-      'Data loading error:',
+      "Data loading error:",
       error
     );
 
-    records = [];
+    records=[];
+
+  }
+
+}
+
+
+/* =====================================================
+   SAVE DATA
+   ===================================================== */
+
+function saveData(){
+
+  try{
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(records)
+    );
+
+    return true;
+
+
+  }catch(error){
+
+    console.error(
+      "Data saving error:",
+      error
+    );
+
+    alert(
+      "ڈیٹا محفوظ کرنے میں مسئلہ آیا۔ Backup بنائیں۔"
+    );
+
+    return false;
+
+  }
+
+}
+
+
+/* =====================================================
+   SCREEN SWITCH
+   ===================================================== */
+
+function switchScreen(
+  screenName,
+  btnElement
+){
+
+  document
+    .querySelectorAll(".app-screen")
+    .forEach(
+      screen=>{
+        screen.classList.remove("active");
+      }
+    );
+
+
+  document
+    .querySelectorAll(".nav-item")
+    .forEach(
+      item=>{
+        item.classList.remove("active");
+      }
+    );
+
+
+  if(screenName==="Home"){
+
+    document
+      .getElementById("screenHome")
+      .classList.add("active");
 
   }
 
 
+  if(screenName==="Records"){
 
-  /* =====================================================
-     SPLASH SCREEN
-  ===================================================== */
+    document
+      .getElementById("screenRecords")
+      .classList.add("active");
 
-  window.addEventListener(
-    'load',
-    function() {
+    renderRecords();
 
-      setTimeout(
-        function() {
-
-          const splash =
-            document.getElementById(
-              'splashScreen'
-            );
+  }
 
 
-          if (splash) {
+  if(screenName==="Settings"){
 
-            splash.classList.add(
-              'hide'
-            );
+    document
+      .getElementById("screenSettings")
+      .classList.add("active");
+
+  }
+
+
+  if(btnElement){
+
+    btnElement.classList.add("active");
+
+  }
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =====================================================
+   SAVE AND RENDER
+   ===================================================== */
+
+function saveAndRender(){
+
+  saveData();
+
+  renderRecords();
+
+  updateSummary();
+
+}
+
+
+/* =====================================================
+   SAVE CUSTOMER
+   ===================================================== */
+
+function saveCustomerRecord(){
+
+  const name =
+    document
+      .getElementById("custName")
+      .value
+      .trim();
+
+
+  const phone1 =
+    document
+      .getElementById("custPhone1")
+      .value
+      .trim();
+
+
+  const phone2 =
+    document
+      .getElementById("custPhone2")
+      .value
+      .trim();
+
+
+  const phone3 =
+    document
+      .getElementById("custPhone3")
+      .value
+      .trim();
+
+
+  const work =
+    document
+      .getElementById("custWork")
+      .value
+      .trim();
+
+
+  const amount =
+    parseFloat(
+      document
+        .getElementById("custAmount")
+        .value
+    ) || 0;
+
+
+  const fee =
+    parseFloat(
+      document
+        .getElementById("custFee")
+        .value
+    ) || 0;
+
+
+  const status =
+    document
+      .getElementById("custStatus")
+      .value;
+
+
+  if(!name){
+
+    alert(
+      "براہ کرم گاہک کا نام درج کریں!"
+    );
+
+    return;
+
+  }
+
+
+  if(amount<=0){
+
+    alert(
+      "براہ کرم وصولی کی درست رقم درج کریں!"
+    );
+
+    return;
+
+  }
+
+
+  if(fee<0){
+
+    alert(
+      "فیس درست درج کریں!"
+    );
+
+    return;
+
+  }
+
+
+  const profit =
+    amount-fee;
+
+
+  /* UPDATE */
+
+  if(editingId!==null){
+
+    records =
+      records.map(
+        record=>{
+
+          if(
+            record.id===editingId
+          ){
+
+            return{
+
+              ...record,
+
+              name:name,
+
+              phone1:phone1,
+
+              phone2:phone2,
+
+              phone3:phone3,
+
+              work:work,
+
+              amount:amount,
+
+              fee:fee,
+
+              profit:profit,
+
+              status:status,
+
+              updatedAt:
+                new Date().toISOString()
+
+            };
 
           }
 
-        },
-        2000
+
+          return record;
+
+        }
+      );
+
+
+    editingId=null;
+
+
+    document
+      .getElementById(
+        "saveUpdateBtn"
+      )
+      .innerText =
+        "ریکارڈ محفوظ کریں (Save)";
+
+
+    alert(
+      "ریکارڈ کامیابی سے اپڈیٹ ہو گیا!"
+    );
+
+
+  }
+
+
+  /* NEW RECORD */
+
+  else{
+
+    const newRecord={
+
+      id:
+        Date.now()+
+        Math.floor(
+          Math.random()*1000
+        ),
+
+      name:name,
+
+      phone1:phone1,
+
+      phone2:phone2,
+
+      phone3:phone3,
+
+      work:work,
+
+      amount:amount,
+
+      fee:fee,
+
+      profit:profit,
+
+      status:status,
+
+      date:
+        new Date()
+          .toLocaleDateString(
+            "ur-PK"
+          ),
+
+      createdAt:
+        new Date().toISOString()
+
+    };
+
+
+    records.unshift(
+      newRecord
+    );
+
+
+    alert(
+      "ریکارڈ کامیابی سے محفوظ ہو گیا!"
+    );
+
+  }
+
+
+  clearForm();
+
+
+  saveAndRender();
+
+
+  switchScreen(
+    "Records",
+    document.querySelectorAll(
+      ".nav-item"
+    )[1]
+  );
+
+}
+
+
+/* =====================================================
+   CLEAR FORM
+   ===================================================== */
+
+function clearForm(){
+
+  document.getElementById(
+    "custName"
+  ).value="";
+
+
+  document.getElementById(
+    "custPhone1"
+  ).value="";
+
+
+  document.getElementById(
+    "custPhone2"
+  ).value="";
+
+
+  document.getElementById(
+    "custPhone3"
+  ).value="";
+
+
+  document.getElementById(
+    "custWork"
+  ).value="";
+
+
+  document.getElementById(
+    "custAmount"
+  ).value="";
+
+
+  document.getElementById(
+    "custFee"
+  ).value="";
+
+
+  document.getElementById(
+    "custStatus"
+  ).value="مکمل ہو گیا";
+
+
+  editingId=null;
+
+
+  document.getElementById(
+    "saveUpdateBtn"
+  ).innerText=
+    "ریکارڈ محفوظ کریں (Save)";
+
+}
+
+
+/* =====================================================
+   EDIT RECORD
+   ===================================================== */
+
+function editRecord(id){
+
+  const record =
+    records.find(
+      r=>r.id===id
+    );
+
+
+  if(!record){
+
+    alert(
+      "ریکارڈ نہیں ملا!"
+    );
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    "custName"
+  ).value =
+    record.name || "";
+
+
+  document.getElementById(
+    "custPhone1"
+  ).value =
+    record.phone1 || "";
+
+
+  document.getElementById(
+    "custPhone2"
+  ).value =
+    record.phone2 || "";
+
+
+  document.getElementById(
+    "custPhone3"
+  ).value =
+    record.phone3 || "";
+
+
+  document.getElementById(
+    "custWork"
+  ).value =
+    record.work || "";
+
+
+  document.getElementById(
+    "custAmount"
+  ).value =
+    record.amount || 0;
+
+
+  document.getElementById(
+    "custFee"
+  ).value =
+    record.fee || 0;
+
+
+  document.getElementById(
+    "custStatus"
+  ).value =
+    record.status ||
+    "مکمل ہو گیا";
+
+
+  editingId=id;
+
+
+  document.getElementById(
+    "saveUpdateBtn"
+  ).innerText =
+    "تبدیلی محفوظ کریں (Update)";
+
+
+  switchScreen(
+    "Home",
+    document.querySelectorAll(
+      ".nav-item"
+    )[0]
+  );
+
+}
+
+
+/* =====================================================
+   DELETE RECORD
+   ===================================================== */
+
+function deleteRecord(id){
+
+  const confirmed =
+    confirm(
+      "کیا آپ واقعی یہ ریکارڈ ڈیلیٹ کرنا چاہتے ہیں؟"
+    );
+
+
+  if(!confirmed){
+
+    return;
+
+  }
+
+
+  records =
+    records.filter(
+      record=>record.id!==id
+    );
+
+
+  if(editingId===id){
+
+    clearForm();
+
+  }
+
+
+  saveAndRender();
+
+
+  alert(
+    "ریکارڈ ڈیلیٹ کر دیا گیا ہے۔"
+  );
+
+}
+
+
+/* =====================================================
+   DELETE ALL DATA
+   ===================================================== */
+
+function clearAllData(){
+
+  const confirmed =
+    confirm(
+      "⚠️ خطرہ!\n\nکیا آپ تمام کسٹمرز کا ریکارڈ ہمیشہ کے لیے ختم کرنا چاہتے ہیں؟\n\nضروری ہو تو پہلے Backup بنا لیں۔"
+    );
+
+
+  if(!confirmed){
+
+    return;
+
+  }
+
+
+  records=[];
+
+
+  saveData();
+
+  renderRecords();
+
+  updateSummary();
+
+
+  alert(
+    "تمام ڈیٹا صاف کر دیا گیا ہے۔"
+  );
+
+}
+
+
+/* =====================================================
+   SECURITY - ESCAPE HTML
+   ===================================================== */
+
+function escapeHTML(value){
+
+  return String(
+    value ?? ""
+  )
+
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+
+  .replace(
+    /</g,
+    "&lt;"
+  )
+
+  .replace(
+    />/g,
+    "&gt;"
+  )
+
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+
+  .replace(
+    /'/g,
+    "&#039;"
+  );
+
+}
+
+
+/* =====================================================
+   RENDER RECORDS
+   ===================================================== */
+
+function renderRecords(){
+
+  const listContainer =
+    document.getElementById(
+      "recordsList"
+    );
+
+
+  const searchBox =
+    document.getElementById(
+      "searchBox"
+    );
+
+
+  const searchQuery =
+    searchBox
+      ? searchBox.value
+          .trim()
+          .toLowerCase()
+      : "";
+
+
+  listContainer.innerHTML="";
+
+
+  const filteredRecords =
+    records.filter(
+      record=>{
+
+        const name =
+          String(
+            record.name || ""
+          ).toLowerCase();
+
+
+        const work =
+          String(
+            record.work || ""
+          ).toLowerCase();
+
+
+        const phone1 =
+          String(
+            record.phone1 || ""
+          ).toLowerCase();
+
+
+        const phone2 =
+          String(
+            record.phone2 || ""
+          ).toLowerCase();
+
+
+        const phone3 =
+          String(
+            record.phone3 || ""
+          ).toLowerCase();
+
+
+        return(
+
+          name.includes(
+            searchQuery
+          )
+
+          ||
+
+          work.includes(
+            searchQuery
+          )
+
+          ||
+
+          phone1.includes(
+            searchQuery
+          )
+
+          ||
+
+          phone2.includes(
+            searchQuery
+          )
+
+          ||
+
+          phone3.includes(
+            searchQuery
+          )
+
+        );
+
+      }
+    );
+
+
+  if(
+    filteredRecords.length===0
+  ){
+
+    listContainer.innerHTML=
+      `
+      <div class="empty-msg">
+        📂 کوئی ریکارڈ موجود نہیں ہے
+      </div>
+      `;
+
+
+    updateSummary();
+
+    return;
+
+  }
+
+
+  filteredRecords.forEach(
+    record=>{
+
+
+      const isDone =
+        record.status ===
+        "مکمل ہو گیا";
+
+
+      const badgeClass =
+        isDone
+          ? "status-done"
+          : "status-pending";
+
+
+      let phonesText =
+        record.phone1 || "";
+
+
+      if(record.phone2){
+
+        phonesText +=
+          " , " +
+          record.phone2;
+
+      }
+
+
+      if(record.phone3){
+
+        phonesText +=
+          " , " +
+          record.phone3;
+
+      }
+
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+
+      item.className =
+        "customer-item";
+
+
+      item.innerHTML = `
+
+        <div class="action-btns">
+
+          <button
+            class="action-icon-btn edit-btn"
+            onclick="editRecord(${record.id})"
+            title="ایڈٹ کریں">
+
+            ✏️
+
+          </button>
+
+
+          <button
+            class="action-icon-btn delete-btn"
+            onclick="deleteRecord(${record.id})"
+            title="ڈیلیٹ کریں">
+
+            🗑️
+
+          </button>
+
+        </div>
+
+
+        <div class="customer-header">
+
+          <span>
+
+            👤
+            ${escapeHTML(
+              record.name
+            )}
+
+            ${
+              phonesText
+                ? "(" +
+                  escapeHTML(
+                    phonesText
+                  ) +
+                  ")"
+                : ""
+            }
+
+          </span>
+
+
+          <span
+            class="
+              status-badge
+              ${badgeClass}
+            ">
+
+            ${escapeHTML(
+              record.status ||
+              "مکمل ہو گیا"
+            )}
+
+          </span>
+
+        </div>
+
+
+        <div class="customer-details">
+
+          🛠️ کام:
+
+          <b>
+
+            ${escapeHTML(
+              record.work ||
+              "مقرر نہیں"
+            )}
+
+          </b>
+
+        </div>
+
+
+        <div class="customer-footer">
+
+          <span>
+
+            وصولی:
+
+            Rs.
+            ${Number(
+              record.amount || 0
+            ).toLocaleString()}
+
+            |
+
+            فیس:
+
+            <span class="fee-text">
+
+              Rs.
+              ${Number(
+                record.fee || 0
+              ).toLocaleString()}
+
+            </span>
+
+          </span>
+
+
+          <span>
+
+            منافع:
+
+            <span class="profit-text">
+
+              Rs.
+              ${Number(
+                record.profit || 0
+              ).toLocaleString()}
+
+            </span>
+
+          </span>
+
+        </div>
+
+
+        <div
+          style="
+            color:#94a3b8;
+            font-size:9px;
+            margin-top:5px;
+          ">
+
+          📅
+          ${escapeHTML(
+            record.date || ""
+          )}
+
+        </div>
+
+      `;
+
+
+      listContainer.appendChild(
+        item
       );
 
     }
   );
 
 
+  updateSummary();
 
-  /* =====================================================
-     SCREEN SWITCH
-  ===================================================== */
-
-  function switchScreen(
-    screenName,
-    btnElement
-  ) {
+}
 
 
-    document
-      .querySelectorAll('.app-screen')
-      .forEach(
-        function(screen) {
+/* =====================================================
+   UPDATE SUMMARY
+   ===================================================== */
 
-          screen.classList.remove(
-            'active'
-          );
+function updateSummary(){
 
-        }
-      );
+  let totalCollected=0;
+
+  let totalProfit=0;
 
 
+  records.forEach(
+    record=>{
 
-    document
-      .querySelectorAll('.nav-item')
-      .forEach(
-        function(button) {
-
-          button.classList.remove(
-            'active'
-          );
-
-        }
-      );
+      totalCollected +=
+        Number(
+          record.amount
+        ) || 0;
 
 
-
-    const screen =
-      document.getElementById(
-        'screen' + screenName
-      );
-
-
-    if (screen) {
-
-      screen.classList.add(
-        'active'
-      );
+      totalProfit +=
+        Number(
+          record.profit
+        ) || 0;
 
     }
+  );
 
 
-
-    if (
-      screenName ===
-      'Records'
-    ) {
-
-      renderRecords();
-
-    }
+  document.getElementById(
+    "totalCollected"
+  ).innerText =
+    "Rs. " +
+    totalCollected.toLocaleString();
 
 
+  document.getElementById(
+    "totalProfit"
+  ).innerText =
+    "Rs. " +
+    totalProfit.toLocaleString();
 
-    if (btnElement) {
-
-      btnElement.classList.add(
-        'active'
-      );
-
-    }
+}
 
 
-    window.scrollTo(
-      0,
-      0
+/* =====================================================
+   EXPORT BACKUP
+   ===================================================== */
+
+function exportData(){
+
+  if(records.length===0){
+
+    alert(
+      "بیک اپ بنانے کے لیے کوئی ریکارڈ موجود نہیں ہے!"
     );
 
-  }
-
-
-
-  /* =====================================================
-     SAVE DATA
-  ===================================================== */
-
-  function saveAndRender() {
-
-
-    try {
-
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(records)
-      );
-
-    }
-
-    catch (error) {
-
-      console.error(
-        'Save error:',
-        error
-      );
-
-      alert(
-        'ڈیٹا محفوظ کرنے میں مسئلہ آیا ہے۔'
-      );
-
-    }
-
-
-    renderRecords();
-
-    updateSummary();
+    return;
 
   }
 
 
+  const backupData={
 
-  /* =====================================================
-     SAVE CUSTOMER
-  ===================================================== */
+    app:"AZ Flow",
 
-  function saveCustomerRecord() {
+    version:"14.0",
 
+    backupDate:
+      new Date().toISOString(),
 
-    const name =
-      document
-        .getElementById(
-          'custName'
-        )
-        .value
-        .trim();
+    records:records
+
+  };
 
 
-    const phone1 =
-      document
-        .getElementById(
-          'custPhone1'
-        )
-        .value
-        .trim();
+  const json =
+    JSON.stringify(
+      backupData,
+      null,
+      2
+    );
 
 
-    const phone2 =
-      document
-        .getElementById(
-          'custPhone2'
-        )
-        .value
-        .trim();
+  const blob =
+    new Blob(
+      [json],
+      {
+        type:
+          "application/json"
+      }
+    );
 
 
-    const phone3 =
-      document
-        .getElementById(
-          'custPhone3'
-        )
-        .value
-        .trim();
+  const url =
+    URL.createObjectURL(
+      blob
+    );
 
 
-    const work =
-      document
-        .getElementById(
-          'custWork'
-        )
-        .value
-        .trim();
+  const link =
+    document.createElement(
+      "a"
+    );
 
 
-    const amount =
-      parseFloat(
-        document
-          .getElementById(
-            'custAmount'
-          )
-          .value
-      ) || 0;
+  link.href=url;
 
 
-    const fee =
-      parseFloat(
-        document
-          .getElementById(
-            'custFee'
-          )
-          .value
-      ) || 0;
+  link.download =
+    "AZ_Flow_Backup_" +
+
+    new Date()
+      .toISOString()
+      .slice(0,10) +
+
+    ".json";
 
 
-    const status =
-      document
-        .getElementById(
-          'custStatus'
-        )
-        .value;
+  document.body.appendChild(
+    link
+  );
 
 
+  link.click();
 
-    /* VALIDATION */
 
-    if (
-      !name ||
-      amount <= 0
-    ) {
+  link.remove();
 
-      alert(
-        'براہ کرم گاہک کا نام اور درست رقم درج کریں!'
+
+  setTimeout(
+    ()=>{
+      URL.revokeObjectURL(
+        url
       );
-
-      return;
-
-    }
-
+    },
+    1000
+  );
 
 
-    /* PROFIT */
+  alert(
+    "بیک اپ کامیابی سے ڈاؤن لوڈ ہو گیا ہے۔"
+  );
 
-    const profit =
-      amount - fee;
-
-
-
-    /* =================================================
-       UPDATE EXISTING
-    ================================================= */
-
-    if (
-      editingId !== null
-    ) {
+}
 
 
-      records =
-        records.map(
-          function(record) {
+/* =====================================================
+   IMPORT BACKUP
+   ===================================================== */
+
+function importData(event){
+
+  const file =
+    event.target.files[0];
 
 
-            if (
-              record.id ===
-              editingId
-            ) {
+  if(!file){
+
+    return;
+
+  }
 
 
-              return {
-
-                ...record,
-
-                name:
-                  name,
-
-                phone1:
-                  phone1,
-
-                phone2:
-                  phone2,
-
-                phone3:
-                  phone3,
-
-                work:
-                  work,
-
-                amount:
-                  amount,
-
-                fee:
-                  fee,
-
-                profit:
-                  profit,
-
-                status:
-                  status
-
-              };
-
-            }
+  const reader =
+    new FileReader();
 
 
-            return record;
+  reader.onload =
+    function(e){
 
-          }
+      try{
+
+        const imported =
+          JSON.parse(
+            e.target.result
+          );
+
+
+        let importedRecords;
+
+
+        /* New backup */
+
+        if(
+          imported &&
+          Array.isArray(
+            imported.records
+          )
+        ){
+
+          importedRecords =
+            imported.records;
+
+        }
+
+
+        /* Old backup */
+
+        else if(
+          Array.isArray(
+            imported
+          )
+        ){
+
+          importedRecords =
+            imported;
+
+        }
+
+
+        else{
+
+          alert(
+            "فائل کا فارمیٹ درست نہیں ہے!"
+          );
+
+          return;
+
+        }
+
+
+        const confirmed =
+          confirm(
+            "موجودہ ریکارڈ Backup کے ریکارڈ سے replace ہو جائیں گے۔ کیا آپ جاری رکھنا چاہتے ہیں؟"
+          );
+
+
+        if(!confirmed){
+
+          return;
+
+        }
+
+
+        records =
+          importedRecords;
+
+
+        saveData();
+
+        renderRecords();
+
+        updateSummary();
+
+
+        alert(
+          "ڈیٹا کامیابی سے Restore ہو گیا ہے!"
         );
 
 
-      editingId = null;
+        switchScreen(
+          "Records",
+          document.querySelectorAll(
+            ".nav-item"
+          )[1]
+        );
 
 
-      document
-        .getElementById(
-          'saveUpdateBtn'
-        )
-        .innerText =
-        'ریکارڈ محفوظ کریں (Save)';
+      }
 
-    }
+      catch(error){
 
+        console.error(
+          error
+        );
 
+        alert(
+          "فائل پڑھنے میں خرابی پیش آئی!"
+        );
 
-    /* =================================================
-       NEW RECORD
-    ================================================= */
+      }
 
-    else {
 
-
-      const newRecord = {
-
-        id:
-          Date.now(),
-
-        name:
-          name,
-
-        phone1:
-          phone1,
-
-        phone2:
-          phone2,
-
-        phone3:
-          phone3,
-
-        work:
-          work,
-
-        amount:
-          amount,
-
-        fee:
-          fee,
-
-        profit:
-          profit,
-
-        status:
-          status,
-
-        date:
-          new Date()
-            .toLocaleDateString(
-              'ur-PK'
-            )
-
-      };
-
-
-      records.unshift(
-        newRecord
-      );
-
-    }
-
-
-
-    clearForm();
-
-
-    saveAndRender();
-
-
-    alert(
-      'ریکارڈ کامیابی سے محفوظ ہو گیا!'
-    );
-
-
-    const navButtons =
-      document.querySelectorAll(
-        '.nav-item'
-      );
-
-
-    switchScreen(
-      'Records',
-      navButtons[1]
-    );
-
-  }
-
-
-
-  /* =====================================================
-     CLEAR FORM
-  ===================================================== */
-
-  function clearForm() {
-
-
-    document
-      .getElementById(
-        'custName'
-      )
-      .value = '';
-
-
-    document
-      .getElementById(
-        'custPhone1'
-      )
-      .value = '';
-
-
-    document
-      .getElementById(
-        'custPhone2'
-      )
-      .value = '';
-
-
-    document
-      .getElementById(
-        'custPhone3'
-      )
-      .value = '';
-
-
-    document
-      .getElementById(
-        'custWork'
-      )
-      .value = '';
-
-
-    document
-      .getElementById(
-        'custAmount'
-      )
-      .value = '';
-
-
-    document
-      .getElementById(
-        'custFee'
-      )
-      .value = '';
-
-
-    document
-      .getElementById(
-        'custStatus'
-      )
-      .value =
-      'مکمل ہو گیا';
-
-
-    editingId = null;
-
-
-    document
-      .getElementById(
-        'saveUpdateBtn'
-      )
-      .innerText =
-      'ریکارڈ محفوظ کریں (Save)';
-
-  }
-
-
-
-  /* =====================================================
-     EDIT RECORD
-  ===================================================== */
-
-  function editRecord(id) {
-
-
-    const record =
-      records.find(
-        function(item) {
-
-          return item.id === id;
-
-        }
-      );
-
-
-    if (!record) {
-
-      return;
-
-    }
-
-
-
-    document
-      .getElementById(
-        'custName'
-      )
-      .value =
-      record.name || '';
-
-
-    document
-      .getElementById(
-        'custPhone1'
-      )
-      .value =
-      record.phone1 || '';
-
-
-    document
-      .getElementById(
-        'custPhone2'
-      )
-      .value =
-      record.phone2 || '';
-
-
-    document
-      .getElementById(
-        'custPhone3'
-      )
-      .value =
-      record.phone3 || '';
-
-
-    document
-      .getElementById(
-        'custWork'
-      )
-      .value =
-      record.work || '';
-
-
-    document
-      .getElementById(
-        'custAmount'
-      )
-      .value =
-      record.amount || 0;
-
-
-    document
-      .getElementById(
-        'custFee'
-      )
-      .value =
-      record.fee || 0;
-
-
-    document
-      .getElementById(
-        'custStatus'
-      )
-      .value =
-      record.status ||
-      'مکمل ہو گیا';
-
-
-
-    editingId =
-      id;
-
-
-    document
-      .getElementById(
-        'saveUpdateBtn'
-      )
-      .innerText =
-      'تبدیلی محفوظ کریں (Update)';
-
-
-
-    const navButtons =
-      document.querySelectorAll(
-        '.nav-item'
-      );
-
-
-    switchScreen(
-      'Home',
-      navButtons[0]
-    );
-
-  }
-
-
-
-  /* =====================================================
-     DELETE RECORD
-  ===================================================== */
-
-  function deleteRecord(id) {
-
-
-    if (
-      !confirm(
-        'کیا آپ واقعی یہ ریکارڈ ڈیلیٹ کرنا چاہتے ہیں؟'
-      )
-    ) {
-
-      return;
-
-    }
-
-
-    records =
-      records.filter(
-        function(record) {
-
-          return record.id !== id;
-
-        }
-      );
-
-
-    if (
-      editingId === id
-    ) {
-
-      clearForm();
-
-    }
-
-
-    saveAndRender();
-
-  }
-
-
-
-  /* =====================================================
-     CLEAR ALL
-  ===================================================== */
-
-  function clearAllData() {
-
-
-    if (
-      !confirm(
-        '⚠️ خطرہ!\n\nکیا آپ تمام کسٹمرز کا ریکارڈ ہمیشہ کے لیے ختم کرنا چاہتے ہیں؟'
-      )
-    ) {
-
-      return;
-
-    }
-
-
-    records = [];
-
-
-    saveAndRender();
-
-
-    alert(
-      'تمام ڈیٹا صاف کر دیا گیا ہے۔'
-    );
-
-  }
-
-
-
-  /* =====================================================
-     EXPORT BACKUP
-  ===================================================== */
-
-  function exportData() {
-
-
-    if (
-      records.length === 0
-    ) {
-
-      alert(
-        'بیک اپ کے لیے کوئی ریکارڈ موجود نہیں ہے!'
-      );
-
-      return;
-
-    }
-
-
-
-    const backupData = {
-
-      app:
-        'AZ Flow',
-
-      version:
-        '14.0',
-
-      exportDate:
-        new Date()
-          .toISOString(),
-
-      records:
-        records
+      event.target.value="";
 
     };
 
 
+  reader.readAsText(
+    file
+  );
 
-    const dataStr =
-      'data:application/json;charset=utf-8,' +
-      encodeURIComponent(
-        JSON.stringify(
-          backupData,
-          null,
-          2
-        )
-      );
+}
 
 
+/* =====================================================
+   START APPLICATION
+   ===================================================== */
 
-    const downloadAnchor =
-      document.createElement(
-        'a'
-      );
+loadData();
 
+renderRecords();
 
-    downloadAnchor.href =
-      dataStr;
-
-
-    downloadAnchor.download =
-      'AZ_Flow_Backup_' +
-      new Date()
-        .toISOString()
-        .slice(0,10) +
-      '.json';
+updateSummary();
 
 
+/* =====================================================
+   SPLASH SCREEN TIMER
+   ===================================================== */
 
-    document.body.appendChild(
-      downloadAnchor
+window.addEventListener(
+  "load",
+  function(){
+
+    setTimeout(
+      function(){
+
+        document
+          .getElementById(
+            "splashScreen"
+          )
+          .classList.add(
+            "hide"
+          );
+
+      },
+      2000
     );
 
-
-    downloadAnchor.click();
-
-
-    downloadAnchor.remove();
-
   }
-
-
-
-  /* =====================================================
-     IMPORT BACKUP
-  ===================================================== */
-
-  function importData(event) {
-
-
-    const file =
-      event.target.files[0];
-
-
-    if (!file) {
-
-      return;
-
-    }
-
-
-
-    const reader =
-      new FileReader();
-
-
-
-    reader.onload =
-      function(e) {
-
-
-        try {
-
-
-          const importedData =
-            JSON.parse(
-              e.target.result
-            );
-
-
-          let importedRecords;
-
-
-
-          /* NEW FORMAT */
-
-          if (
-            importedData &&
-            Array.isArray(
-              importedData.records
-            )
-          ) {
-
-            importedRecords =
-              importedData.records;
-
-          }
-
-
-
-          /* OLD FORMAT */
-
-          else if (
-            Array.isArray(
-              importedData
-            )
-          ) {
-
-            importedRecords =
-              importedData;
-
-          }
-
-
-
-          else {
-
-            alert(
-              'فائل کا فارمیٹ درست نہیں ہے!'
-            );
-
-            return;
-
-          }
-
-
-
-          if (
-            !confirm(
-              'کیا آپ موجودہ ڈیٹا کو بیک اپ والے ڈیٹا سے تبدیل کرنا چاہتے ہیں؟'
-            )
-          ) {
-
-            return;
-
-          }
-
-
-
-          records =
-            importedRecords;
-
-
-          saveAndRender();
-
-
-          alert(
-            'ڈیٹا کامیابی سے Restore ہو گیا ہے!'
-          );
-
-
-          const navButtons =
-            document.querySelectorAll(
-              '.nav-item'
-            );
-
-
-          switchScreen(
-            'Records',
-            navButtons[1]
-          );
-
-        }
-
-
-        catch (error) {
-
-
-          console.error(
-            error
-          );
-
-
-          alert(
-            'فائل پڑھنے میں خرابی پیش آئی!'
-          );
-
-        }
-
-      };
-
-
-
-    reader.readAsText(
-      file
-    );
-
-
-    event.target.value = '';
-
-  }
-
-
-
-  /* =====================================================
-     UPDATE SUMMARY
-  ===================================================== */
-
-  function updateSummary() {
-
-
-    let sumCollected = 0;
-
-    let sumProfit = 0;
-
-
-
-    records.forEach(
-      function(record) {
-
-
-        sumCollected +=
-          Number(
-            record.amount
-          ) || 0;
-
-
-        sumProfit +=
-          Number(
-            record.profit
-          ) || 0;
-
-      }
-    );
-
-
-
-    document
-      .getElementById(
-        'totalCollected'
-      )
-      .innerText =
-      'Rs. ' +
-      sumCollected;
-
-
-
-    document
-      .getElementById(
-        'totalProfit'
-      )
-      .innerText =
-      'Rs. ' +
-      sumProfit;
-
-  }
-
-
-
-  /* =====================================================
-     RENDER RECORDS
-  ===================================================== */
-
-  function renderRecords() {
-
-
-    const listContainer =
-      document.getElementById(
-        'recordsList'
-      );
-
-
-    if (!listContainer) {
-
-      return;
-
-    }
-
-
-
-    const searchBox =
-      document.getElementById(
-        'searchBox'
-      );
-
-
-    const searchQuery =
-      searchBox
-        ? searchBox.value
-            .trim()
-            .toLowerCase()
-        : '';
-
-
-
-    listContainer.innerHTML =
-      '';
-
-
-
-    /* IMPORTANT:
-       درست Syntax
-    */
-
-    const filteredRecords =
-      records.filter(
-        function(record) {
-
-
-          const name =
-            String(
-              record.name || ''
-            )
-            .toLowerCase();
-
-
-          const work =
-            String(
-              record.work || ''
-            )
-            .toLowerCase();
-
-
-          const phone1 =
-            String(
-              record.phone1 || ''
-            )
-            .toLowerCase();
-
-
-          const phone2 =
-            String(
-              record.phone2 || ''
-            )
-            .toLowerCase();
-
-
-          const phone3 =
-            String(
-              record.phone3 || ''
-            )
-            .toLowerCase();
-
-
-
-          return (
-
-            name.includes(
-              searchQuery
-            )
-
-            ||
-
-            work.includes(
-              searchQuery
-            )
-
-            ||
-
-            phone1.includes(
-              searchQuery
-            )
-
-            ||
-
-            phone2.includes(
-              searchQuery
-            )
-
-            ||
-
-            phone3.includes(
-              searchQuery
-            )
-
-          );
-
-        }
-      );
-
-
-
-    /* EMPTY */
-
-    if (
-      filteredRecords.length === 0
-    ) {
-
-
-      listContainer.innerHTML =
-        '<div class="empty-msg">' +
-        '📭 کوئی ریکارڈ موجود نہیں ہے' +
-        '</div>';
-
-
-      updateSummary();
-
-
-      return;
-
-    }
-
-
-
-    /* RECORDS */
-
-    filteredRecords.forEach(
-      function(record) {
-
-
-        const isDone =
-          record.status ===
-          'مکمل ہو گیا';
-
-
-        const badgeClass =
-          isDone
-            ? 'status-done'
-            : 'status-pending';
-
-
-
-        let phonesText =
-          record.phone1 || '';
-
-
-
-        if (
-          record.phone2
-        ) {
-
-          phonesText +=
-            ' , ' +
-            record.phone2;
-
-        }
-
-
-        if (
-          record.phone3
-        ) {
-
-          phonesText +=
-            ' , ' +
-            record.phone3;
-
-        }
-
-
-
-        /* MAIN CARD */
-
-        const item =
-          document.createElement(
-            'div'
-          );
-
-
-        item.className =
-          'customer-item';
-
-
-
-        /* ACTION BUTTONS */
-
-        const actionBtns =
-          document.createElement(
-            'div'
-          );
-
-
-        actionBtns.className =
-          'action-btns';
-
-
-
-        const editBtn =
-          document.createElement(
-            'button'
-          );
-
-
-        editBtn.className =
-          'action-icon-btn edit-btn';
-
-
-        editBtn.innerText =
-          '✏️';
-
-
-        editBtn.title =
-          'ایڈٹ کریں';
-
-
-        editBtn.onclick =
-          function() {
-
-            editRecord(
-              record.id
-            );
-
-          };
-
-
-
-        const deleteBtn =
-          document.createElement(
-            'button'
-          );
-
-
-        deleteBtn.className =
-          'action-icon-btn delete-btn';
-
-
-        deleteBtn.innerText =
-          '×';
-
-
-        deleteBtn.title =
-          'ڈلیٹ کریں';
-
-
-        deleteBtn.onclick =
-          function() {
-
-            deleteRecord(
-              record.id
-            );
-
-          };
-
-
-
-        actionBtns.appendChild(
-          editBtn
-        );
-
-
-        actionBtns.appendChild(
-          deleteBtn
-        );
-
-
-
-        /* HEADER */
-
-        const header =
-          document.createElement(
-            'div'
-          );
-
-
-        header.className =
-          'customer-header';
-
-
-
-        const nameSpan =
-          document.createElement(
-            'span'
-          );
-
-
-        nameSpan.textContent =
-          '👤 ' +
-          (record.name || '') +
-          (
-            phonesText
-              ? ' (' +
-                phonesText +
-                ')'
-              : ''
-          );
-
-
-
-        const statusSpan =
-          document.createElement(
-            'span'
-          );
-
-
-        statusSpan.className =
-          'status-badge ' +
-          badgeClass;
-
-
-        statusSpan.textContent =
-          record.status ||
-          'مکمل ہو گیا';
-
-
-
-        header.appendChild(
-          nameSpan
-        );
-
-
-        header.appendChild(
-          statusSpan
-        );
-
-
-
-        /* WORK */
-
-        const details =
-          document.createElement(
-            'div'
-          );
-
-
-        details.className =
-          'customer-details';
-
-
-        details.innerHTML =
-          '🛠️ کام: ';
-
-
-
-        const workBold =
-          document.createElement(
-            'b'
-          );
-
-
-        workBold.textContent =
-          record.work ||
-          'مقرر نہیں';
-
-
-
-        details.appendChild(
-          workBold
-        );
-
-
-
-        /* FOOTER */
-
-        const footer =
-          document.createElement(
-            'div'
-          );
-
-
-        footer.className =
-          'customer-footer';
-
-
-
-        const amountSpan =
-          document.createElement(
-            'span'
-          );
-
-
-        amountSpan.innerHTML =
-          'وصولی: Rs. ' +
-          (Number(
-            record.amount
-          ) || 0) +
-          ' | فیس: ';
-
-
-
-        const feeSpan =
-          document.createElement(
-            'span'
-          );
-
-
-        feeSpan.className =
-          'fee-text';
-
-
-        feeSpan.textContent =
-          'Rs. ' +
-          (Number(
-            record.fee
-          ) || 0);
-
-
-
-        amountSpan.appendChild(
-          feeSpan
-        );
-
-
-
-        const profitSpan =
-          document.createElement(
-            'span'
-          );
-
-
-        profitSpan.innerHTML =
-          'منافع: ';
-
-
-
-        const profitValue =
-          document.createElement(
-            'span'
-          );
-
-
-        profitValue.className =
-          'profit-text';
-
-
-        profitValue.textContent =
-          'Rs. ' +
-          (Number(
-            record.profit
-          ) || 0);
-
-
-
-        profitSpan.appendChild(
-          profitValue
-        );
-
-
-
-        /* DATE */
-
-        const dateLine =
-          document.createElement(
-            'div'
-          );
-
-
-        dateLine.style.cssText =
-          'font-size:9px;color:#94a3b8;margin-top:5px;';
-
-
-        dateLine.textContent =
-          record.date
-            ? '📅 ' +
-              record.date
-            : '';
-
-
-
-        /* APPEND */
-
-        item.appendChild(
-          actionBtns
-        );
-
-
-        item.appendChild(
-          header
-        );
-
-
-        item.appendChild(
-          details
-        );
-
-
-        item.appendChild(
-          footer
-        );
-
-
-        item.appendChild(
-          dateLine
-        );
-
-
-        listContainer.appendChild(
-          item
-        );
-
-      }
-    );
-
-
-
-    updateSummary();
-
-  }
-
-
-
-  /* =====================================================
-     APP START
-  ===================================================== */
-
-  renderRecords();
-
-  updateSummary();
-
+);
 
 </script>
 
