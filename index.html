@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="manifest" href="./manifest.json">
   <title>AZ Flow - Smart App</title>
+
   <style>
     :root {
       --primary: #0284c7;
@@ -17,493 +18,1481 @@
       --pending: #d97706;
     }
 
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: var(--bg-gradient);
       min-height: 100vh;
       margin: 0;
-      padding: 10px 10px 70px 10px;
+      padding: 10px 10px 70px;
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      box-sizing: border-box;
     }
 
     .container {
-      width: 100%; max-width: 480px; background: var(--card-bg);
-      padding: 15px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-      box-sizing: border-box; margin-top: 10px;
+      width: 100%;
+      max-width: 480px;
+      background: var(--card-bg);
+      padding: 15px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      margin-top: 10px;
     }
 
-    /* ایپ ہیڈر */
     .app-header {
-      background: #0f172a; color: white; padding: 12px; border-radius: 14px;
-      display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;
+      background: #0f172a;
+      color: white;
+      padding: 12px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
     }
-    .app-title-area h1 { margin: 0; font-size: 18px; color: #38bdf8; }
-    .app-title-area p { margin: 2px 0 0 0; font-size: 10px; color: #94a3b8; }
+
+    .app-title-area h1 {
+      margin: 0;
+      font-size: 18px;
+      color: #38bdf8;
+    }
+
+    .app-title-area p {
+      margin: 2px 0 0;
+      font-size: 10px;
+      color: #94a3b8;
+    }
+
     .app-logo-badge {
-      width: 38px; height: 38px; background: #1e293b; border: 2px solid #38bdf8;
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-weight: bold; color: #38bdf8; font-size: 14px;
+      width: 38px;
+      height: 38px;
+      background: #1e293b;
+      border: 2px solid #38bdf8;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #38bdf8;
+      font-size: 14px;
     }
 
-    /* اسکرینز کنٹرول */
-    .app-screen { display: none; }
-    .app-screen.active { display: block; }
+    .app-screen {
+      display: none;
+    }
 
-    /* سمری کارڈز */
-    .summary-box { display: flex; gap: 8px; margin-bottom: 15px; }
+    .app-screen.active {
+      display: block;
+    }
+
+    .summary-box {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
     .stat-card {
-      flex: 1; background: #f8fafc; border: 1px solid #e2e8f0;
-      padding: 10px; border-radius: 12px; text-align: center;
+      flex: 1;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 10px;
+      border-radius: 12px;
+      text-align: center;
     }
-    .stat-card h3 { margin: 0; font-size: 11px; color: var(--text-muted); }
-    .stat-card .amount { font-size: 15px; font-weight: 800; margin-top: 3px; }
-    .stat-card.profit .amount { color: var(--profit); }
-    .stat-card.total .amount { color: var(--primary); }
 
-    .form-group { margin-bottom: 8px; }
-    .form-group label { font-size: 11px; font-weight: 600; color: var(--text-main); display: block; margin-bottom: 2px; }
-    .form-control {
-      width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1;
-      border-radius: 8px; font-size: 12px; box-sizing: border-box; background: #fff;
+    .stat-card h3 {
+      margin: 0;
+      font-size: 11px;
+      color: var(--text-muted);
     }
-    .row { display: flex; gap: 6px; }
-    .row .form-group { flex: 1; }
+
+    .stat-card .amount {
+      font-size: 15px;
+      font-weight: 800;
+      margin-top: 3px;
+    }
+
+    .stat-card.profit .amount {
+      color: var(--profit);
+    }
+
+    .stat-card.total .amount {
+      color: var(--primary);
+    }
+
+    .form-group {
+      margin-bottom: 8px;
+    }
+
+    .form-group label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-main);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 12px;
+      background: #fff;
+      outline: none;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.12);
+    }
+
+    .row {
+      display: flex;
+      gap: 6px;
+    }
+
+    .row .form-group {
+      flex: 1;
+    }
 
     .btn {
-      width: 100%; padding: 11px; border: none; border-radius: 10px;
-      font-weight: 700; font-size: 13px; cursor: pointer; color: white;
-      background: var(--primary); box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
-      margin-top: 5px; transition: background 0.3s; text-align: center; display: block; text-decoration: none; box-sizing: border-box;
+      width: 100%;
+      padding: 11px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      color: white;
+      background: var(--primary);
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+      margin-top: 5px;
+      transition: background 0.3s;
+      text-align: center;
+      display: block;
+      text-decoration: none;
     }
-    .btn:hover { background: #0369a1; }
-    .btn-danger { background: var(--expense); }
-    .btn-success { background: var(--profit); }
 
-    /* کسٹمر کارڈ */
+    .btn:hover {
+      background: #0369a1;
+    }
+
+    .btn-danger {
+      background: var(--expense);
+    }
+
+    .btn-success {
+      background: var(--profit);
+    }
+
     .customer-item {
-      background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px;
-      padding: 10px; margin-bottom: 8px; font-size: 11px; position: relative;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 8px;
+      font-size: 11px;
+      position: relative;
     }
-    .customer-header { display: flex; justify-content: space-between; font-weight: 700; color: var(--text-main); margin-bottom: 3px; padding-left: 45px; }
-    .customer-details { color: var(--text-muted); margin-bottom: 4px; }
-    .customer-footer { display: flex; justify-content: space-between; font-weight: 700; border-top: 1px dashed #cbd5e1; padding-top: 4px; margin-top: 4px; }
-    
-    .profit-text { color: var(--profit); }
-    .fee-text { color: var(--expense); }
-    .status-badge { padding: 2px 6px; border-radius: 6px; font-size: 9px; font-weight: 700; }
-    .status-done { background: #d1fae5; color: var(--profit); }
-    .status-pending { background: #fef3c7; color: var(--pending); }
 
-    .action-btns { position: absolute; top: 8px; left: 10px; display: flex; gap: 6px; }
-    .action-icon-btn { background: none; border: none; cursor: pointer; font-size: 12px; padding: 0; }
-    .edit-btn { color: var(--primary); }
-    .delete-btn { color: var(--expense); }
+    .customer-header {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 3px;
+      padding-left: 45px;
+      gap: 5px;
+    }
+
+    .customer-details {
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .customer-footer {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      border-top: 1px dashed #cbd5e1;
+      padding-top: 4px;
+      margin-top: 4px;
+      gap: 5px;
+    }
+
+    .profit-text {
+      color: var(--profit);
+    }
+
+    .fee-text {
+      color: var(--expense);
+    }
+
+    .status-badge {
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 9px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .status-done {
+      background: #d1fae5;
+      color: var(--profit);
+    }
+
+    .status-pending {
+      background: #fef3c7;
+      color: var(--pending);
+    }
+
+    .action-btns {
+      position: absolute;
+      top: 8px;
+      left: 10px;
+      display: flex;
+      gap: 6px;
+    }
+
+    .action-icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      padding: 0;
+    }
+
+    .edit-btn {
+      color: var(--primary);
+    }
+
+    .delete-btn {
+      color: var(--expense);
+    }
 
     .settings-box {
-      background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 10px; font-size: 12px; margin-bottom: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      margin-bottom: 10px;
     }
-    .settings-box h4 { margin: 0 0 4px 0; color: var(--text-main); font-size: 13px; }
-    .settings-box p { margin: 0 0 8px 0; color: var(--text-muted); font-size: 11px; }
 
-    /* بالکل منفرد اور واضح ماسٹر کی باکس */
+    .settings-box h4 {
+      margin: 0 0 4px;
+      color: var(--text-main);
+      font-size: 13px;
+    }
+
+    .settings-box p {
+      margin: 0 0 8px;
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
     .master-key-box {
-      background: #eff6ff; 
-      border: 2px dashed #0284c7; 
-      padding: 14px; 
-      border-radius: 12px; 
-      font-size: 12px; 
+      background: #eff6ff;
+      border: 2px dashed #0284c7;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 12px;
       margin-bottom: 12px;
       box-shadow: 0 4px 15px rgba(2, 132, 199, 0.15);
     }
-    .master-key-box h4 { color: #0369a1; margin: 0 0 6px 0; font-size: 14px; font-weight: 800; }
-    .master-key-box p { color: #334155; margin: 0 0 10px 0; font-size: 11px; line-height: 1.4; }
 
-    /* باٹم نیویگیشن بار */
+    .master-key-box h4 {
+      color: #0369a1;
+      margin: 0 0 6px;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .master-key-box p {
+      color: #334155;
+      margin: 0 0 10px;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
     .bottom-nav {
-      position: fixed; bottom: 0; left: 0; width: 100%;
-      background: #0f172a; display: flex; justify-content: space-around;
-      padding: 8px 0; border-top: 1px solid rgba(255,255,255,0.1);
-      z-index: 1000; box-sizing: border-box;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #0f172a;
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      z-index: 1000;
     }
-    .nav-item {
-      background: none; border: none; color: #94a3b8; font-size: 11px;
-      font-weight: 600; cursor: pointer; display: flex; flex-direction: column;
-      align-items: center; gap: 2px; transition: color 0.3s;
-    }
-    .nav-item span { font-size: 18px; }
-    .nav-item.active { color: #38bdf8; }
 
-    .empty-msg { text-align: center; color: var(--text-muted); font-size: 11px; padding: 20px; }
+    .nav-item {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .nav-item span {
+      font-size: 18px;
+    }
+
+    .nav-item.active {
+      color: #38bdf8;
+    }
+
+    .empty-msg {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 11px;
+      padding: 20px;
+    }
+
+    @media (max-width: 400px) {
+      .row {
+        gap: 4px;
+      }
+
+      .form-control {
+        font-size: 11px;
+        padding: 8px 6px;
+      }
+
+      .customer-footer {
+        flex-direction: column;
+      }
+    }
   </style>
 </head>
+
 <body>
 
-  <div class="container">
-    
-    <!-- ایپ کا پروفیشنل ہیڈر -->
-    <div class="app-header">
-      <div class="app-title-area">
-        <h1>AZ Flow ⚡</h1>
-        <p>اسمارٹ کھاتہ اور کسٹمر مینیجر (Admin: Ansar AZ)</p>
-      </div>
-      <div class="app-logo-badge">AZ</div>
+<div class="container">
+
+  <!-- Header -->
+  <div class="app-header">
+    <div class="app-title-area">
+      <h1>AZ Flow ⚡</h1>
+      <p>اسمارٹ کھاتہ اور کسٹمر مینیجر (Admin: Ansar AZ)</p>
     </div>
 
-    <!-- بیلنس اور پرافٹ سمری -->
-    <div class="summary-box">
-      <div class="stat-card total">
-        <h3>کل وصولی (Total)</h3>
-        <div class="amount" id="totalCollected">Rs. 0</div>
-      </div>
-      <div class="stat-card profit">
-        <h3>کل منافع (Profit)</h3>
-        <div class="amount" id="totalProfit">Rs. 0</div>
-      </div>
+    <div class="app-logo-badge">AZ</div>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary-box">
+
+    <div class="stat-card total">
+      <h3>کل وصولی (Total)</h3>
+      <div class="amount" id="totalCollected">Rs. 0</div>
     </div>
 
-    <!-- ================= اسکرین 1: نیا گاہک درج کریں (Home) ================= -->
-    <div id="screenHome" class="app-screen active">
-      <div style="font-size: 13px; font-weight: 800; color: #0284c7; margin-bottom: 8px;">➕ نیا گاہک درج کریں</div>
-
-      <div class="form-group">
-        <label>گاہک کا نام:</label>
-        <input type="text" id="custName" class="form-control" placeholder="نام لکھیں">
-      </div>
-
-      <div class="row">
-        <div class="form-group">
-          <label>موبائل 1:</label>
-          <input type="text" id="custPhone1" class="form-control" placeholder="پہلا نمبر">
-        </div>
-        <div class="form-group">
-          <label>موبائل 2 (آپشنل):</label>
-          <input type="text" id="custPhone2" class="form-control" placeholder="دوسرا نمبر">
-        </div>
-        <div class="form-group">
-          <label>موبائل 3 (آپشنل):</label>
-          <input type="text" id="custPhone3" class="form-control" placeholder="تیسرا نمبر">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>کام کی تفصیل:</label>
-        <input type="text" id="custWork" class="form-control" placeholder="مثلاً: آن لائن فارم / فوٹو شوٹ / ڈیزائننگ">
-      </div>
-
-      <div class="row">
-        <div class="form-group">
-          <label>وصولی رقم:</label>
-          <input type="number" id="custAmount" class="form-control" placeholder="0">
-        </div>
-        <div class="form-group">
-          <label>فیس / لاگت:</label>
-          <input type="number" id="custFee" class="form-control" placeholder="0">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>کام کی حالت (Status):</label>
-        <select id="custStatus" class="form-control">
-          <option value="مکمل ہو گیا">✅ کام مکمل ہو گیا</option>
-          <option value="جاری ہے">⏳ کام جاری ہے (باقی ہے)</option>
-        </select>
-      </div>
-
-      <button class="btn" id="saveUpdateBtn" onclick="saveCustomerRecord()">ریکارڈ محفوظ کریں (Save)</button>
-    </div>
-
-
-    <!-- ================= اسکرین 2: تمام گاہکوں کا ریکارڈ (Records) ================= -->
-    <div id="screenRecords" class="app-screen">
-      <div style="font-size: 13px; font-weight: 800; color: #0284c7; margin-bottom: 8px;">👥 تمام گاہکوں کا ریکارڈ</div>
-
-      <div class="form-group" style="margin-bottom: 10px;">
-        <input type="text" id="searchBox" class="form-control" placeholder="🔍 نام یا کام سے تلاش کریں..." oninput="renderRecords()">
-      </div>
-
-      <div style="max-height: 320px; overflow-y: auto;" id="recordsList">
-        <!-- ریکارڈز یہاں شو ہوں گے -->
-      </div>
-    </div>
-
-
-    <!-- ================= اسکرین 3: ایپ سیٹنگز (Settings) ================= -->
-    <div id="screenSettings" class="app-screen">
-      <div style="font-size: 13px; font-weight: 800; color: #0284c7; margin-bottom: 8px;">⚙️ ایپ کی سیٹنگز</div>
-
-      <!-- بالکل منفرد اور نمایاں ماسٹر کی اور بیک اپ سیکشن -->
-      <div class="master-key-box">
-        <h4>🔐 ماسٹر پرمیننٹ کی اور بیک اپ (Master Key)</h4>
-        <p>یوزر کا تمام ڈیٹا اس ماسٹر کی کے ذریعے ہمیشہ محفوظ رہتا ہے۔ آپ یہاں سے اپنا ڈیٹا فائل میں محفوظ (Export) یا واپس لا سکتے ہیں (Import)۔</p>
-        
-        <a id="downloadBackupBtn" class="btn btn-success" onclick="exportData()" style="margin-bottom: 8px;">📤 ڈیٹا بیک اپ ڈاؤن لوڈ کریں (Export)</a>
-        
-        <label class="btn" style="background: #475569; margin-bottom: 0; cursor: pointer; display: block; text-align: center;">
-          📥 بیک اپ فائل سے ریسٹور کریں (Import)
-          <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
-        </label>
-      </div>
-
-      <div class="settings-box">
-        <h4>📱 ایپ کی معلومات</h4>
-        <p><b>AZ Flow</b> ورژن 14.0 - ایڈمن: عنصر ایے زی (Ansar AZ)</p>
-      </div>
-
-      <div class="settings-box">
-        <h4>⚠️ ڈیٹا کنٹرول</h4>
-        <button class="btn btn-danger" onclick="clearAllData()" style="padding: 9px; font-size: 11px;">تمام ڈیٹا ڈیلیٹ کریں (Reset Data)</button>
-      </div>
+    <div class="stat-card profit">
+      <h3>کل منافع (Profit)</h3>
+      <div class="amount" id="totalProfit">Rs. 0</div>
     </div>
 
   </div>
 
 
-  <!-- نچلا نیویگیشن بار -->
-  <div class="bottom-nav">
-    <button class="nav-item active" onclick="switchScreen('Home', this)">
-      <span>🏠</span>ہوم
+  <!-- HOME -->
+  <div id="screenHome" class="app-screen active">
+
+    <div style="font-size:13px;font-weight:800;color:#0284c7;margin-bottom:8px;">
+      ➕ نیا گاہک درج کریں
+    </div>
+
+    <div class="form-group">
+      <label>گاہک کا نام:</label>
+      <input type="text" id="custName" class="form-control" placeholder="نام لکھیں">
+    </div>
+
+    <div class="row">
+
+      <div class="form-group">
+        <label>موبائل 1:</label>
+        <input type="tel" id="custPhone1" class="form-control" placeholder="پہلا نمبر">
+      </div>
+
+      <div class="form-group">
+        <label>موبائل 2 (آپشنل):</label>
+        <input type="tel" id="custPhone2" class="form-control" placeholder="دوسرا نمبر">
+      </div>
+
+      <div class="form-group">
+        <label>موبائل 3 (آپشنل):</label>
+        <input type="tel" id="custPhone3" class="form-control" placeholder="تیسرا نمبر">
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label>کام کی تفصیل:</label>
+      <input type="text" id="custWork" class="form-control"
+             placeholder="مثلاً: آن لائن فارم / فوٹو شوٹ / ڈیزائننگ">
+    </div>
+
+    <div class="row">
+
+      <div class="form-group">
+        <label>وصولی رقم:</label>
+        <input type="number" id="custAmount" class="form-control" placeholder="0">
+      </div>
+
+      <div class="form-group">
+        <label>فیس / لاگت:</label>
+        <input type="number" id="custFee" class="form-control" placeholder="0">
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label>کام کی حالت (Status):</label>
+
+      <select id="custStatus" class="form-control">
+        <option value="مکمل ہو گیا">✅ کام مکمل ہو گیا</option>
+        <option value="جاری ہے">⏳ کام جاری ہے (باقی ہے)</option>
+      </select>
+    </div>
+
+    <button class="btn" id="saveUpdateBtn" onclick="saveCustomerRecord()">
+      ریکارڈ محفوظ کریں (Save)
     </button>
-    <button class="nav-item" onclick="switchScreen('Records', this)">
-      <span>👥</span>تمام ریکارڈ
-    </button>
-    <button class="nav-item" onclick="switchScreen('Settings', this)">
-      <span>⚙️</span>سیٹنگز
-    </button>
+
   </div>
 
 
-  <script>
-    // پرمیننٹ ماسٹر کی تاکہ کوڈ اپ ڈیٹ کرنے پر بھی یوزر کا ڈیٹا ضائع نہ ہو
-    const STORAGE_KEY = 'az_flow_permanent_master_records';
-    let records = [];
-    try {
-      records = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    } catch (e) {
-      records = [];
-    }
-    let editingId = null;
+  <!-- RECORDS -->
+  <div id="screenRecords" class="app-screen">
 
-    function switchScreen(screenName, btnElement) {
-      document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    <div style="font-size:13px;font-weight:800;color:#0284c7;margin-bottom:8px;">
+      👥 تمام گاہکوں کا ریکارڈ
+    </div>
 
-      if (screenName === 'Home') {
-        document.getElementById('screenHome').classList.add('active');
-      } else if (screenName === 'Records') {
-        document.getElementById('screenRecords').classList.add('active');
-        renderRecords();
-      } else if (screenName === 'Settings') {
-        document.getElementById('screenSettings').classList.add('active');
+    <div class="form-group" style="margin-bottom:10px;">
+      <input
+        type="text"
+        id="searchBox"
+        class="form-control"
+        placeholder="🔍 نام یا کام سے تلاش کریں..."
+        oninput="renderRecords()"
+      >
+    </div>
+
+    <div style="max-height:320px;overflow-y:auto;" id="recordsList"></div>
+
+  </div>
+
+
+  <!-- SETTINGS -->
+  <div id="screenSettings" class="app-screen">
+
+    <div style="font-size:13px;font-weight:800;color:#0284c7;margin-bottom:8px;">
+      ⚙️ ایپ کی سیٹنگز
+    </div>
+
+    <div class="master-key-box">
+
+      <h4>🔐 ماسٹر پرمیننٹ کی اور بیک اپ</h4>
+
+      <p>
+        یوزر کا تمام ڈیٹا اس ماسٹر کی کے ذریعے محفوظ رہتا ہے۔
+        آپ یہاں سے اپنا ڈیٹا فائل میں محفوظ یا واپس لا سکتے ہیں۔
+      </p>
+
+      <button class="btn btn-success"
+              onclick="exportData()"
+              style="margin-bottom:8px;">
+        📤 ڈیٹا بیک اپ ڈاؤن لوڈ کریں
+      </button>
+
+      <label class="btn"
+             style="background:#475569;margin-bottom:0;cursor:pointer;">
+        📥 بیک اپ فائل سے ریسٹور کریں
+
+        <input
+          type="file"
+          id="importFile"
+          accept=".json"
+          style="display:none;"
+          onchange="importData(event)"
+        >
+      </label>
+
+    </div>
+
+    <div class="settings-box">
+
+      <h4>📱 ایپ کی معلومات</h4>
+
+      <p>
+        <b>AZ Flow</b> ورژن 14.0 -
+        ایڈمن: Ansar AZ
+      </p>
+
+    </div>
+
+    <div class="settings-box">
+
+      <h4>⚠️ ڈیٹا کنٹرول</h4>
+
+      <button
+        class="btn btn-danger"
+        onclick="clearAllData()"
+        style="padding:9px;font-size:11px;">
+        تمام ڈیٹا ڈیلیٹ کریں
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+
+  <button class="nav-item active"
+          onclick="switchScreen('Home', this)">
+    <span>🏠</span>
+    ہوم
+  </button>
+
+  <button class="nav-item"
+          onclick="switchScreen('Records', this)">
+    <span>👥</span>
+    تمام ریکارڈ
+  </button>
+
+  <button class="nav-item"
+          onclick="switchScreen('Settings', this)">
+    <span>⚙️</span>
+    سیٹنگز
+  </button>
+
+</div>
+
+
+<script>
+
+  /* ===============================
+     DATABASE
+  =============================== */
+
+  const STORAGE_KEY = 'az_flow_permanent_master_records';
+
+  let records = [];
+  let editingId = null;
+
+  try {
+
+    const savedData = localStorage.getItem(STORAGE_KEY);
+
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+
+      if (Array.isArray(parsedData)) {
+        records = parsedData;
       }
-      btnElement.classList.add('active');
-      window.scrollTo(0, 0);
     }
 
-    function saveAndRender() {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
-      } catch (e) {}
+  } catch (error) {
+
+    console.error('Data loading error:', error);
+    records = [];
+
+  }
+
+
+  /* ===============================
+     SCREEN SWITCH
+  =============================== */
+
+  function switchScreen(screenName, btnElement) {
+
+    document
+      .querySelectorAll('.app-screen')
+      .forEach(screen => screen.classList.remove('active'));
+
+    document
+      .querySelectorAll('.nav-item')
+      .forEach(button => button.classList.remove('active'));
+
+    const screen = document.getElementById(
+      'screen' + screenName
+    );
+
+    if (screen) {
+      screen.classList.add('active');
+    }
+
+    if (screenName === 'Records') {
       renderRecords();
-      updateSummary();
     }
 
-    function saveCustomerRecord() {
-      const name = document.getElementById('custName').value.trim();
-      const phone1 = document.getElementById('custPhone1').value.trim();
-      const phone2 = document.getElementById('custPhone2').value.trim();
-      const phone3 = document.getElementById('custPhone3').value.trim();
-      const work = document.getElementById('custWork').value.trim();
-      const amount = parseFloat(document.getElementById('custAmount').value) || 0;
-      const fee = parseFloat(document.getElementById('custFee').value) || 0;
-      const status = document.getElementById('custStatus').value;
-
-      if (!name || amount <= 0) {
-        alert('براہ کرم گاہک کا نام اور درست رقم درج کریں!');
-        return;
-      }
-
-      const profit = amount - fee;
-
-      if (editingId !== null) {
-        records = records.map(r => {
-          if (r.id === editingId) {
-            return { ...r, name, phone1, phone2, phone3, work, amount, fee, profit, status };
-          }
-          return r;
-        });
-        editingId = null;
-        document.getElementById('saveUpdateBtn').innerText = 'ریکارڈ محفوظ کریں (Save)';
-      } else {
-        const newRecord = {
-          id: Date.now(),
-          name,
-          phone1,
-          phone2,
-          phone3,
-          work,
-          amount,
-          fee,
-          profit,
-          status,
-          date: new Date().toLocaleDateString('ur-PK')
-        };
-        records.unshift(newRecord);
-      }
-
-      clearForm();
-      saveAndRender();
-      alert('ریکارڈ کامیابی سے محفوظ ہو گیا!');
-      switchScreen('Records', document.querySelectorAll('.nav-item')[1]);
+    if (btnElement) {
+      btnElement.classList.add('active');
     }
 
-    function clearForm() {
-      document.getElementById('custName').value = '';
-      document.getElementById('custPhone1').value = '';
-      document.getElementById('custPhone2').value = '';
-      document.getElementById('custPhone3').value = '';
-      document.getElementById('custWork').value = '';
-      document.getElementById('custAmount').value = '';
-      document.getElementById('custFee').value = '';
-      document.getElementById('custStatus').value = 'مکمل ہو گیا';
-      editingId = null;
-      document.getElementById('saveUpdateBtn').innerText = 'ریکارڈ محفوظ کریں (Save)';
-    }
+    window.scrollTo(0, 0);
+  }
 
-    function editRecord(id) {
-      const rec = records.find(r => r.id === id);
-      if (!rec) return;
 
-      document.getElementById('custName').value = rec.name;
-      document.getElementById('custPhone1').value = rec.phone1 || '';
-      document.getElementById('custPhone2').value = rec.phone2 || '';
-      document.getElementById('custPhone3').value = rec.phone3 || '';
-      document.getElementById('custWork').value = rec.work || '';
-      document.getElementById('custAmount').value = rec.amount;
-      document.getElementById('custFee').value = rec.fee;
-      document.getElementById('custStatus').value = rec.status || 'مکمل ہو گیا';
+  /* ===============================
+     SAVE DATA
+  =============================== */
 
-      editingId = id;
-      document.getElementById('saveUpdateBtn').innerText = 'تبدیلی محفوظ کریں (Update)';
-      switchScreen('Home', document.querySelectorAll('.nav-item')[0]);
-    }
+  function saveAndRender() {
 
-    function deleteRecord(id) {
-      if (confirm('کیا آپ واقعی یہ ریکارڈ ڈیلیٹ کرنا چاہتے ہیں؟')) {
-        records = records.filter(r => r.id !== id);
-        if (editingId === id) clearForm();
-        saveAndRender();
-      }
-    }
+    try {
 
-    function clearAllData() {
-      if (confirm('خطرہ! کیا آپ تمام کسٹمرز کا ریکارڈ ہمیشہ کے لیے ختم کرنا چاہتے ہیں؟')) {
-        records = [];
-        saveAndRender();
-        alert('تمام ڈیٹا صاف کر دیا گیا ہے۔');
-      }
-    }
-
-    function exportData() {
-      if (records.length === 0) {
-        alert('ڈاؤن لوڈ کرنے کے لیے کوئی ریکارڈ موجود نہیں ہے!');
-        return;
-      }
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(records));
-      const downloadAnchor = document.createElement('a');
-      downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", `AZ_Flow_Backup_${new Date().toISOString().slice(0,10)}.json`);
-      document.body.appendChild(downloadAnchor);
-      downloadAnchor.click();
-      downloadAnchor.remove();
-    }
-
-    function importData(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        try {
-          const importedRecords = JSON.parse(e.target.result);
-          if (Array.isArray(importedRecords)) {
-            records = importedRecords;
-            saveAndRender();
-            alert('ڈیٹا کامیابی سے ریسٹور (Restore) ہو گیا ہے!');
-            switchScreen('Records', document.querySelectorAll('.nav-item')[1]);
-          } else {
-            alert('فائل کا فارمیٹ درست نہیں ہے!');
-          }
-        } catch (err) {
-          alert('فائل پڑھنے میں خرابی پیش آئی!');
-        }
-      };
-      reader.readAsText(file);
-    }
-
-    function updateSummary() {
-      let sumCollected = 0;
-      let sumProfit = 0;
-      records.forEach(r => {
-        sumCollected += r.amount;
-        sumProfit += r.profit;
-      });
-      document.getElementById('totalCollected').innerText = `Rs. ${sumCollected}`;
-      document.getElementById('totalProfit').innerText = `Rs. ${sumProfit}`;
-    }
-
-    function renderRecords() {
-      const listContainer = document.getElementById('recordsList');
-      const searchQuery = document.getElementById('searchBox') ? document.getElementById('searchBox'].value.toLowerCase() : '';
-      listContainer.innerHTML = '';
-
-      The filteredRecords = records.filter(r => 
-        r.name.toLowerCase().includes(searchQuery) || (r.work && r.work.toLowerCase().includes(searchQuery))
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(records)
       );
 
-      if (filteredRecords.length === 0) {
-        listContainer.innerHTML = '<div class="empty-msg">کوئی ریکارڈ موجود نہیں ہے</div>';
-        updateSummary();
-        return;
-      }
+    } catch (error) {
 
-      filteredRecords.forEach(r => {
-        const isDone = r.status === 'مکمل ہو گیا';
-        const badgeClass = isDone ? 'status-done' : 'status-pending';
+      alert('ڈیٹا محفوظ کرنے میں مسئلہ آیا ہے۔');
+      console.error(error);
 
-        let phonesText = r.phone1 ? r.phone1 : '';
-        if (r.phone2) phonesText += ` , ${r.phone2}`;
-        if (r.phone3) phonesText += ` , ${r.phone3}`;
-
-        const item = document.createElement('div');
-        item.className = 'customer-item';
-        item.innerHTML = `
-          <div class="action-btns">
-            <button class="action-icon-btn edit-btn" onclick="editRecord(${r.id})" title="ایڈٹ کریں">✏️</button>
-            <button class="action-icon-btn delete-btn" onclick="deleteRecord(${r.id})" title="ڈلیٹ کریں">×</button>
-          </div>
-          <div class="customer-header">
-            <span>👤 ${r.name} ${phonesText ? '(' + phonesText + ')' : ''}</span>
-            <span class="status-badge ${badgeClass}">${r.status || 'مکمل ہو گیا'}</span>
-          </div>
-          <div class="customer-details">
-            🛠️ کام: <b>${r.work || 'مقرر نہیں'}</b>
-          </div>
-          <div class="customer-footer">
-            <span>وصولی: Rs. ${r.amount} | فیس: <span class="fee-text">Rs. ${r.fee}</span></span>
-            <span>منافع: <span class="profit-text">Rs. ${r.profit}</span></span>
-          </div>
-        `;
-        listContainer.appendChild(item);
-      });
-
-      updateSummary();
     }
 
     renderRecords();
-  </script>
+    updateSummary();
+  }
+
+
+  /* ===============================
+     SAVE / UPDATE CUSTOMER
+  =============================== */
+
+  function saveCustomerRecord() {
+
+    const name =
+      document.getElementById('custName').value.trim();
+
+    const phone1 =
+      document.getElementById('custPhone1').value.trim();
+
+    const phone2 =
+      document.getElementById('custPhone2').value.trim();
+
+    const phone3 =
+      document.getElementById('custPhone3').value.trim();
+
+    const work =
+      document.getElementById('custWork').value.trim();
+
+    const amount =
+      parseFloat(
+        document.getElementById('custAmount').value
+      ) || 0;
+
+    const fee =
+      parseFloat(
+        document.getElementById('custFee').value
+      ) || 0;
+
+    const status =
+      document.getElementById('custStatus').value;
+
+
+    if (!name || amount <= 0) {
+
+      alert(
+        'براہ کرم گاہک کا نام اور درست رقم درج کریں!'
+      );
+
+      return;
+    }
+
+
+    const profit = amount - fee;
+
+
+    /* UPDATE */
+
+    if (editingId !== null) {
+
+      records = records.map(record => {
+
+        if (record.id === editingId) {
+
+          return {
+            ...record,
+            name,
+            phone1,
+            phone2,
+            phone3,
+            work,
+            amount,
+            fee,
+            profit,
+            status
+          };
+
+        }
+
+        return record;
+
+      });
+
+
+      editingId = null;
+
+
+      document.getElementById(
+        'saveUpdateBtn'
+      ).innerText =
+        'ریکارڈ محفوظ کریں (Save)';
+
+    }
+
+
+    /* NEW RECORD */
+
+    else {
+
+      const newRecord = {
+
+        id: Date.now(),
+
+        name,
+
+        phone1,
+
+        phone2,
+
+        phone3,
+
+        work,
+
+        amount,
+
+        fee,
+
+        profit,
+
+        status,
+
+        date:
+          new Date().toLocaleDateString('ur-PK')
+
+      };
+
+      records.unshift(newRecord);
+
+    }
+
+
+    clearForm();
+
+    saveAndRender();
+
+    alert('ریکارڈ کامیابی سے محفوظ ہو گیا!');
+
+    const navButtons =
+      document.querySelectorAll('.nav-item');
+
+    switchScreen('Records', navButtons[1]);
+
+  }
+
+
+  /* ===============================
+     CLEAR FORM
+  =============================== */
+
+  function clearForm() {
+
+    document.getElementById('custName').value = '';
+
+    document.getElementById('custPhone1').value = '';
+
+    document.getElementById('custPhone2').value = '';
+
+    document.getElementById('custPhone3').value = '';
+
+    document.getElementById('custWork').value = '';
+
+    document.getElementById('custAmount').value = '';
+
+    document.getElementById('custFee').value = '';
+
+    document.getElementById('custStatus').value =
+      'مکمل ہو گیا';
+
+    editingId = null;
+
+    document.getElementById(
+      'saveUpdateBtn'
+    ).innerText =
+      'ریکارڈ محفوظ کریں (Save)';
+
+  }
+
+
+  /* ===============================
+     EDIT RECORD
+  =============================== */
+
+  function editRecord(id) {
+
+    const record =
+      records.find(r => r.id === id);
+
+    if (!record) return;
+
+
+    document.getElementById('custName').value =
+      record.name || '';
+
+    document.getElementById('custPhone1').value =
+      record.phone1 || '';
+
+    document.getElementById('custPhone2').value =
+      record.phone2 || '';
+
+    document.getElementById('custPhone3').value =
+      record.phone3 || '';
+
+    document.getElementById('custWork').value =
+      record.work || '';
+
+    document.getElementById('custAmount').value =
+      record.amount || 0;
+
+    document.getElementById('custFee').value =
+      record.fee || 0;
+
+    document.getElementById('custStatus').value =
+      record.status || 'مکمل ہو گیا';
+
+
+    editingId = id;
+
+
+    document.getElementById(
+      'saveUpdateBtn'
+    ).innerText =
+      'تبدیلی محفوظ کریں (Update)';
+
+
+    const navButtons =
+      document.querySelectorAll('.nav-item');
+
+    switchScreen('Home', navButtons[0]);
+
+  }
+
+
+  /* ===============================
+     DELETE RECORD
+  =============================== */
+
+  function deleteRecord(id) {
+
+    if (
+      !confirm(
+        'کیا آپ واقعی یہ ریکارڈ ڈیلیٹ کرنا چاہتے ہیں؟'
+      )
+    ) {
+      return;
+    }
+
+
+    records =
+      records.filter(record => record.id !== id);
+
+
+    if (editingId === id) {
+      clearForm();
+    }
+
+
+    saveAndRender();
+
+  }
+
+
+  /* ===============================
+     DELETE ALL
+  =============================== */
+
+  function clearAllData() {
+
+    if (
+      !confirm(
+        'خطرہ! کیا آپ تمام کسٹمرز کا ریکارڈ ہمیشہ کے لیے ختم کرنا چاہتے ہیں؟'
+      )
+    ) {
+      return;
+    }
+
+
+    records = [];
+
+    saveAndRender();
+
+    alert('تمام ڈیٹا صاف کر دیا گیا ہے۔');
+
+  }
+
+
+  /* ===============================
+     EXPORT BACKUP
+  =============================== */
+
+  function exportData() {
+
+    if (records.length === 0) {
+
+      alert(
+        'ڈاؤن لوڈ کرنے کے لیے کوئی ریکارڈ موجود نہیں ہے!'
+      );
+
+      return;
+    }
+
+
+    const backupData = {
+
+      app: 'AZ Flow',
+
+      version: '14.0',
+
+      exportDate:
+        new Date().toISOString(),
+
+      records: records
+
+    };
+
+
+    const dataStr =
+      'data:application/json;charset=utf-8,' +
+      encodeURIComponent(
+        JSON.stringify(backupData, null, 2)
+      );
+
+
+    const downloadAnchor =
+      document.createElement('a');
+
+    downloadAnchor.href = dataStr;
+
+    downloadAnchor.download =
+      `AZ_Flow_Backup_${new Date()
+        .toISOString()
+        .slice(0, 10)}.json`;
+
+
+    document.body.appendChild(
+      downloadAnchor
+    );
+
+    downloadAnchor.click();
+
+    downloadAnchor.remove();
+
+  }
+
+
+  /* ===============================
+     IMPORT BACKUP
+  =============================== */
+
+  function importData(event) {
+
+    const file =
+      event.target.files[0];
+
+    if (!file) return;
+
+
+    const reader =
+      new FileReader();
+
+
+    reader.onload = function(e) {
+
+      try {
+
+        const importedData =
+          JSON.parse(e.target.result);
+
+
+        let importedRecords;
+
+
+        /*
+          نئے بیک اپ فارمیٹ
+        */
+
+        if (
+          importedData &&
+          Array.isArray(importedData.records)
+        ) {
+
+          importedRecords =
+            importedData.records;
+
+        }
+
+
+        /*
+          پرانا بیک اپ فارمیٹ
+        */
+
+        else if (
+          Array.isArray(importedData)
+        ) {
+
+          importedRecords =
+            importedData;
+
+        }
+
+
+        else {
+
+          alert(
+            'فائل کا فارمیٹ درست نہیں ہے!'
+          );
+
+          return;
+
+        }
+
+
+        if (
+          !confirm(
+            'کیا آپ موجودہ ڈیٹا کو بیک اپ والے ڈیٹا سے تبدیل کرنا چاہتے ہیں؟'
+          )
+        ) {
+          return;
+        }
+
+
+        records =
+          importedRecords;
+
+
+        saveAndRender();
+
+
+        alert(
+          'ڈیٹا کامیابی سے ریسٹور ہو گیا ہے!'
+        );
+
+
+        const navButtons =
+          document.querySelectorAll('.nav-item');
+
+        switchScreen(
+          'Records',
+          navButtons[1]
+        );
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        alert(
+          'فائل پڑھنے میں خرابی پیش آئی!'
+        );
+
+      }
+
+    };
+
+
+    reader.readAsText(file);
+
+    event.target.value = '';
+
+  }
+
+
+  /* ===============================
+     SUMMARY
+  =============================== */
+
+  function updateSummary() {
+
+    let sumCollected = 0;
+
+    let sumProfit = 0;
+
+
+    records.forEach(record => {
+
+      sumCollected +=
+        Number(record.amount) || 0;
+
+      sumProfit +=
+        Number(record.profit) || 0;
+
+    });
+
+
+    document.getElementById(
+      'totalCollected'
+    ).innerText =
+      `Rs. ${sumCollected}`;
+
+
+    document.getElementById(
+      'totalProfit'
+    ).innerText =
+      `Rs. ${sumProfit}`;
+
+  }
+
+
+  /* ===============================
+     RENDER RECORDS
+  =============================== */
+
+  function renderRecords() {
+
+    const listContainer =
+      document.getElementById(
+        'recordsList'
+      );
+
+    if (!listContainer) return;
+
+
+    const searchBox =
+      document.getElementById(
+        'searchBox'
+      );
+
+
+    const searchQuery =
+      searchBox
+        ? searchBox.value.trim().toLowerCase()
+        : '';
+
+
+    listContainer.innerHTML = '';
+
+
+    /*
+      اصل درست شدہ لائن:
+      const filteredRecords = ...
+    */
+
+    const filteredRecords =
+      records.filter(record => {
+
+        const name =
+          String(record.name || '')
+            .toLowerCase();
+
+        const work =
+          String(record.work || '')
+            .toLowerCase();
+
+        const phone1 =
+          String(record.phone1 || '')
+            .toLowerCase();
+
+        const phone2 =
+          String(record.phone2 || '')
+            .toLowerCase();
+
+        const phone3 =
+          String(record.phone3 || '')
+            .toLowerCase();
+
+
+        return (
+          name.includes(searchQuery) ||
+          work.includes(searchQuery) ||
+          phone1.includes(searchQuery) ||
+          phone2.includes(searchQuery) ||
+          phone3.includes(searchQuery)
+        );
+
+      });
+
+
+    if (filteredRecords.length === 0) {
+
+      listContainer.innerHTML =
+        '<div class="empty-msg">کوئی ریکارڈ موجود نہیں ہے</div>';
+
+      updateSummary();
+
+      return;
+
+    }
+
+
+    filteredRecords.forEach(record => {
+
+      const isDone =
+        record.status === 'مکمل ہو گیا';
+
+
+      const badgeClass =
+        isDone
+          ? 'status-done'
+          : 'status-pending';
+
+
+      let phonesText =
+        record.phone1 || '';
+
+
+      if (record.phone2) {
+
+        phonesText +=
+          ` , ${record.phone2}`;
+
+      }
+
+
+      if (record.phone3) {
+
+        phonesText +=
+          ` , ${record.phone3}`;
+
+      }
+
+
+      const item =
+        document.createElement('div');
+
+
+      item.className =
+        'customer-item';
+
+
+      /*
+        textContent کے ذریعے user data
+        محفوظ انداز میں دکھایا جا رہا ہے۔
+      */
+
+      const actionBtns =
+        document.createElement('div');
+
+      actionBtns.className =
+        'action-btns';
+
+
+      const editBtn =
+        document.createElement('button');
+
+      editBtn.className =
+        'action-icon-btn edit-btn';
+
+      editBtn.innerText = '✏️';
+
+      editBtn.title =
+        'ایڈٹ کریں';
+
+      editBtn.onclick =
+        () => editRecord(record.id);
+
+
+      const deleteBtn =
+        document.createElement('button');
+
+      deleteBtn.className =
+        'action-icon-btn delete-btn';
+
+      deleteBtn.innerText = '×';
+
+      deleteBtn.title =
+        'ڈلیٹ کریں';
+
+      deleteBtn.onclick =
+        () => deleteRecord(record.id);
+
+
+      actionBtns.appendChild(
+        editBtn
+      );
+
+      actionBtns.appendChild(
+        deleteBtn
+      );
+
+
+      const header =
+        document.createElement('div');
+
+      header.className =
+        'customer-header';
+
+
+      const nameSpan =
+        document.createElement('span');
+
+      nameSpan.textContent =
+        `👤 ${record.name || ''}` +
+        (phonesText
+          ? ` (${phonesText})`
+          : '');
+
+
+      const statusSpan =
+        document.createElement('span');
+
+      statusSpan.className =
+        `status-badge ${badgeClass}`;
+
+      statusSpan.textContent =
+        record.status ||
+        'مکمل ہو گیا';
+
+
+      header.appendChild(
+        nameSpan
+      );
+
+      header.appendChild(
+        statusSpan
+      );
+
+
+      const details =
+        document.createElement('div');
+
+      details.className =
+        'customer-details';
+
+      details.innerHTML =
+        '🛠️ کام: ';
+
+      const workBold =
+        document.createElement('b');
+
+      workBold.textContent =
+        record.work || 'مقرر نہیں';
+
+      details.appendChild(
+        workBold
+      );
+
+
+      const footer =
+        document.createElement('div');
+
+      footer.className =
+        'customer-footer';
+
+
+      const amountSpan =
+        document.createElement('span');
+
+      amountSpan.innerHTML =
+        `وصولی: Rs. ${Number(record.amount) || 0}
+         | فیس: `;
+
+
+      const feeSpan =
+        document.createElement('span');
+
+      feeSpan.className =
+        'fee-text';
+
+      feeSpan.textContent =
+        `Rs. ${Number(record.fee) || 0}`;
+
+
+      amountSpan.appendChild(
+        feeSpan
+      );
+
+
+      const profitSpan =
+        document.createElement('span');
+
+      profitSpan.innerHTML =
+        'منافع: ';
+
+
+      const profitValue =
+        document.createElement('span');
+
+      profitValue.className =
+        'profit-text';
+
+      profitValue.textContent =
+        `Rs. ${Number(record.profit) || 0}`;
+
+
+      profitSpan.appendChild(
+        profitValue
+      );
+
+
+      footer.appendChild(
+        amountSpan
+      );
+
+      footer.appendChild(
+        profitSpan
+      );
+
+
+      item.appendChild(
+        actionBtns
+      );
+
+      item.appendChild(
+        header
+      );
+
+      item.appendChild(
+        details
+      );
+
+      item.appendChild(
+        footer
+      );
+
+
+      listContainer.appendChild(
+        item
+      );
+
+    });
+
+
+    updateSummary();
+
+  }
+
+
+  /* ===============================
+     APP START
+  =============================== */
+
+  renderRecords();
+
+  updateSummary();
+
+</script>
 
 </body>
 </html>
