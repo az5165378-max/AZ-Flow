@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="./manifest.json">
   <title>AZ Flow - Smart App</title>
   <style>
     :root {
@@ -14,7 +15,6 @@
       --profit: #059669;
       --expense: #e11d48;
       --pending: #d97706;
-      --import-btn: #7c3aed;
     }
 
     body {
@@ -22,12 +22,29 @@
       background: var(--bg-gradient);
       min-height: 100vh;
       margin: 0;
-      padding: 10px 10px 80px 10px;
+      padding: 10px 10px 70px 10px;
       display: flex;
       justify-content: center;
       align-items: flex-start;
       box-sizing: border-box;
     }
+
+    /* اسپلش اسکرین */
+    #splashScreen {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--bg-gradient);
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      z-index: 9999; color: white; transition: opacity 0.5s ease;
+    }
+    .splash-logo-circle {
+      width: 85px; height: 85px; background: #0f172a; border: 3px solid #38bdf8;
+      border-radius: 50%; display: flex; justify-content: center; align-items: center;
+      font-size: 28px; font-weight: 900; color: #38bdf8;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.4); margin-bottom: 12px;
+    }
+    #splashScreen h1 { font-size: 26px; margin: 0 0 5px 0; font-weight: 900; color: #ffffff; }
+    #splashScreen p { font-size: 12px; color: #38bdf8; margin: 0; }
 
     .container {
       width: 100%; max-width: 480px; background: var(--card-bg);
@@ -35,26 +52,24 @@
       box-sizing: border-box; margin-top: 10px;
     }
 
+    /* ایپ ہیڈر */
     .app-header {
-      background: #0f172a; color: white; padding: 12px 15px; border-radius: 14px;
+      background: #0f172a; color: white; padding: 12px; border-radius: 14px;
       display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
-    .app-title-area h1 { margin: 0; font-size: 18px; color: #38bdf8; font-weight: 800; }
+    .app-title-area h1 { margin: 0; font-size: 18px; color: #38bdf8; }
     .app-title-area p { margin: 2px 0 0 0; font-size: 10px; color: #94a3b8; }
-    
-    .app-logo-circle {
-      width: 45px; height: 45px; background: #090d16;
-      border: 2px solid #38bdf8; border-radius: 50%;
-      display: flex; justify-content: center; align-items: center;
-      font-size: 16px; font-weight: 900; color: #38bdf8;
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    .app-logo-badge {
+      width: 38px; height: 38px; background: #1e293b; border: 2px solid #38bdf8;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-weight: bold; color: #38bdf8; font-size: 14px;
     }
 
+    /* اسکرینز کنٹرول */
     .app-screen { display: none; }
     .app-screen.active { display: block; }
 
+    /* سمری کارڈز */
     .summary-box { display: flex; gap: 8px; margin-bottom: 15px; }
     .stat-card {
       flex: 1; background: #f8fafc; border: 1px solid #e2e8f0;
@@ -75,16 +90,16 @@
     .row .form-group { flex: 1; }
 
     .btn {
-      width: 100%; padding: 12px; border: none; border-radius: 10px;
+      width: 100%; padding: 11px; border: none; border-radius: 10px;
       font-weight: 700; font-size: 13px; cursor: pointer; color: white;
       background: var(--primary); box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
-      margin-top: 8px; transition: background 0.3s; text-align: center; display: block; text-decoration: none; box-sizing: border-box;
+      margin-top: 5px; transition: background 0.3s; text-align: center; display: block; text-decoration: none; box-sizing: border-box;
     }
-    .btn:hover { opacity: 0.9; }
+    .btn:hover { background: #0369a1; }
     .btn-danger { background: var(--expense); }
     .btn-success { background: var(--profit); }
-    .btn-import { background: var(--import-btn); }
 
+    /* کسٹمر کارڈ */
     .customer-item {
       background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px;
       padding: 10px; margin-bottom: 8px; font-size: 11px; position: relative;
@@ -110,18 +125,19 @@
     .settings-box h4 { margin: 0 0 4px 0; color: var(--text-main); font-size: 13px; }
     .settings-box p { margin: 0 0 8px 0; color: var(--text-muted); font-size: 11px; }
 
+    /* باٹم نیویگیشن بار */
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; width: 100%;
       background: #0f172a; display: flex; justify-content: space-around;
-      padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.15);
-      z-index: 1000; box-sizing: border-box; box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
+      padding: 8px 0; border-top: 1px solid rgba(255,255,255,0.1);
+      z-index: 1000; box-sizing: border-box;
     }
     .nav-item {
-      background: none; border: none; color: #94a3b8; font-size: 12px;
+      background: none; border: none; color: #94a3b8; font-size: 11px;
       font-weight: 600; cursor: pointer; display: flex; flex-direction: column;
-      align-items: center; gap: 3px; transition: color 0.3s;
+      align-items: center; gap: 2px; transition: color 0.3s;
     }
-    .nav-item span { font-size: 20px; }
+    .nav-item span { font-size: 18px; }
     .nav-item.active { color: #38bdf8; }
 
     .empty-msg { text-align: center; color: var(--text-muted); font-size: 11px; padding: 20px; }
@@ -129,16 +145,25 @@
 </head>
 <body>
 
+  <!-- اسپلش اسکرین -->
+  <div id="splashScreen">
+    <div class="splash-logo-circle">AZ</div>
+    <h1>AZ Flow ⚡</h1>
+    <p>پروفیشنل اسمارٹ کھاتہ ایپ</p>
+  </div>
+
   <div class="container">
     
+    <!-- ایپ کا پروفیشنل ہیڈر -->
     <div class="app-header">
       <div class="app-title-area">
         <h1>AZ Flow ⚡</h1>
-        <p>پروفیشنل اسمارٹ کھاتہ (Admin: Ansar AZ)</p>
+        <p>اسمارٹ کھاتہ اور کسٹمر مینیجر</p>
       </div>
-      <div class="app-logo-circle">AZ</div>
+      <div class="app-logo-badge">AZ</div>
     </div>
 
+    <!-- بیلنس اور پرافٹ سمری -->
     <div class="summary-box">
       <div class="stat-card total">
         <h3>کل وصولی (Total)</h3>
@@ -150,7 +175,7 @@
       </div>
     </div>
 
-    <!-- ہوم اسکرین -->
+    <!-- ================= اسکرین 1: نیا گاہک درج کریں (Home) ================= -->
     <div id="screenHome" class="app-screen active">
       <div style="font-size: 13px; font-weight: 800; color: #0284c7; margin-bottom: 8px;">➕ نیا گاہک درج کریں</div>
 
@@ -201,7 +226,8 @@
       <button class="btn" id="saveUpdateBtn" onclick="saveCustomerRecord()">ریکارڈ محفوظ کریں (Save)</button>
     </div>
 
-    <!-- تمام ریکارڈ اسکرین -->
+
+    <!-- ================= اسکرین 2: تمام گاہکوں کا ریکارڈ (Records) ================= -->
     <div id="screenRecords" class="app-screen">
       <div style="font-size: 13px; font-weight: 800; color: #0284c7; margin-bottom: 8px;">👥 تمام گاہکوں کا ریکارڈ</div>
 
@@ -209,80 +235,88 @@
         <input type="text" id="searchBox" class="form-control" placeholder="🔍 نام یا کام سے تلاش کریں..." oninput="renderRecords()">
       </div>
 
-      <div style="max-height: 320px; overflow-y: auto;" id="recordsList"></div>
+      <div style="max-height: 320px; overflow-y: auto;" id="recordsList">
+        <!-- ریکارڈز یہاں شو ہوں گے -->
+      </div>
     </div>
 
-    <!-- سیٹنگز اسکرین -->
+
+    <!-- ================= اسکرین 3: ایپ سیٹنگز (Settings) ================= -->
     <div id="screenSettings" class="app-screen">
       <div style="font-size: 13px; font-weight: 800; color: #0284c7; margin-bottom: 8px;">⚙️ ایپ کی سیٹنگز</div>
 
       <div class="settings-box">
         <h4>📱 ایپ کی معلومات</h4>
-        <p><b>AZ Flow</b> ورژن 11.0 - ایڈمن: عنصر ایے زی (Ansar AZ)</p>
+        <p><b>AZ Flow</b> ورژن 4.5 - تمام ڈیٹا محفوظ اور مستقل ہے۔</p>
       </div>
 
       <div class="settings-box">
         <h4>💾 ڈیٹا بیک اپ اور ریسٹور</h4>
         <p>اپنے ریکارڈ کی فائل ڈاؤن لوڈ کریں یا پرانی فائل سے ڈیٹا واپس لائیں۔</p>
         
-        <a class="btn btn-success" onclick="exportData()">📤 ڈیٹا بیک اپ ڈاؤن لوڈ کریں (Export)</a>
+        <a id="downloadBackupBtn" class="btn btn-success" onclick="exportData()" style="margin-bottom: 8px;">📤 ڈیٹا بیک اپ ڈاؤن لوڈ کریں (Export)</a>
         
-        <button class="btn btn-import" onclick="document.getElementById('importFile').click()">📥 بیک اپ فائل سے ریسٹور کریں (Import)</button>
-        <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+        <label class="btn" style="background: #475569; margin-bottom: 8px; cursor: pointer;">
+          📥 بیک اپ فائل سے ریسٹور کریں (Import)
+          <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+        </label>
       </div>
 
       <div class="settings-box">
         <h4>⚠️ ڈیٹا کنٹرول</h4>
-        <button class="btn btn-danger" onclick="clearAllData()">تمام ڈیٹا ڈیلیٹ کریں (Reset Data)</button>
+        <button class="btn btn-danger" onclick="clearAllData()" style="padding: 9px; font-size: 11px;">تمام ڈیٹا ڈیلیٹ کریں (Reset Data)</button>
       </div>
     </div>
 
   </div>
 
+
+  <!-- نچلا نیویگیشن بار -->
   <div class="bottom-nav">
-    <button class="nav-item active" id="navHome" onclick="switchScreen('Home')">
+    <button class="nav-item active" onclick="switchScreen('Home', this)">
       <span>🏠</span>ہوم
     </button>
-    <button class="nav-item" id="navRecords" onclick="switchScreen('Records')">
+    <button class="nav-item" onclick="switchScreen('Records', this)">
       <span>👥</span>تمام ریکارڈ
     </button>
-    <button class="nav-item" id="navSettings" onclick="switchScreen('Settings')">
+    <button class="nav-item" onclick="switchScreen('Settings', this)">
       <span>⚙️</span>سیٹنگز
     </button>
   </div>
 
+
   <script>
-    const STORAGE_KEY = 'az_flow_permanent_master_records';
-    let records = [];
-    try {
-      records = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    } catch (e) {
-      records = [];
-    }
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const splash = document.getElementById('splashScreen');
+        splash.style.opacity = '0';
+        setTimeout(() => {
+          splash.style.display = 'none';
+        }, 500);
+      }, 1200);
+    });
+
+    let records = JSON.parse(localStorage.getItem('az_flow_records_v6')) || [];
     let editingId = null;
 
-    function switchScreen(screenName) {
+    function switchScreen(screenName, btnElement) {
       document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
 
       if (screenName === 'Home') {
         document.getElementById('screenHome').classList.add('active');
-        document.getElementById('navHome').classList.add('active');
       } else if (screenName === 'Records') {
         document.getElementById('screenRecords').classList.add('active');
-        document.getElementById('navRecords').classList.add('active');
         renderRecords();
       } else if (screenName === 'Settings') {
         document.getElementById('screenSettings').classList.add('active');
-        document.getElementById('navSettings').classList.add('active');
       }
+      btnElement.classList.add('active');
       window.scrollTo(0, 0);
     }
 
     function saveAndRender() {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
-      } catch (e) {}
+      localStorage.setItem('az_flow_records_v6', JSON.stringify(records));
       renderRecords();
       updateSummary();
     }
@@ -333,7 +367,7 @@
       clearForm();
       saveAndRender();
       alert('ریکارڈ کامیابی سے محفوظ ہو گیا!');
-      switchScreen('Records');
+      switchScreen('Records', document.querySelectorAll('.nav-item')[1]);
     }
 
     function clearForm() {
@@ -364,7 +398,7 @@
 
       editingId = id;
       document.getElementById('saveUpdateBtn').innerText = 'تبدیلی محفوظ کریں (Update)';
-      switchScreen('Home');
+      switchScreen('Home', document.querySelectorAll('.nav-item')[0]);
     }
 
     function deleteRecord(id) {
@@ -376,13 +410,14 @@
     }
 
     function clearAllData() {
-      if (confirm('خطرہ! کیا آپ تمام کسٹمرز کا ریکارڈ ہمیشہ کے لیے ختم کرنا चाहते ہیں؟')) {
+      if (confirm('خطرہ! کیا آپ تمام کسٹمرز کا ریکارڈ ہمیشہ کے لیے ختم کرنا چاہتے ہیں؟')) {
         records = [];
         saveAndRender();
         alert('تمام ڈیٹا صاف کر دیا گیا ہے۔');
       }
     }
 
+    // ڈیٹا ایکسپورٹ (بیک اپ فائل ڈاؤن لوڈ)
     function exportData() {
       if (records.length === 0) {
         alert('ڈاؤن لوڈ کرنے کے لیے کوئی ریکارڈ موجود نہیں ہے!');
@@ -397,6 +432,7 @@
       downloadAnchor.remove();
     }
 
+    // ڈیٹا امپورٹ (بیک اپ فائل ریستور)
     function importData(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -409,7 +445,7 @@
             records = importedRecords;
             saveAndRender();
             alert('ڈیٹا کامیابی سے ریسٹور (Restore) ہو گیا ہے!');
-            switchScreen('Records');
+            switchScreen('Records', document.querySelectorAll('.nav-item')[1]);
           } else {
             alert('فائل کا فارمیٹ درست نہیں ہے!');
           }
@@ -433,7 +469,7 @@
 
     function renderRecords() {
       const listContainer = document.getElementById('recordsList');
-      const searchQuery = document.getElementById('searchBox') ? document.getElementById('searchBox'].value.toLowerCase() : '';
+      const searchQuery = document.getElementById('searchBox') ? document.getElementById('searchBox').value.toLowerCase() : '';
       listContainer.innerHTML = '';
 
       const filteredRecords = records.filter(r => 
