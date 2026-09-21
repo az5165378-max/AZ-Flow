@@ -29,23 +29,6 @@
       box-sizing: border-box;
     }
 
-    /* اسپلش اسکرین */
-    #splashScreen {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: var(--bg-gradient);
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-      z-index: 9999; color: white; transition: opacity 0.5s ease;
-    }
-    .splash-logo-circle {
-      width: 85px; height: 85px; background: #0f172a; border: 3px solid #38bdf8;
-      border-radius: 50%; display: flex; justify-content: center; align-items: center;
-      font-size: 28px; font-weight: 900; color: #38bdf8;
-      box-shadow: 0 0 25px rgba(56, 189, 248, 0.4); margin-bottom: 12px;
-    }
-    #splashScreen h1 { font-size: 26px; margin: 0 0 5px 0; font-weight: 900; color: #ffffff; }
-    #splashScreen p { font-size: 12px; color: #38bdf8; margin: 0; }
-
     .container {
       width: 100%; max-width: 480px; background: var(--card-bg);
       padding: 15px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
@@ -125,7 +108,7 @@
     .settings-box h4 { margin: 0 0 4px 0; color: var(--text-main); font-size: 13px; }
     .settings-box p { margin: 0 0 8px 0; color: var(--text-muted); font-size: 11px; }
 
-    /* بالکل منفرد اور واضح ماسٹر کی باکس (Highlight Box) */
+    /* بالکل منفرد اور واضح ماسٹر کی باکس */
     .master-key-box {
       background: #eff6ff; 
       border: 2px dashed #0284c7; 
@@ -157,13 +140,6 @@
   </style>
 </head>
 <body>
-
-  <!-- اسپلش اسکرین -->
-  <div id="splashScreen">
-    <div class="splash-logo-circle">AZ</div>
-    <h1>AZ Flow ⚡</h1>
-    <p>پروفیشنل اسمارٹ کھاتہ ایپ (Admin: Ansar AZ)</p>
-  </div>
 
   <div class="container">
     
@@ -273,7 +249,7 @@
 
       <div class="settings-box">
         <h4>📱 ایپ کی معلومات</h4>
-        <p><b>AZ Flow</b> ورژن 13.0 - ایڈمن: عنصر ایے زی (Ansar AZ)</p>
+        <p><b>AZ Flow</b> ورژن 14.0 - ایڈمن: عنصر ایے زی (Ansar AZ)</p>
       </div>
 
       <div class="settings-box">
@@ -300,18 +276,6 @@
 
 
   <script>
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        const splash = document.getElementById('splashScreen');
-        if(splash) {
-          splash.style.opacity = '0';
-          setTimeout(() => {
-            splash.style.display = 'none';
-          }, 500);
-        }
-      }, 1200);
-    });
-
     // پرمیننٹ ماسٹر کی تاکہ کوڈ اپ ڈیٹ کرنے پر بھی یوزر کا ڈیٹا ضائع نہ ہو
     const STORAGE_KEY = 'az_flow_permanent_master_records';
     let records = [];
@@ -495,7 +459,7 @@
       const searchQuery = document.getElementById('searchBox') ? document.getElementById('searchBox'].value.toLowerCase() : '';
       listContainer.innerHTML = '';
 
-      const filteredRecords = records.filter(r => 
+      The filteredRecords = records.filter(r => 
         r.name.toLowerCase().includes(searchQuery) || (r.work && r.work.toLowerCase().includes(searchQuery))
       );
 
