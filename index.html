@@ -1,860 +1,299 @@
 <!DOCTYPE html>
 <html lang="ur" dir="rtl">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#06152e">
-  <title>AZ Flow ⚡ - Smart Khata & Customer Manager</title>
-
+  <title>AZ Flow ⚡ - اسمارٹ کھاتہ اور کسٹمر مینیجر</title>
   <style>
-    /* =====================================================
-       DESIGN TOKENS & SYSTEM VARIABLES
-    ===================================================== */
     :root {
       --primary: #0284c7;
       --primary-hover: #0369a1;
       --primary-light: #38bdf8;
       --primary-subtle: #e0f2fe;
-      --cyan-accent: #00d9ff;
+      --cyan: #00d9ff;
       --bg-dark: #06152e;
-      --bg-surface: #0a1e3f;
-      --bg-card: #0f2752;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
+      --text: #0f172a;
+      --muted: #64748b;
       --profit: #059669;
       --profit-light: #d1fae5;
-      --profit-text: #065f46;
       --expense: #e11d48;
-      --expense-light: #ffe4e6;
-      --expense-text: #9f1239;
       --pending: #d97706;
       --pending-light: #fef3c7;
-      --pending-text: #92400e;
       --whatsapp: #16a34a;
-      --whatsapp-hover: #15803d;
-      --border-color: #cbd5e1;
+      --border: #cbd5e1;
       --border-light: #e2e8f0;
       --radius-sm: 8px;
       --radius-md: 12px;
       --radius-lg: 16px;
       --radius-xl: 22px;
-      --shadow-sm: 0 2px 6px rgba(0, 0, 0, .06);
-      --shadow-md: 0 8px 20px rgba(0, 0, 0, .10);
-      --shadow-lg: 0 14px 34px rgba(0, 0, 0, .18);
+      --shadow-sm: 0 2px 8px rgba(0,0,0,.06);
+      --shadow-md: 0 8px 24px rgba(0,0,0,.12);
     }
-
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     html, body {
-      width: 100%;
-      min-height: 100%;
+      width: 100%; min-height: 100%;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Nastaliq Urdu", Tahoma, Arial, sans-serif;
-      background:
-        radial-gradient(circle at 15% 10%, rgba(14, 165, 233, .22), transparent 32%),
-        radial-gradient(circle at 85% 85%, rgba(37, 99, 235, .20), transparent 35%),
-        linear-gradient(135deg, #020617 0%, #06152e 50%, #0b2a55 100%);
-      color: var(--text-main);
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 12px 12px 90px;
+      background: radial-gradient(circle at 15% 10%, rgba(14,165,233,.22), transparent 32%),
+                  radial-gradient(circle at 85% 85%, rgba(37,99,235,.20), transparent 35%),
+                  linear-gradient(135deg, #020617 0%, #06152e 50%, #0b2a55 100%);
+      color: var(--text);
+      display: flex; justify-content: center; align-items: flex-start;
+      padding: 12px 12px 95px;
     }
 
-    /* =====================================================
-       SPLASH SCREEN ANIMATION
-    ===================================================== */
+    /* Splash Screen */
     #splashScreen {
-      position: fixed;
-      inset: 0;
-      z-index: 99999;
-      background:
-        radial-gradient(circle at 50% 30%, rgba(0, 217, 255, .25), transparent 35%),
-        linear-gradient(145deg, #020617 0%, #06152e 50%, #0a254d 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      transition: opacity .5s cubic-bezier(0.4, 0, 0.2, 1), visibility .5s ease;
+      position: fixed; inset: 0; z-index: 99999;
+      background: radial-gradient(circle at 50% 30%, rgba(0,217,255,.25), transparent 35%),
+                  linear-gradient(145deg, #020617 0%, #06152e 50%, #0a254d 100%);
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      transition: opacity .5s ease, visibility .5s ease;
     }
-
-    #splashScreen.hide {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .splash-content {
-      width: 100%;
-      max-width: 420px;
-      padding: 24px;
-    }
-
+    #splashScreen.hide { opacity: 0; visibility: hidden; pointer-events: none; }
     .splash-logo-wrap {
-      width: 175px;
-      height: 175px;
-      margin: 0 auto 20px;
-      border-radius: 50%;
+      width: 155px; height: 155px; margin: 0 auto 18px; border-radius: 50%;
       background: radial-gradient(circle at 40% 30%, #163e75, #031631 80%);
-      border: 3.5px solid var(--cyan-accent);
-      box-shadow: 0 0 30px rgba(0, 217, 255, .5), inset 0 0 25px rgba(0, 217, 255, .25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      padding: 8px;
-      animation: pulseGlow 2.5s infinite alternate;
+      border: 3.5px solid var(--cyan);
+      box-shadow: 0 0 30px rgba(0,217,255,.5), inset 0 0 20px rgba(0,217,255,.25);
+      display: flex; align-items: center; justify-content: center;
     }
+    .splash-title { color: #ffffff; font-size: 38px; font-weight: 900; letter-spacing: 1px; }
+    .splash-title span { color: var(--primary-light); }
+    .splash-subtitle { color: #bfdbfe; font-size: 13.5px; margin-top: 4px; }
+    .splash-loading-bar-wrap { width: 200px; height: 6px; background: #103362; border-radius: 20px; margin: 22px auto 14px; overflow: hidden; }
+    .splash-loading-bar { width: 0; height: 100%; background: linear-gradient(90deg, #00d9ff, #38bdf8, #0284c7); border-radius: 20px; animation: splashProgress 1.6s linear forwards; }
+    @keyframes splashProgress { 0% { width: 0; } 100% { width: 100%; } }
+    .splash-powered-by { color: var(--cyan); font-size: 13.5px; font-weight: 800; margin-top: 20px; letter-spacing: .5px; }
 
-    @keyframes pulseGlow {
-      from { box-shadow: 0 0 20px rgba(0, 217, 255, .4); }
-      to { box-shadow: 0 0 40px rgba(0, 217, 255, .7); }
-    }
-
-    .splash-title {
-      color: #ffffff;
-      font-size: 40px;
-      font-weight: 900;
-      letter-spacing: 1px;
-    }
-
-    .splash-title span {
-      color: var(--primary-light);
-    }
-
-    .splash-subtitle {
-      color: #bfdbfe;
-      font-size: 14px;
-      font-weight: 500;
-      margin-top: 4px;
-    }
-
-    .splash-loading-bar-wrap {
-      width: 230px;
-      height: 6px;
-      background: #103362;
-      border-radius: 20px;
-      margin: 24px auto 14px;
-      overflow: hidden;
-    }
-
-    .splash-loading-bar {
-      width: 0;
-      height: 100%;
-      background: linear-gradient(90deg, #00d9ff, #38bdf8, #0284c7);
-      border-radius: 20px;
-      animation: splashProgress 1.8s linear forwards;
-    }
-
-    @keyframes splashProgress {
-      0% { width: 0; }
-      100% { width: 100%; }
-    }
-
-    .splash-tagline {
-      color: #94a3b8;
-      font-size: 13px;
-    }
-
-    .splash-powered-by {
-      color: var(--cyan-accent);
-      font-size: 14px;
-      font-weight: 800;
-      margin-top: 24px;
-      letter-spacing: 0.8px;
-    }
-
-    /* =====================================================
-       APP CONTAINER
-    ===================================================== */
+    /* App Container */
     .app-container {
-      width: 100%;
-      max-width: 530px;
-      background: #ffffff;
-      padding: 16px;
-      border-radius: var(--radius-xl);
-      box-shadow: 0 25px 60px rgba(0, 0, 0, .45);
+      width: 100%; max-width: 520px; background: #ffffff;
+      padding: 16px; border-radius: var(--radius-xl);
+      box-shadow: 0 25px 60px rgba(0,0,0,.45);
       position: relative;
     }
 
-    /* =====================================================
-       TOP APP HEADER
-    ===================================================== */
+    /* Header */
     .app-header {
       background: linear-gradient(135deg, #020617 0%, #06152e 55%, #0e2954 100%);
-      color: #ffffff;
-      padding: 14px 16px;
-      border-radius: var(--radius-lg);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
-      border: 1px solid rgba(56, 189, 248, .28);
-      box-shadow: var(--shadow-sm);
+      color: #ffffff; padding: 14px 16px; border-radius: var(--radius-lg);
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;
+      border: 1px solid rgba(56,189,248,.28); box-shadow: var(--shadow-sm);
+    }
+    .header-text h1 { font-size: 20px; color: var(--primary-light); font-weight: 900; display: flex; align-items: center; gap: 6px; }
+    .header-text p { font-size: 11.5px; color: #cbd5e1; margin-top: 3px; }
+    .header-badge {
+      width: 42px; height: 42px; background: #04142d; border: 2px solid var(--primary-light);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      color: var(--primary-light); font-weight: 900; font-size: 15px;
+      box-shadow: 0 0 12px rgba(56,189,248,.4);
     }
 
-    .header-text h1 {
-      font-size: 21px;
-      color: var(--primary-light);
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .header-text p {
-      font-size: 11.5px;
-      color: #cbd5e1;
-      margin-top: 3px;
-    }
-
-    .header-logo-badge {
-      width: 44px;
-      height: 44px;
-      background: #04142d;
-      border: 2px solid var(--primary-light);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--primary-light);
-      font-weight: 900;
-      font-size: 15px;
-      box-shadow: 0 0 12px rgba(56, 189, 248, .4);
-    }
-
-    /* =====================================================
-       METRIC KPI CARDS
-    ===================================================== */
-    .metrics-row {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
+    /* KPI Cards */
+    .metrics-row { display: flex; gap: 10px; margin-bottom: 14px; }
     .metric-card {
-      flex: 1;
-      background: #f8fafc;
-      border: 1px solid var(--border-light);
-      padding: 11px 12px;
-      border-radius: var(--radius-md);
-      transition: transform .2s ease, box-shadow .2s ease;
+      flex: 1; background: #f8fafc; border: 1px solid var(--border-light);
+      padding: 10px 12px; border-radius: var(--radius-md);
     }
-
-    .metric-card:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .metric-card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 4px;
-    }
-
-    .metric-card-title {
-      font-size: 11px;
-      color: var(--text-muted);
-      font-weight: 700;
-    }
-
-    .metric-card-val {
-      font-size: 17px;
-      font-weight: 900;
-      letter-spacing: .2px;
-    }
-
+    .metric-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+    .metric-card-title { font-size: 11px; color: var(--muted); font-weight: 700; }
+    .metric-card-val { font-size: 17px; font-weight: 900; }
     .metric-card.revenue .metric-card-val { color: var(--primary); }
     .metric-card.profit .metric-card-val { color: var(--profit); }
 
-    /* =====================================================
-       SCREENS & VIEWS
-    ===================================================== */
-    .screen-view {
-      display: none;
-      animation: fadeIn .25s ease forwards;
-    }
+    /* Views */
+    .screen-view { display: none; animation: fadeIn .2s ease forwards; }
+    .screen-view.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    .section-title { font-size: 14.5px; font-weight: 900; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
 
-    .screen-view.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(5px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .section-title {
-      font-size: 14.5px;
-      font-weight: 900;
-      color: var(--primary);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    /* =====================================================
-       INPUTS & FORM ELEMENTS
-    ===================================================== */
-    .form-group {
-      margin-bottom: 12px;
-    }
-
-    .form-label {
-      font-size: 11.5px;
-      font-weight: 700;
-      color: var(--text-main);
-      display: block;
-      margin-bottom: 4px;
-    }
-
+    /* Form */
+    .form-group { margin-bottom: 12px; }
+    .form-label { font-size: 11.5px; font-weight: 700; color: var(--text); display: block; margin-bottom: 4px; }
     .input-control {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      font-size: 12.5px;
-      background: #ffffff;
-      color: var(--text-main);
-      outline: none;
-      transition: border-color .2s ease, box-shadow .2s ease;
-      font-family: inherit;
+      width: 100%; padding: 10px 12px; border: 1px solid var(--border);
+      border-radius: 10px; font-size: 12.5px; background: #ffffff; color: var(--text);
+      outline: none; transition: border-color .2s ease, box-shadow .2s ease; font-family: inherit;
     }
+    .input-control:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(2,132,199,.14); }
+    .input-row { display: flex; gap: 8px; }
+    .input-row .form-group { flex: 1; }
 
-    .input-control:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(2, 132, 199, .14);
-    }
-
-    .input-row {
-      display: flex;
-      gap: 8px;
-    }
-
-    .input-row .form-group {
-      flex: 1;
-    }
-
-    /* =====================================================
-       CATEGORIZED SERVICE CHIPS
-    ===================================================== */
-    .service-category-tabs {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      margin-bottom: 8px;
-      scrollbar-width: none;
-    }
-
-    .service-category-tabs::-webkit-scrollbar {
-      display: none;
-    }
-
+    /* Category tabs & chips */
+    .service-category-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 8px; scrollbar-width: none; }
+    .service-category-tabs::-webkit-scrollbar { display: none; }
     .category-tab-btn {
-      padding: 5px 11px;
-      border-radius: 9px;
-      font-size: 11px;
-      font-weight: 700;
-      border: 1px solid var(--border-color);
-      background: #f1f5f9;
-      color: #475569;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all .2s ease;
-      font-family: inherit;
+      padding: 5px 11px; border-radius: 9px; font-size: 11px; font-weight: 700;
+      border: 1px solid var(--border); background: #f1f5f9; color: #475569;
+      cursor: pointer; white-space: nowrap; font-family: inherit;
     }
-
-    .category-tab-btn.active {
-      background: var(--primary);
-      color: #ffffff;
-      border-color: var(--primary);
-      box-shadow: 0 2px 8px rgba(2, 132, 199, .25);
-    }
-
-    .service-chips-wrap {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 12px;
-    }
-
+    .category-tab-btn.active { background: var(--primary); color: #ffffff; border-color: var(--primary); }
+    .service-chips-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
     .service-chip-item {
-      background: var(--primary-subtle);
-      color: #0369a1;
-      border: 1px solid #bae6fd;
-      border-radius: 14px;
-      padding: 5px 10px;
-      font-size: 11px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all .15s ease;
-      user-select: none;
+      background: var(--primary-subtle); color: #0369a1; border: 1px solid #bae6fd;
+      border-radius: 14px; padding: 5px 10px; font-size: 11px; font-weight: 600;
+      cursor: pointer; transition: all .15s ease;
+    }
+    .service-chip-item:hover { background: var(--primary); color: #ffffff; border-color: var(--primary); }
+
+    /* Profit Card */
+    .profit-calc-card {
+      background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: var(--radius-md);
+      padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between;
     }
 
-    .service-chip-item:hover, .service-chip-item:active {
-      background: var(--primary);
-      color: #ffffff;
-      border-color: var(--primary);
-      transform: translateY(-1px);
-    }
-
-    /* Profit Live Card */
-    .profit-calculation-card {
-      background: #ecfdf5;
-      border: 1px solid #a7f3d0;
-      border-radius: var(--radius-md);
-      padding: 10px 14px;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .profit-calc-label {
-      font-size: 11.5px;
-      color: var(--profit-text);
-      font-weight: 700;
-    }
-
-    .profit-calc-val {
-      font-size: 17px;
-      color: var(--profit);
-      font-weight: 900;
-    }
-
-    /* =====================================================
-       BUTTONS
-    ===================================================== */
+    /* Buttons */
     .btn {
-      width: 100%;
-      padding: 12px 14px;
-      border: none;
-      border-radius: 11px;
-      font-weight: 800;
-      font-size: 13.5px;
-      cursor: pointer;
-      color: #ffffff;
-      background: var(--primary);
-      box-shadow: 0 4px 14px rgba(2, 132, 199, .28);
-      transition: all .2s ease;
-      text-align: center;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-family: inherit;
+      width: 100%; padding: 12px 14px; border: none; border-radius: 11px;
+      font-weight: 800; font-size: 13.5px; cursor: pointer; color: #ffffff;
+      background: var(--primary); box-shadow: 0 4px 14px rgba(2,132,199,.28);
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      font-family: inherit; transition: all .2s ease;
     }
+    .btn:hover { background: var(--primary-hover); }
+    .btn:active { transform: scale(.98); }
+    .btn-success { background: var(--profit); box-shadow: 0 4px 14px rgba(5,150,105,.28); }
+    .btn-danger { background: var(--expense); box-shadow: 0 4px 14px rgba(225,29,72,.28); }
+    .btn-whatsapp { background: var(--whatsapp); box-shadow: 0 4px 14px rgba(22,163,74,.28); }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); box-shadow: none; }
 
-    .btn:hover {
-      background: var(--primary-hover);
-      box-shadow: 0 6px 18px rgba(2, 132, 199, .35);
-    }
-
-    .btn:active {
-      transform: scale(.98);
-    }
-
-    .btn-success {
-      background: var(--profit);
-      box-shadow: 0 4px 14px rgba(5, 150, 105, .28);
-    }
-    .btn-success:hover { background: #047857; }
-
-    .btn-danger {
-      background: var(--expense);
-      box-shadow: 0 4px 14px rgba(225, 29, 72, .28);
-    }
-    .btn-danger:hover { background: #be123c; }
-
-    .btn-whatsapp {
-      background: var(--whatsapp);
-      box-shadow: 0 4px 14px rgba(22, 163, 74, .28);
-    }
-    .btn-whatsapp:hover { background: var(--whatsapp-hover); }
-
-    .btn-outline {
-      background: transparent;
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      box-shadow: none;
-    }
-    .btn-outline:hover {
-      background: #f1f5f9;
-    }
-
-    /* =====================================================
-       RECORDS LIST & CARDS
-    ===================================================== */
+    /* Records & Cards */
     .record-card {
-      background: #ffffff;
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 12px 14px;
-      margin-bottom: 10px;
-      box-shadow: var(--shadow-sm);
-      position: relative;
-      transition: border-color .2s ease, box-shadow .2s ease;
+      background: #ffffff; border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg); padding: 13px 14px; margin-bottom: 12px;
+      box-shadow: var(--shadow-sm); transition: border-color .2s ease, box-shadow .2s ease;
     }
-
-    .record-card:hover {
-      border-color: #cbd5e1;
-      box-shadow: var(--shadow-md);
-    }
-
-    .record-card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 6px;
-      padding-left: 85px;
-    }
-
-    .customer-avatar-name {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
+    .record-card:hover { border-color: #cbd5e1; box-shadow: var(--shadow-md); }
+    .record-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .customer-avatar-name { display: flex; align-items: center; gap: 10px; }
     .customer-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--primary-subtle);
-      color: var(--primary-dark);
-      font-weight: 800;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%; background: var(--primary-subtle);
+      color: var(--primary); font-weight: 900; font-size: 15px; display: flex;
+      align-items: center; justify-content: center;
     }
+    .customer-info h4 { font-size: 14px; font-weight: 800; color: var(--text); }
+    .customer-info span { font-size: 11px; color: var(--muted); }
 
-    .customer-info h4 {
-      font-size: 13.5px;
-      font-weight: 800;
-      color: var(--text-main);
-    }
-
-    .customer-info span {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
+    /* High Visibility Solid Status Badges */
     .status-pill {
-      padding: 3px 8px;
-      border-radius: 8px;
-      font-size: 9.5px;
-      font-weight: 800;
-      letter-spacing: .2px;
+      padding: 6px 14px; border-radius: 20px; font-size: 11.5px; font-weight: 800;
+      letter-spacing: .2px; display: inline-flex; align-items: center; gap: 5px;
+      white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,.12);
     }
-
     .status-pill.done {
-      background: var(--profit-light);
-      color: var(--profit-text);
+      background: #059669; color: #ffffff; border: 1.5px solid #047857; text-shadow: 0 1px 2px rgba(0,0,0,.2);
     }
-
     .status-pill.pending {
-      background: var(--pending-light);
-      color: var(--pending-text);
+      background: #d97706; color: #ffffff; border: 1.5px solid #b45309; text-shadow: 0 1px 2px rgba(0,0,0,.2);
     }
 
     .record-work-line {
-      font-size: 12px;
-      color: #334155;
-      margin: 6px 0;
-      line-height: 1.4;
+      font-size: 12.5px; color: #334155; margin: 8px 0; line-height: 1.4;
+      background: #f1f5f9; padding: 6px 10px; border-radius: 8px;
     }
 
-    .record-financial-bar {
-      background: #f8fafc;
-      border-radius: var(--radius-sm);
-      padding: 6px 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 11.5px;
-      font-weight: 700;
-      margin: 6px 0;
+    /* 3-Way Financial Grid */
+    .record-financial-grid {
+      background: #f8fafc; border: 1px solid var(--border-light); border-radius: var(--radius-md);
+      padding: 9px 10px; display: grid; grid-template-columns: 1fr 1fr 1fr;
+      text-align: center; gap: 4px; margin: 8px 0;
     }
+    .fin-col { display: flex; flex-direction: column; gap: 3px; }
+    .fin-col:not(:last-child) { border-left: 1px solid #e2e8f0; }
+    .fin-col .fin-title { font-size: 10.5px; color: #64748b; font-weight: 700; }
+    .fin-col .fin-val { font-size: 12.5px; font-weight: 900; }
+    .fin-val.val-rev { color: var(--primary); }
+    .fin-val.val-cost { color: var(--expense); }
+    .fin-val.val-profit { color: var(--profit); font-size: 13.5px; }
 
-    .record-card-actions {
-      position: absolute;
-      top: 10px;
-      left: 12px;
-      display: flex;
-      gap: 4px;
+    .record-bottom-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-light);
     }
+    .record-actions-group { display: flex; align-items: center; gap: 6px; }
+
+    .btn-receipt-pill {
+      background: #eff6ff; border: 1px solid #93c5fd; color: #0284c7;
+      border-radius: 8px; padding: 5px 11px; font-size: 11.5px; font-weight: 800;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 4px; font-family: inherit;
+    }
+    .btn-receipt-pill:hover { background: #dbeafe; transform: translateY(-1px); }
+
+    .btn-whatsapp-pill {
+      background: #dcfce7; border: 1px solid #86efac; color: #166534;
+      border-radius: 8px; padding: 5px 10px; font-size: 11.5px; font-weight: 800;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 4px;
+      text-decoration: none; font-family: inherit;
+    }
+    .btn-whatsapp-pill:hover { background: #bbf7d0; transform: translateY(-1px); }
 
     .icon-btn {
-      width: 28px;
-      height: 28px;
-      border-radius: 6px;
-      border: 1px solid var(--border-color);
-      background: #ffffff;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      transition: background .15s ease;
+      width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border);
+      background: #ffffff; cursor: pointer; display: inline-flex; align-items: center;
+      justify-content: center; font-size: 13.5px; transition: all .15s ease; color: var(--text);
     }
+    .icon-btn:hover { background: #f1f5f9; transform: scale(1.05); }
 
-    .icon-btn:hover {
-      background: #f1f5f9;
-    }
-
-    /* =====================================================
-       ANALYTICS & METRICS
-    ===================================================== */
-    .analytics-panel {
-      background: #f8fafc;
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 14px;
-      margin-bottom: 12px;
-    }
-
-    .chart-container-bar {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-around;
-      height: 130px;
-      padding: 12px 0 6px;
-      border-bottom: 1px solid var(--border-color);
-      margin-bottom: 10px;
-    }
-
-    .bar-column {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .bar-shape {
-      width: 48px;
-      border-radius: 8px 8px 0 0;
-      transition: height .6s cubic-bezier(0.4, 0, 0.2, 1);
-      min-height: 8px;
-    }
-
-    /* =====================================================
-       SETTINGS & CARDS
-    ===================================================== */
-    .settings-group-card {
-      background: #f8fafc;
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      padding: 14px;
-      margin-bottom: 12px;
-    }
-
-    .settings-group-card h3 {
-      font-size: 13.5px;
-      font-weight: 800;
-      color: var(--text-main);
-      margin-bottom: 5px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .settings-group-card p {
-      font-size: 11.5px;
-      color: var(--text-muted);
-      line-height: 1.5;
-      margin-bottom: 10px;
-    }
-
-    .powered-by-box {
-      background: #eff6ff;
-      border: 1.5px dashed var(--primary-light);
-      border-radius: var(--radius-md);
-      padding: 10px;
-      text-align: center;
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--primary);
-      margin-top: 10px;
-      letter-spacing: .4px;
-    }
-
-    /* =====================================================
-       RECEIPT INVOICE DIALOG & PRINT
-    ===================================================== */
+    /* Modal */
     .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, .65);
-      backdrop-filter: blur(4px);
-      z-index: 10000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
+      position: fixed; inset: 0; background: rgba(0,0,0,.65);
+      backdrop-filter: blur(4px); z-index: 10000; display: none;
+      align-items: center; justify-content: center; padding: 16px;
     }
-
-    .modal-backdrop.open {
-      display: flex;
-    }
-
+    .modal-backdrop.open { display: flex; }
     .invoice-modal {
-      background: #ffffff;
-      width: 100%;
-      max-width: 400px;
-      border-radius: var(--radius-xl);
-      padding: 20px;
-      box-shadow: var(--shadow-lg);
-      animation: modalPop .2s ease forwards;
+      background: #ffffff; width: 100%; max-width: 410px;
+      border-radius: var(--radius-xl); padding: 20px; box-shadow: var(--shadow-md);
     }
 
-    @keyframes modalPop {
-      from { transform: scale(.92); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    @media print {
-      body * {
-        visibility: hidden;
-      }
-      #printArea, #printArea * {
-        visibility: visible;
-      }
-      #printArea {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        padding: 20px;
-      }
-    }
-
-    /* =====================================================
-       TOAST NOTIFICATIONS
-    ===================================================== */
+    /* Toast */
     #toastMessage {
-      position: fixed;
-      top: 16px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-60px);
-      background: #020617;
-      color: #ffffff;
-      padding: 10px 18px;
-      border-radius: 30px;
-      font-size: 12.5px;
-      font-weight: 700;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, .4);
-      border: 1px solid rgba(56, 189, 248, .3);
-      z-index: 100000;
-      opacity: 0;
-      transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      position: fixed; top: 16px; left: 50%; transform: translateX(-50%) translateY(-60px);
+      background: #020617; color: #ffffff; padding: 10px 18px; border-radius: 30px;
+      font-size: 12.5px; font-weight: 700; box-shadow: 0 8px 24px rgba(0,0,0,.4);
+      border: 1px solid rgba(56,189,248,.3); z-index: 100000; opacity: 0;
+      transition: all .3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; gap: 8px;
     }
+    #toastMessage.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-    #toastMessage.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
-
-    /* =====================================================
-       BOTTOM NAVIGATION BAR
-    ===================================================== */
+    /* Bottom Nav */
     .bottom-navbar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #020617;
-      display: flex;
-      justify-content: space-around;
-      padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
-      border-top: 1px solid rgba(255, 255, 255, .1);
-      z-index: 1000;
+      position: fixed; bottom: 0; left: 0; width: 100%; background: #020617;
+      display: flex; justify-content: space-around; padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+      border-top: 1px solid rgba(255,255,255,.1); z-index: 1000;
     }
-
     .bottom-nav-item {
-      background: none;
-      border: none;
-      color: #94a3b8;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-      min-width: 70px;
-      transition: color .15s ease;
-      font-family: inherit;
+      background: none; border: none; color: #94a3b8; font-size: 11px; font-weight: 700;
+      cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px;
+      min-width: 70px; font-family: inherit;
     }
-
-    .bottom-nav-item span {
-      font-size: 19px;
-    }
-
-    .bottom-nav-item.active {
-      color: var(--primary-light);
-    }
+    .bottom-nav-item span { font-size: 19px; }
+    .bottom-nav-item.active { color: var(--primary-light); }
   </style>
 </head>
-
 <body>
 
-  <!-- =====================================================
-       SPLASH SCREEN
-  ===================================================== -->
+  <!-- Splash Screen -->
   <div id="splashScreen">
-    <div class="splash-content">
+    <div style="padding: 24px;">
       <div class="splash-logo-wrap">
-        <svg viewBox="0 0 300 300" style="width: 100%; height: 100%;">
-          <defs>
-            <linearGradient id="blueLineGlow" x1="0" y1="1" x2="1" y2="0">
-              <stop offset="0%" stop-color="#00a8ff" />
-              <stop offset="50%" stop-color="#00d9ff" />
-              <stop offset="100%" stop-color="#7dd3fc" />
-            </linearGradient>
-            <filter id="splashGlowFilter">
-              <feGaussianBlur stdDeviation="3" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-          <text x="92" y="137" text-anchor="middle" font-family="Arial, sans-serif" font-size="100" font-weight="900" fill="#fff">A</text>
-          <text x="185" y="137" text-anchor="middle" font-family="Arial, sans-serif" font-size="100" font-weight="900" fill="#fff">Z</text>
-          <path d="M42 178 C70 153 92 178 119 158 L151 130 L178 153 L222 92" fill="none" stroke="url(#blueLineGlow)" stroke-width="19" stroke-linecap="round" stroke-linejoin="round" filter="url(#splashGlowFilter)" />
-          <path d="M205 96 L238 70 L231 105" fill="none" stroke="#7dd3fc" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
-          <text x="150" y="222" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#fff">اے زی فلو</text>
+        <svg viewBox="0 0 200 200" style="width: 100%; height: 100%;">
+          <text x="65" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="70" font-weight="900" fill="#fff">A</text>
+          <text x="135" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="70" font-weight="900" fill="#fff">Z</text>
+          <path d="M30 135 L80 105 L115 125 L165 75" fill="none" stroke="#00d9ff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="100" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#fff">اے زی فلو</text>
         </svg>
       </div>
-
       <h1 class="splash-title">AZ Flow <span>⚡</span></h1>
-      <div class="splash-subtitle">Smart Khata &amp; Customer Manager</div>
-
-      <div class="splash-loading-bar-wrap">
-        <div class="splash-loading-bar"></div>
-      </div>
-
-      <div class="splash-tagline">آپ کے کاروبار میں آسانی...</div>
+      <div class="splash-subtitle">اسمارٹ کھاتہ اور کسٹمر مینیجر</div>
+      <div class="splash-loading-bar-wrap"><div class="splash-loading-bar"></div></div>
+      <div style="color: #94a3b8; font-size: 12.5px;">آپ کے کاروبار میں آسانی...</div>
       <div class="splash-powered-by">Powered by Ansar AZ</div>
     </div>
   </div>
 
-
-  <!-- =====================================================
-       MAIN APP CONTAINER
-  ===================================================== -->
+  <!-- Main App Container -->
   <div class="app-container">
 
     <!-- Top Header -->
@@ -863,7 +302,7 @@
         <h1>AZ Flow <span>⚡</span></h1>
         <p>اسمارٹ کھاتہ اور کسٹمر مینیجر • Powered by Ansar AZ</p>
       </div>
-      <div class="header-logo-badge">AZ</div>
+      <div class="header-badge">AZ</div>
     </header>
 
     <!-- Quick Metric Cards -->
@@ -884,11 +323,23 @@
       </div>
     </div>
 
-
-    <!-- =====================================================
-         SCREEN 1: HOME (NEW ENTRY & PRESETS)
-    ===================================================== -->
+    <!-- SCREEN 1: HOME (FORM) -->
     <div id="screenHome" class="screen-view active">
+
+      <!-- WhatsApp Community Group Banner -->
+      <a href="https://chat.whatsapp.com/ESePIIyZUJKAtvm8WJE6Yf?s=cl&p=a&mlu=4&ilr=4&iam=2" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:flex; align-items:center; justify-content:space-between; background:#dcfce7; border:1px solid #86efac; border-radius:var(--radius-md); padding:10px 14px; margin-bottom:14px; box-shadow:0 2px 6px rgba(22,163,74,.12); transition:transform .15s ease;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:18px;">📢</span>
+          <div>
+            <div style="font-size:12.5px; font-weight:900; color:#166534;">آفیشل WhatsApp گروپ جوائن کریں</div>
+            <div style="font-size:10.5px; color:#15803d; font-weight:600;">نئے ممبرز اور اپڈیٹس کے لیے کلک کریں</div>
+          </div>
+        </div>
+        <div style="background:#16a34a; color:#ffffff; font-size:11px; font-weight:800; padding:5px 10px; border-radius:8px;">
+          جوائن کریں ➔
+        </div>
+      </a>
+
       <div class="section-title">
         <span id="formHeaderTitle">➕ نیا گاہک درج کریں (New Customer)</span>
         <button id="cancelEditingBtn" onclick="resetEntryForm()" style="display:none; background:none; border:none; color:var(--expense); font-size:11.5px; font-weight:800; cursor:pointer;">کینسل کریں ✖</button>
@@ -896,7 +347,7 @@
 
       <div class="form-group">
         <label class="form-label">گاہک کا نام (Customer Name) *:</label>
-        <input type="text" id="inputName" class="input-control" placeholder="مثلاً: محمد احمد خان">
+        <input type="text" id="inputName" class="input-control" placeholder="مثلاً: محمد عثمان">
       </div>
 
       <div class="input-row">
@@ -919,10 +370,9 @@
         <input type="text" id="inputWork" class="input-control" placeholder="کام منتخب کریں یا خود لکھیں">
       </div>
 
-      <!-- Quick Categorized Presets -->
+      <!-- Quick Services -->
       <div class="form-group">
         <label class="form-label">تیز ترین سروسز کا انتخاب (Quick Services):</label>
-
         <div class="service-category-tabs">
           <button type="button" class="category-tab-btn active" onclick="activatePresetCategory('nadra', this)">نادرا و سرٹیفکیٹس</button>
           <button type="button" class="category-tab-btn" onclick="activatePresetCategory('online', this)">آن لائن ای-خدمات</button>
@@ -930,7 +380,6 @@
           <button type="button" class="category-tab-btn" onclick="activatePresetCategory('shop', this)">دکان و پرنٹنگ</button>
         </div>
 
-        <!-- Nadra Category -->
         <div id="chips_nadra" class="service-chips-wrap">
           <div class="service-chip-item" onclick="insertServicePreset('سی آر سی (CRC / ب فارم رجسٹریشن)')">+ سی آر سی (B-Form)</div>
           <div class="service-chip-item" onclick="insertServicePreset('ایف آر سی (FRC نادرا فیملی سرٹیفکیٹ)')">+ ایف آر سی (FRC)</div>
@@ -939,7 +388,6 @@
           <div class="service-chip-item" onclick="insertServicePreset('گمشدہ شناختی کارڈ ری پرنٹ')">+ شناختی کارڈ ری پرنٹ</div>
         </div>
 
-        <!-- Online Category -->
         <div id="chips_online" class="service-chips-wrap" style="display:none;">
           <div class="service-chip-item" onclick="insertServicePreset('آن لائن پاسپورٹ فیس و ٹوکن چالان')">+ آن لائن پاسپورٹ</div>
           <div class="service-chip-item" onclick="insertServicePreset('پولیس کریکٹر سرٹیفکیٹ تصدیق')">+ پولیس کریکٹر تصدیق</div>
@@ -948,7 +396,6 @@
           <div class="service-chip-item" onclick="insertServicePreset('آن لائن جاب / داخلہ فارم')">+ جاب / داخلہ فارم</div>
         </div>
 
-        <!-- Legal Category -->
         <div id="chips_legal" class="service-chips-wrap" style="display:none;">
           <div class="service-chip-item" onclick="insertServicePreset('نکاح نامہ کمپیوٹرائزڈ تصدیق')">+ نکاح نامہ</div>
           <div class="service-chip-item" onclick="insertServicePreset('تاریخ پیدائش سرٹیفکیٹ (Birth Certificate)')">+ تاریخ پیدائش</div>
@@ -957,7 +404,6 @@
           <div class="service-chip-item" onclick="insertServicePreset('طلاق موثر سرٹیفکیٹ')">+ طلاق سرٹیفکیٹ</div>
         </div>
 
-        <!-- Shop Category -->
         <div id="chips_shop" class="service-chips-wrap" style="display:none;">
           <div class="service-chip-item" onclick="insertServicePreset('فوری فوٹو شوٹ و ویزا سائز تصاویر')">+ فوٹو شوٹ و پرنٹنگ</div>
           <div class="service-chip-item" onclick="insertServicePreset('فلیکس، بینر و کارڈ ڈیزائننگ')">+ فلیکس و ڈیزائننگ</div>
@@ -977,13 +423,12 @@
         </div>
       </div>
 
-      <!-- Real-time Profit Preview Card -->
-      <div class="profit-calculation-card">
+      <div class="profit-calc-card">
         <div>
-          <div class="profit-calc-label">حساب شدہ خالص منافع (Calculated Net Profit):</div>
+          <div style="font-size:11.5px; color:var(--profit); font-weight:700;">حساب شدہ خالص منافع (Calculated Net Profit):</div>
           <div style="font-size:10.5px; color:#64748b;" id="profitMarginPercentLabel">مارجن: 0%</div>
         </div>
-        <div class="profit-calc-val" id="profitPreviewBadge">Rs. 0</div>
+        <div style="font-size:17px; color:var(--profit); font-weight:900;" id="profitPreviewBadge">Rs. 0</div>
       </div>
 
       <div class="form-group">
@@ -999,14 +444,11 @@
       </button>
     </div>
 
-
-    <!-- =====================================================
-         SCREEN 2: RECORDS LIST & SEARCH
-    ===================================================== -->
+    <!-- SCREEN 2: RECORDS -->
     <div id="screenRecords" class="screen-view">
       <div class="section-title">
         <span>👥 تمام گاہکوں کا کھاتہ و ریکارڈ</span>
-        <span style="font-size:11.5px; color:var(--text-muted);" id="recordsTotalBadge">کل: 0</span>
+        <span style="font-size:11.5px; color:var(--muted);" id="recordsTotalBadge">کل: 0</span>
       </div>
 
       <div class="form-group">
@@ -1019,41 +461,35 @@
           <button class="category-tab-btn" id="tabFilterDone" onclick="setRecordFilter('done', this)">✅ مکمل</button>
           <button class="category-tab-btn" id="tabFilterPending" onclick="setRecordFilter('pending', this)">⏳ جاری ہے</button>
         </div>
-
-        <button class="category-tab-btn" onclick="exportToCsvFile()" title="Excel / CSV فائل ڈاؤن لوڈ کریں">
-          📊 Excel شیٹ
-        </button>
+        <button class="category-tab-btn" onclick="exportToCsvFile()">📊 Excel شیٹ</button>
       </div>
 
-      <div id="customerRecordsContainer" style="max-height: 460px; overflow-y: auto; padding-left: 2px;"></div>
+      <div id="customerRecordsContainer" style="max-height: 480px; overflow-y: auto; padding-left: 2px;"></div>
     </div>
 
-
-    <!-- =====================================================
-         SCREEN 3: ANALYTICS & FINANCIAL REPORTS
-    ===================================================== -->
+    <!-- SCREEN 3: ANALYTICS -->
     <div id="screenAnalytics" class="screen-view">
       <div class="section-title">📊 مالیاتی تجزیہ و کاروباری رپورٹس</div>
 
-      <div class="analytics-panel" style="background: linear-gradient(135deg, #020617, #06152e); color:#ffffff; border-color:rgba(56, 189, 248, .3);">
-        <div style="font-size:12px; color:#94a3b8; font-weight:700;">خالص منافع (Net Profit)</div>
-        <div style="font-size:26px; font-weight:900; color:#34d399; margin:4px 0 10px;" id="anaTotalProfit">Rs. 0</div>
-        <div style="font-size:12px; color:#cbd5e1; font-weight:600;" id="anaMarginRate">منافع کی شرح (Margin Rate): 0%</div>
+      <div style="background: linear-gradient(135deg, #020617, #06152e); color:#ffffff; border-radius:var(--radius-lg); padding:14px; margin-bottom:12px; border:1px solid rgba(56,189,248,.3);">
+        <div style="font-size:12px; color:#94a3b8; font-weight:700;">کل خالص منافع (Net Profit)</div>
+        <div style="font-size:26px; font-weight:900; color:#34d399; margin:4px 0 8px;" id="anaTotalProfit">Rs. 0</div>
+        <div style="font-size:12px; color:#cbd5e1;" id="anaMarginRate">منافع کی شرح (Margin Rate): 0%</div>
       </div>
 
-      <div class="analytics-panel">
-        <div style="font-weight:800; font-size:13px; margin-bottom:8px; color:var(--text-main);">📈 مالیاتی موازنہ گراف</div>
-        <div class="chart-container-bar">
-          <div class="bar-column">
-            <div class="bar-shape" id="chartRevenueBar" style="height:10px; background:var(--primary);"></div>
+      <div style="background:#f8fafc; border:1px solid var(--border-light); border-radius:var(--radius-lg); padding:14px; margin-bottom:12px;">
+        <div style="font-weight:800; font-size:13px; margin-bottom:8px;">📈 مالیاتی موازنہ گراف</div>
+        <div style="display:flex; align-items:flex-end; justify-content:space-around; height:120px; padding:10px 0 6px; border-bottom:1px solid var(--border); margin-bottom:10px;">
+          <div style="display:flex; flex-direction:column; align-items:center; gap:5px;">
+            <div id="chartRevenueBar" style="width:46px; border-radius:8px 8px 0 0; background:var(--primary); height:10px; min-height:8px;"></div>
             <div style="font-size:10.5px; font-weight:700;">آمدنی</div>
           </div>
-          <div class="bar-column">
-            <div class="bar-shape" id="chartCostBar" style="height:10px; background:var(--expense);"></div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:5px;">
+            <div id="chartCostBar" style="width:46px; border-radius:8px 8px 0 0; background:var(--expense); height:10px; min-height:8px;"></div>
             <div style="font-size:10.5px; font-weight:700;">لاگت</div>
           </div>
-          <div class="bar-column">
-            <div class="bar-shape" id="chartProfitBar" style="height:10px; background:var(--profit);"></div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:5px;">
+            <div id="chartProfitBar" style="width:46px; border-radius:8px 8px 0 0; background:var(--profit); height:10px; min-height:8px;"></div>
             <div style="font-size:10.5px; font-weight:700;">منافع</div>
           </div>
         </div>
@@ -1064,8 +500,8 @@
         </div>
       </div>
 
-      <div class="analytics-panel">
-        <div style="font-weight:800; font-size:13px; margin-bottom:8px; color:var(--text-main);">🛠️ کاموں کی تکمیل کی شرح</div>
+      <div style="background:#f8fafc; border:1px solid var(--border-light); border-radius:var(--radius-lg); padding:14px;">
+        <div style="font-weight:800; font-size:13px; margin-bottom:8px;">🛠️ کاموں کی تکمیل کی شرح</div>
         <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px;">
           <span>مکمل کام: <b id="anaDoneCountVal" style="color:var(--profit);">0</b></span>
           <span>زیرِ تکمیل کام: <b id="anaPendingCountVal" style="color:var(--pending);">0</b></span>
@@ -1076,89 +512,84 @@
       </div>
     </div>
 
-
-    <!-- =====================================================
-         SCREEN 4: SETTINGS & BACKUP MANAGER
-    ===================================================== -->
+    <!-- SCREEN 4: SETTINGS -->
     <div id="screenSettings" class="screen-view">
       <div class="section-title">⚙️ ایپ کی سیٹنگز و بیک اپ</div>
 
-      <div class="settings-group-card" style="background:#eff6ff; border-color:#93c5fd;">
-        <h3 style="color:#0369a1;">🔐 مستقل ڈیٹا بیس اور بیک اپ</h3>
-        <p>آپ کا ریکارڈ موبائل کی اسٹوریج میں مستقل محفوظ ہے۔ حفاظت کے لیے JSON یا Excel فائل ڈاؤن لوڈ کر کے اپنے پاس محفوظ رکھیں۔</p>
+      <div style="background:#eff6ff; border:1px solid #93c5fd; border-radius:var(--radius-lg); padding:14px; margin-bottom:12px;">
+        <h3 style="color:#0369a1; font-size:13.5px; margin-bottom:5px;">🔐 مستقل ڈیٹا بیس اور بیک اپ</h3>
+        <p style="font-size:11.5px; color:var(--muted); margin-bottom:10px;">آپ کا ڈیٹا مستقل محفوظ ہے۔ حفاظت کے لیے فائل ڈاؤن لوڈ کریں۔</p>
         <button class="btn btn-success" onclick="downloadBackupFile()" style="margin-bottom:8px;">
           <span>📤</span> ڈیٹا بیک اپ ڈاؤن لوڈ کریں (JSON)
         </button>
-
         <label class="btn btn-outline" style="cursor:pointer; width:100%;">
           <span>📥</span> بیک اپ فائل سے Restore کریں
           <input type="file" id="fileRestoreInput" accept=".json,application/json" style="display:none" onchange="restoreBackupFile(event)">
         </label>
       </div>
 
-      <div class="settings-group-card" style="background:#ecfdf5; border-color:#86efac;">
-        <h3 style="color:#166534;">📞 ایڈمن سے رابطہ (Contact Support)</h3>
-        <p>کسی بھی مدد، رہنمائی یا ایپ سے متعلق سوال کے لیے ایڈمن Ansar AZ سے WhatsApp پر رابطہ کریں۔</p>
-        <a href="https://wa.me/923298191689?text=السلام%20علیکم%20Ansar%20AZ!%20AZ%20Flow%20ایپ" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
-          <span>💬</span> WhatsApp پر رابطہ کریں (03298191689)
+      <!-- WhatsApp Official Group Card -->
+      <div style="background:#f0fdf4; border:1px solid #86efac; border-radius:var(--radius-lg); padding:14px; margin-bottom:12px;">
+        <h3 style="color:#15803d; font-size:13.5px; margin-bottom:5px;">🌐 آفیشل WhatsApp گروپ (Join Community)</h3>
+        <p style="font-size:11.5px; color:var(--muted); margin-bottom:10px;">نئے ممبرز اور تمام کاروباری بھائیوں کے لیے رہنمائی، کسٹمر سروسز اور نئی اپڈیٹس کے لیے ہمارا آفیشل واٹس ایپ گروپ جوائن کریں۔</p>
+        <a href="https://chat.whatsapp.com/ESePIIyZUJKAtvm8WJE6Yf?s=cl&p=a&mlu=4&ilr=4&iam=2" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+          <span>👥</span> آفیشل واٹس ایپ گروپ جوائن کریں
         </a>
-        <div style="text-align:center; font-size:12px; font-weight:800; color:#166534; margin-top:8px;">Admin: Ansar AZ (03298191689)</div>
       </div>
 
-      <div class="settings-group-card">
-        <h3>🌟 ڈیمو کسٹمرز لوڈ کریں</h3>
-        <p>ایپ کی کارکردگی جانچنے کے لیے سی آر سی، ایف آر سی، نکاح نامہ، تاریخ پیدائش وغیرہ کا نمونہ ڈیٹا شامل کریں۔</p>
-        <button class="btn" onclick="populateDemoRecords()" style="background:var(--primary);">
-          <span>🔄</span> ڈیمو ریکارڈز لوڈ کریں
-        </button>
+      <div style="background:#ecfdf5; border:1px solid #86efac; border-radius:var(--radius-lg); padding:14px; margin-bottom:12px;">
+        <h3 style="color:#166534; font-size:13.5px; margin-bottom:5px;">📞 ایڈمن سے رابطہ (Support)</h3>
+        <p style="font-size:11.5px; color:var(--muted); margin-bottom:10px;">ایڈمن Ansar AZ سے براہ راست WhatsApp پر رابطہ کریں۔</p>
+        <a href="https://wa.me/923298191689?text=السلام%20علیکم%20Ansar%20AZ!%20AZ%20Flow%20ایپ" target="_blank" class="btn btn-whatsapp">
+          <span>💬</span> WhatsApp رابطہ (03298191689)
+        </a>
       </div>
 
-      <div class="settings-group-card">
-        <h3>📱 ایپ کی تفصیلات</h3>
-        <p>
-          <b>AZ Flow ⚡</b> ورژن 14.0 (پروفیشنل)<br>
-          ایڈمن و ڈویلپر: Ansar AZ<br>
-          لوکل اسٹوریج: SQLite / Local Storage (100% آف لائن فعال)
+      <div style="background:#f8fafc; border:1px solid var(--border-light); border-radius:var(--radius-lg); padding:14px; margin-bottom:12px;">
+        <h3 style="font-size:13.5px; margin-bottom:5px;">🌟 ڈیمو کسٹمرز لوڈ کریں</h3>
+        <p style="font-size:11.5px; color:var(--muted); margin-bottom:10px;">سی آر سی، ایف آر سی، نکاح نامہ وغیرہ کے نمونہ ریکارڈز شامل کریں۔</p>
+        <button class="btn" onclick="populateDemoRecords()"><span>🔄</span> ڈیمو ریکارڈز لوڈ کریں</button>
+      </div>
+
+      <div style="background:#f8fafc; border:1px solid var(--border-light); border-radius:var(--radius-lg); padding:14px; margin-bottom:12px;">
+        <h3 style="font-size:13.5px; margin-bottom:4px;">📱 ایپ تفصیلات</h3>
+        <p style="font-size:11.5px; color:var(--muted); line-height:1.6;">
+          <b>AZ Flow ⚡</b> ورژن 15.0 (پروفیشنل)<br>
+          ڈویلپر و ایڈمن: <b>Ansar AZ</b><br>
+          مستقل لوکل اسٹوریج فعال ہے (100% آف لائن فعال)
         </p>
-        <div class="powered-by-box">⚡ Powered by Ansar AZ</div>
+        <div style="background:#eff6ff; border:1.5px dashed var(--primary-light); border-radius:8px; padding:8px; text-align:center; font-weight:800; color:var(--primary); font-size:12.5px; margin-top:8px;">
+          ⚡ Powered by Ansar AZ
+        </div>
       </div>
 
-      <div class="settings-group-card" style="border-color:#fca5a5;">
-        <h3 style="color:var(--expense);">⚠️ ڈیٹا ڈیلیٹ کنٹرول</h3>
-        <p>یہ بٹن تمام کسٹمرز کا کھاتہ ہمیشہ کے لیے ختم کر دے گا۔ پہلے بیک اپ لے لیں۔</p>
-        <button class="btn btn-danger" onclick="wipeAllData()">
-          <span>🗑️</span> تمام ڈیٹا ڈیلیٹ کریں
-        </button>
+      <div style="border:1px solid #fca5a5; border-radius:var(--radius-lg); padding:14px; background:#fff1f2;">
+        <h3 style="color:var(--expense); font-size:13.5px; margin-bottom:5px;">⚠️ ڈیٹا ڈیلیٹ کنٹرول</h3>
+        <button class="btn btn-danger" onclick="wipeAllData()"><span>🗑️</span> تمام ڈیٹا ڈیلیٹ کریں</button>
       </div>
 
-      <div style="text-align:center; font-weight:800; font-size:13.5px; color:var(--primary); margin:18px 0 25px; letter-spacing:0.5px;">
+      <div style="text-align:center; font-weight:800; font-size:13px; color:var(--primary); margin:18px 0 25px;">
         Powered by Ansar AZ
       </div>
     </div>
 
   </div>
 
-
-  <!-- =====================================================
-       CUSTOMER INVOICE / RECEIPT MODAL
-  ===================================================== -->
+  <!-- RECEIPT MODAL -->
   <div id="invoiceModal" class="modal-backdrop">
     <div class="invoice-modal">
       <div id="printArea">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
           <div>
             <h2 style="color:var(--primary); font-size:18px; font-weight:900;">AZ Flow ⚡</h2>
-            <div style="font-size:11px; color:var(--text-muted);">اسمارٹ کسٹمر رسید / انوائس</div>
+            <div style="font-size:11px; color:var(--muted);">اسمارٹ کسٹمر رسید / انوائس سِلپ</div>
           </div>
-          <button onclick="dismissReceiptModal()" style="background:none; border:none; font-size:20px; cursor:pointer; color:var(--text-muted);">✖</button>
+          <button onclick="dismissReceiptModal()" style="background:none; border:none; font-size:22px; cursor:pointer; color:var(--muted);">✖</button>
         </div>
-
-        <hr style="border:none; border-top:1px dashed var(--border-color); margin-bottom:12px;">
-
-        <div id="receiptContentDetails" style="font-size:12.5px; line-height:1.7; color:#1e293b;"></div>
+        <hr style="border:none; border-top:1px dashed var(--border); margin-bottom:10px;">
+        <div id="receiptContentDetails" style="font-size:12.5px; line-height:1.7;"></div>
       </div>
-
-      <div style="display:flex; gap:8px; margin-top:16px;">
+      <div style="display:flex; gap:8px; margin-top:14px;">
         <button class="btn btn-whatsapp" id="btnShareWhatsAppReceipt" style="flex:2;">
           <span>💬</span> WhatsApp پر بھیجیں
         </button>
@@ -1169,19 +600,13 @@
     </div>
   </div>
 
-
-  <!-- =====================================================
-       TOAST NOTIFICATION BOX
-  ===================================================== -->
+  <!-- Toast -->
   <div id="toastMessage">
     <span id="toastIcon">✅</span>
     <span id="toastText">پیغام محفوظ ہو گیا!</span>
   </div>
 
-
-  <!-- =====================================================
-       BOTTOM NAVIGATION BAR
-  ===================================================== -->
+  <!-- Bottom Navigation -->
   <nav class="bottom-navbar">
     <button class="bottom-nav-item active" onclick="switchActiveScreen('Home', this)">
       <span>🏠</span> ہوم
@@ -1197,29 +622,22 @@
     </button>
   </nav>
 
-
-  <!-- =====================================================
-       JAVASCRIPT APPLICATION ENGINE
-  ===================================================== -->
   <script>
     const MASTER_STORAGE_KEY = "az_flow_permanent_master_records";
     let customerRecords = [];
     let activeEditingId = null;
     let currentFilterStatus = 'all';
 
-    /* LOAD DATA */
     function loadStorageData() {
       try {
         const raw = localStorage.getItem(MASTER_STORAGE_KEY);
         customerRecords = raw ? JSON.parse(raw) : [];
         if (!Array.isArray(customerRecords)) customerRecords = [];
       } catch (err) {
-        console.error("Storage loading error:", err);
         customerRecords = [];
       }
     }
 
-    /* SAVE DATA */
     function commitStorageData() {
       try {
         localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(customerRecords));
@@ -1230,59 +648,50 @@
       }
     }
 
-    /* TOAST ALERT */
     function showToast(message, icon = "✅") {
       const toast = document.getElementById("toastMessage");
       document.getElementById("toastIcon").innerText = icon;
       document.getElementById("toastText").innerText = message;
       toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 2600);
+      setTimeout(() => toast.classList.remove("show"), 2500);
     }
 
-    /* SCREEN SWITCHER */
-    function switchActiveScreen(screenName, buttonEl) {
-      document.querySelectorAll(".screen-view").forEach(view => view.classList.remove("active"));
-      document.querySelectorAll(".bottom-nav-item").forEach(btn => btn.classList.remove("active"));
-
+    function switchActiveScreen(screenName, btnEl) {
+      document.querySelectorAll(".screen-view").forEach(v => v.classList.remove("active"));
+      document.querySelectorAll(".bottom-nav-item").forEach(b => b.classList.remove("active"));
       document.getElementById("screen" + screenName).classList.add("active");
-      if (buttonEl) buttonEl.classList.add("active");
-
+      if (btnEl) btnEl.classList.add("active");
       if (screenName === "Records") renderRecordsList();
       if (screenName === "Analytics") computeAndRenderAnalytics();
       refreshDashboardMetrics();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    /* PRESET CATEGORIES */
     function activatePresetCategory(catKey, tabBtn) {
       document.querySelectorAll(".category-tab-btn").forEach(t => t.classList.remove("active"));
       tabBtn.classList.add("active");
-
       document.getElementById("chips_nadra").style.display = (catKey === 'nadra') ? 'flex' : 'none';
       document.getElementById("chips_online").style.display = (catKey === 'online') ? 'flex' : 'none';
       document.getElementById("chips_legal").style.display = (catKey === 'legal') ? 'flex' : 'none';
       document.getElementById("chips_shop").style.display = (catKey === 'shop') ? 'flex' : 'none';
     }
 
-    function insertServicePreset(serviceName) {
-      const workInput = document.getElementById("inputWork");
-      const current = workInput.value.trim();
-      workInput.value = current ? current + " ، " + serviceName : serviceName;
-      showToast(`شامل کیا گیا: ${serviceName}`, "➕");
+    function insertServicePreset(name) {
+      const el = document.getElementById("inputWork");
+      const cur = el.value.trim();
+      el.value = cur ? cur + " ، " + name : name;
+      showToast(`شامل کیا گیا: ${name}`, "➕");
     }
 
-    /* LIVE PROFIT & MARGIN CALCULATION */
     function updateLiveProfitPreview() {
       const amt = parseFloat(document.getElementById("inputAmount").value) || 0;
       const fee = parseFloat(document.getElementById("inputFee").value) || 0;
       const profit = amt - fee;
       const margin = amt > 0 ? ((profit / amt) * 100).toFixed(1) : 0;
-
       document.getElementById("profitPreviewBadge").innerText = "Rs. " + profit.toLocaleString();
       document.getElementById("profitMarginPercentLabel").innerText = `مارجن: ${margin}%`;
     }
 
-    /* SAVE / EDIT CUSTOMER */
     function submitCustomerForm() {
       const name = document.getElementById("inputName").value.trim();
       const phone1 = document.getElementById("inputPhone1").value.trim();
@@ -1293,29 +702,19 @@
       const fee = parseFloat(document.getElementById("inputFee").value) || 0;
       const status = document.getElementById("inputStatus").value;
 
-      if (!name) {
-        showToast("گاہک کا نام درج کریں!", "⚠️");
-        return;
-      }
-      if (amount <= 0) {
-        showToast("درست وصولی رقم درج کریں!", "⚠️");
-        return;
-      }
+      if (!name) { showToast("گاہک کا نام درج کریں!", "⚠️"); return; }
+      if (amount <= 0) { showToast("درست وصولی رقم درج کریں!", "⚠️"); return; }
 
       const profit = amount - fee;
 
       if (activeEditingId !== null) {
         customerRecords = customerRecords.map(item => {
           if (item.id === activeEditingId) {
-            return {
-              ...item,
-              name, phone1, phone2, phone3, work, amount, fee, profit, status,
-              updatedAt: new Date().toISOString()
-            };
+            return { ...item, name, phone1, phone2, phone3, work, amount, fee, profit, status, updatedAt: new Date().toISOString() };
           }
           return item;
         });
-        showToast("ریکارڈ کامیابی سے اپڈیٹ ہو گیا!", "✏️");
+        showToast("ریکارڈ اپڈیٹ ہو گیا!", "✏️");
       } else {
         const newRecord = {
           id: Date.now() + Math.floor(Math.random() * 1000),
@@ -1333,7 +732,6 @@
       switchActiveScreen("Records", document.querySelectorAll(".bottom-nav-item")[1]);
     }
 
-    /* RESET FORM */
     function resetEntryForm() {
       document.getElementById("inputName").value = "";
       document.getElementById("inputPhone1").value = "";
@@ -1345,70 +743,60 @@
       document.getElementById("inputStatus").value = "مکمل ہو گیا";
       document.getElementById("profitPreviewBadge").innerText = "Rs. 0";
       document.getElementById("profitMarginPercentLabel").innerText = "مارجن: 0%";
-
       activeEditingId = null;
       document.getElementById("formHeaderTitle").innerText = "➕ نیا گاہک درج کریں (New Customer)";
       document.getElementById("saveRecordBtn").innerHTML = `<span>💾</span> ریکارڈ محفوظ کریں (Save Record)`;
       document.getElementById("cancelEditingBtn").style.display = "none";
     }
 
-    /* EDIT RECORD */
-    function startEditingRecord(recordId) {
-      const target = customerRecords.find(r => r.id === recordId);
-      if (!target) return;
-
-      document.getElementById("inputName").value = target.name || "";
-      document.getElementById("inputPhone1").value = target.phone1 || "";
-      document.getElementById("inputPhone2").value = target.phone2 || "";
-      document.getElementById("inputPhone3").value = target.phone3 || "";
-      document.getElementById("inputWork").value = target.work || "";
-      document.getElementById("inputAmount").value = target.amount || 0;
-      document.getElementById("inputFee").value = target.fee || 0;
-      document.getElementById("inputStatus").value = target.status || "مکمل ہو گیا";
+    function startEditingRecord(id) {
+      const t = customerRecords.find(r => r.id === id);
+      if (!t) return;
+      document.getElementById("inputName").value = t.name || "";
+      document.getElementById("inputPhone1").value = t.phone1 || "";
+      document.getElementById("inputPhone2").value = t.phone2 || "";
+      document.getElementById("inputPhone3").value = t.phone3 || "";
+      document.getElementById("inputWork").value = t.work || "";
+      document.getElementById("inputAmount").value = t.amount || 0;
+      document.getElementById("inputFee").value = t.fee || 0;
+      document.getElementById("inputStatus").value = t.status || "مکمل ہو گیا";
       updateLiveProfitPreview();
-
-      activeEditingId = recordId;
+      activeEditingId = id;
       document.getElementById("formHeaderTitle").innerText = "✏️ ریکارڈ میں ترمیم کریں (Edit Customer)";
       document.getElementById("saveRecordBtn").innerHTML = `<span>💾</span> تبدیلی محفوظ کریں (Update)`;
       document.getElementById("cancelEditingBtn").style.display = "inline";
-
       switchActiveScreen("Home", document.querySelectorAll(".bottom-nav-item")[0]);
     }
 
-    /* DELETE RECORD */
-    function removeCustomerRecord(recordId) {
+    function removeCustomerRecord(id) {
       if (!confirm("کیا آپ واقعی یہ ریکارڈ ڈیلیٹ کرنا چاہتے ہیں؟")) return;
-      customerRecords = customerRecords.filter(r => r.id !== recordId);
-      if (activeEditingId === recordId) resetEntryForm();
+      customerRecords = customerRecords.filter(r => r.id !== id);
+      if (activeEditingId === id) resetEntryForm();
       commitStorageData();
       renderRecordsList();
       refreshDashboardMetrics();
       showToast("ریکارڈ ڈیلیٹ کر دیا گیا", "🗑️");
     }
 
-    /* FILTER STATUS */
-    function setRecordFilter(statusKey, btnElement) {
-      currentFilterStatus = statusKey;
+    function setRecordFilter(key, btn) {
+      currentFilterStatus = key;
       document.querySelectorAll("#tabFilterAll, #tabFilterDone, #tabFilterPending").forEach(b => b.classList.remove("active"));
-      btnElement.classList.add("active");
+      btn.classList.add("active");
       renderRecordsList();
     }
 
-    /* RENDER RECORDS LIST */
     function renderRecordsList() {
       const container = document.getElementById("customerRecordsContainer");
       const query = (document.getElementById("searchFilterBox").value || "").trim().toLowerCase();
       container.innerHTML = "";
 
-      let filtered = customerRecords.filter(item => {
-        const matchesQuery =
-          (item.name || "").toLowerCase().includes(query) ||
-          (item.work || "").toLowerCase().includes(query) ||
-          (item.phone1 || "").includes(query) ||
-          (item.phone2 || "").includes(query) ||
-          (item.phone3 || "").includes(query);
-
-        if (!matchesQuery) return false;
+      const filtered = customerRecords.filter(item => {
+        const matches = (item.name || "").toLowerCase().includes(query) ||
+                        (item.work || "").toLowerCase().includes(query) ||
+                        (item.phone1 || "").includes(query) ||
+                        (item.phone2 || "").includes(query) ||
+                        (item.phone3 || "").includes(query);
+        if (!matches) return false;
         if (currentFilterStatus === 'done') return item.status === "مکمل ہو گیا";
         if (currentFilterStatus === 'pending') return item.status === "جاری ہے";
         return true;
@@ -1417,53 +805,56 @@
       document.getElementById("recordsTotalBadge").innerText = "کل: " + filtered.length;
 
       if (filtered.length === 0) {
-        container.innerHTML = `
-          <div style="text-align:center; padding:40px 10px; color:var(--text-muted); font-size:12.5px;">
-            <div style="font-size:32px; margin-bottom:8px;">📂</div>
-            کوئی مماثل کسٹمر ریکارڈ موجود نہیں ہے
-          </div>`;
+        container.innerHTML = `<div style="text-align:center; padding:35px 10px; color:var(--muted); font-size:12.5px;"><div style="font-size:32px; margin-bottom:8px;">📂</div>کوئی مماثل کسٹمر ریکارڈ موجود نہیں ہے</div>`;
         return;
       }
 
       filtered.forEach(item => {
         const isDone = item.status === "مکمل ہو گیا";
         const initial = (item.name || "A").trim().charAt(0);
-        const phonesJoined = [item.phone1, item.phone2, item.phone3].filter(Boolean).join(" • ");
+        const phones = [item.phone1, item.phone2, item.phone3].filter(Boolean).join(" • ");
 
         const card = document.createElement("div");
         card.className = "record-card";
         card.innerHTML = `
-          <div class="record-card-actions">
-            <button class="icon-btn" onclick="openInvoiceSlip(${item.id})" title="رسید دیکھیں">📄</button>
-            <button class="icon-btn" onclick="startEditingRecord(${item.id})" title="ترمیم">✏️</button>
-            <button class="icon-btn" onclick="removeCustomerRecord(${item.id})" title="ڈیلیٹ" style="color:var(--expense);">🗑️</button>
-          </div>
-
           <div class="record-card-top">
             <div class="customer-avatar-name">
-              <div class="customer-avatar">${escapeHtmlStr(initial)}</div>
+              <div class="customer-avatar">${escapeHtml(initial)}</div>
               <div class="customer-info">
-                <h4>${escapeHtmlStr(item.name)}</h4>
-                ${phonesJoined ? `<span>📞 ${escapeHtmlStr(phonesJoined)}</span>` : ''}
+                <h4>${escapeHtml(item.name)}</h4>
+                ${phones ? `<span>📞 ${escapeHtml(phones)}</span>` : ''}
               </div>
             </div>
-            <span class="status-pill ${isDone ? 'done' : 'pending'}">${escapeHtmlStr(item.status)}</span>
+            <span class="status-pill ${isDone ? 'done' : 'pending'}">${isDone ? '✅ کام مکمل ہو گیا' : '⏳ کام جاری ہے'}</span>
           </div>
 
           <div class="record-work-line">
-            🛠️ <b>${escapeHtmlStr(item.work || "کام مقرر نہیں")}</b>
+            🛠️ <b>${escapeHtml(item.work || "کام مقرر نہیں")}</b>
           </div>
 
-          <div class="record-financial-bar">
-            <span>وصولی: Rs. ${Number(item.amount || 0).toLocaleString()} | لاگت: <span style="color:var(--expense);">Rs. ${Number(item.fee || 0).toLocaleString()}</span></span>
-            <span style="color:var(--profit);">منافع: Rs. ${Number(item.profit || 0).toLocaleString()}</span>
+          <div class="record-financial-grid">
+            <div class="fin-col">
+              <span class="fin-title">کل وصولی فیس</span>
+              <span class="fin-val val-rev">Rs. ${Number(item.amount || 0).toLocaleString()}</span>
+            </div>
+            <div class="fin-col">
+              <span class="fin-title">لاگت فیس (خرچ)</span>
+              <span class="fin-val val-cost">Rs. ${Number(item.fee || 0).toLocaleString()}</span>
+            </div>
+            <div class="fin-col">
+              <span class="fin-title">باقی خالص منافع</span>
+              <span class="fin-val val-profit">Rs. ${Number(item.profit || 0).toLocaleString()}</span>
+            </div>
           </div>
 
-          <div style="font-size:10px; color:var(--text-muted); margin-top:6px; display:flex; justify-content:space-between; align-items:center;">
-            <span>📅 ${escapeHtmlStr(item.date || "")}</span>
-            <div style="display:flex; gap:8px;">
-              ${item.phone1 ? `<a href="tel:${item.phone1}" style="text-decoration:none; color:var(--primary); font-weight:800;">📞 کال</a>` : ''}
-              ${item.phone1 ? `<a href="https://wa.me/92${item.phone1.replace(/[^0-9]/g,'').replace(/^0/,'')}?text=محترم%20${encodeURIComponent(item.name)}%20صاحب!%20آپ%20کا%20کام:%20${encodeURIComponent(item.work)}%20کا%20بل%20Rs.%20${item.amount}%20ہے۔%20شکریہ!%20(Powered%20by%20Ansar%20AZ)" target="_blank" style="text-decoration:none; color:var(--whatsapp); font-weight:800;">💬 WhatsApp</a>` : ''}
+          <div class="record-bottom-bar">
+            <span style="font-size:11.5px; color:var(--muted); font-weight:700;">📅 ${escapeHtml(item.date || "")}</span>
+            <div class="record-actions-group">
+              ${item.phone1 ? `<a href="tel:${item.phone1}" class="icon-btn" title="کال کریں" style="text-decoration:none;">📞</a>` : ''}
+              ${item.phone1 ? `<a href="https://wa.me/92${item.phone1.replace(/[^0-9]/g,'').replace(/^0/,'')}?text=محترم%20${encodeURIComponent(item.name)}%20صاحب!%20آپ%20کا%20کام:%20${encodeURIComponent(item.work)}%20کا%20کل%20بل%20Rs.%20${item.amount}%20ہے۔%20شکریہ!" target="_blank" class="btn-whatsapp-pill">💬 WhatsApp</a>` : ''}
+              <button class="btn-receipt-pill" onclick="openInvoiceSlip(${item.id})">📄 رسید دیکھیں</button>
+              <button class="icon-btn" onclick="startEditingRecord(${item.id})" title="ترمیم">✏️</button>
+              <button class="icon-btn" onclick="removeCustomerRecord(${item.id})" title="ڈیلیٹ" style="color:var(--expense);">🗑️</button>
             </div>
           </div>
         `;
@@ -1471,39 +862,58 @@
       });
     }
 
-    /* DIGITAL RECEIPT INVOICE */
     function openInvoiceSlip(recordId) {
       const item = customerRecords.find(x => x.id === recordId);
       if (!item) return;
 
-      const detailsDiv = document.getElementById("receiptContentDetails");
-      detailsDiv.innerHTML = `
-        <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+      const isDone = item.status === "مکمل ہو گیا";
+      const statusText = isDone ? "✅ کام مکمل ہو گیا" : "⏳ کام جاری ہے";
+      const div = document.getElementById("receiptContentDetails");
+
+      div.innerHTML = `
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:12px;">
           <span><b>رسید نمبر:</b> #${item.id.toString().slice(-6)}</span>
-          <span><b>تاریخ:</b> ${escapeHtmlStr(item.date || "")}</span>
+          <span><b>تاریخ:</b> ${escapeHtml(item.date || "")}</span>
         </div>
-        <div style="margin-bottom:4px;"><b>گاہک کا نام:</b> ${escapeHtmlStr(item.name)}</div>
-        ${item.phone1 ? `<div style="margin-bottom:4px;"><b>موبائل:</b> ${escapeHtmlStr(item.phone1)}</div>` : ''}
-        <div style="margin-bottom:8px;"><b>کام کی تفصیل:</b> ${escapeHtmlStr(item.work || "سروس چارجز")}</div>
-
-        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:8px 10px; margin:8px 0;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-            <span>وصولی بل:</span>
-            <b>Rs. ${Number(item.amount).toLocaleString()}</b>
-          </div>
-          <div style="display:flex; justify-content:space-between; color:var(--text-muted); font-size:11.5px;">
-            <span>حالت:</span>
-            <b>${escapeHtmlStr(item.status)}</b>
-          </div>
+        <div style="margin-bottom:4px; font-size:14px;"><b>گاہک کا نام:</b> ${escapeHtml(item.name)}</div>
+        ${item.phone1 ? `<div style="margin-bottom:4px; color:var(--muted);"><b>موبائل نمبر:</b> ${escapeHtml(item.phone1)}</div>` : ''}
+        <div style="margin-bottom:10px; background:#f1f5f9; padding:7px 10px; border-radius:8px;">
+          <b>🛠️ کام کی تفصیل:</b> ${escapeHtml(item.work || "سروس چارجز")}
         </div>
 
-        <div style="text-align:center; font-size:10.5px; color:var(--text-muted); margin-top:10px;">
-          شکریہ! Powered by Ansar AZ (03298191689)
+        <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:12px; padding:12px 14px; margin:10px 0;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px;">
+            <span style="font-weight:700; color:#334155;">1. کل وصولی فیس (Total Received):</span>
+            <b style="color:var(--primary); font-size:15px; font-weight:900;">Rs. ${Number(item.amount || 0).toLocaleString()}</b>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px;">
+            <span style="font-weight:700; color:#334155;">2. سرکاری فیس / لاگت (Cost Fee):</span>
+            <b style="color:var(--expense); font-size:15px; font-weight:900;">Rs. ${Number(item.fee || 0).toLocaleString()}</b>
+          </div>
+          <hr style="border:none; border-top:1.5px dashed #cbd5e1; margin:10px 0;">
+          <div style="display:flex; justify-content:space-between; font-size:14px; align-items:center;">
+            <span style="font-weight:900; color:#0f172a;">3. باقی رقم / خالص بچت (Net Remaining):</span>
+            <b style="color:var(--profit); font-size:17px; font-weight:900;">Rs. ${Number(item.profit || 0).toLocaleString()}</b>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px; margin-top:10px; background:#f8fafc; border:1px solid #e2e8f0; padding:8px 12px; border-radius:10px;">
+          <span style="font-weight:700; color:#475569;">کام کی حالت:</span>
+          <span class="status-pill ${isDone ? 'done' : 'pending'}" style="padding:4px 10px; font-size:11px;">
+            ${statusText}
+          </span>
+        </div>
+
+        <div style="text-align:center; font-size:11.5px; font-weight:700; color:var(--muted); margin-top:12px;">
+          شکریہ! رابطہ: 03298191689 • ⚡ Powered by Ansar AZ<br>
+          <a href="https://chat.whatsapp.com/ESePIIyZUJKAtvm8WJE6Yf?s=cl&p=a&mlu=4&ilr=4&iam=2" target="_blank" style="color:#16a34a; text-decoration:none; display:inline-block; margin-top:4px;">
+            🌐 آفیشل WhatsApp گروپ جوائن کریں ➔
+          </a>
         </div>
       `;
 
       document.getElementById("btnShareWhatsAppReceipt").onclick = function() {
-        const text = `📄 *AZ Flow کسٹمر رسید* ⚡\n---------------------------\n👤 *گاہک:* ${item.name}\n🛠️ *کام:* ${item.work}\n💰 *کل رقم:* Rs. ${Number(item.amount).toLocaleString()}\n📌 *حالت:* ${item.status}\n📅 *تاریخ:* ${item.date}\n---------------------------\nشکریہ! Powered by Ansar AZ (03298191689)`;
+        const text = `📄 *AZ Flow - کسٹمر رسید / انوائس سِلپ* ⚡\n------------------------------------\n👤 *گاہک کا نام:* ${item.name}\n${item.phone1 ? `📞 *موبائل نمبر:* ${item.phone1}\n` : ''}🛠️ *کام کی تفصیل:* ${item.work || "سروس چارجز"}\n------------------------------------\n💰 *کل وصولی فیس (Total Fee):* Rs. ${Number(item.amount || 0).toLocaleString()}\n🏷️ *لاگت فیس / سرکاری خرچہ (Cost Fee):* Rs. ${Number(item.fee || 0).toLocaleString()}\n💵 *باقی رقم / خالص بچت (Net Remaining):* Rs. ${Number(item.profit || 0).toLocaleString()}\n------------------------------------\n📌 *کام کی حالت:* ${statusText}\n📅 *تاریخ:* ${item.date || ''}\n------------------------------------\n🌐 *آفیشل واٹس ایپ گروپ جوائن کریں:*\nhttps://chat.whatsapp.com/ESePIIyZUJKAtvm8WJE6Yf\n------------------------------------\nشکریہ! برائے رابطہ: Ansar AZ (03298191689)\n⚡ Powered by Ansar AZ`;
         const phone = (item.phone1 || "").replace(/[^0-9]/g, "").replace(/^0/, "92");
         window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, "_blank");
       };
@@ -1515,19 +925,16 @@
       document.getElementById("invoiceModal").classList.remove("open");
     }
 
-    /* DASHBOARD REFRESH */
     function refreshDashboardMetrics() {
       let revenue = 0, profit = 0;
       customerRecords.forEach(r => {
         revenue += Number(r.amount) || 0;
         profit += Number(r.profit) || 0;
       });
-
       document.getElementById("totalCollectedVal").innerText = "Rs. " + revenue.toLocaleString();
       document.getElementById("totalProfitVal").innerText = "Rs. " + profit.toLocaleString();
     }
 
-    /* ANALYTICS */
     function computeAndRenderAnalytics() {
       let revenue = 0, profit = 0, cost = 0, done = 0, pending = 0;
       customerRecords.forEach(r => {
@@ -1536,55 +943,33 @@
         profit += Number(r.profit) || 0;
         if (r.status === "مکمل ہو گیا") done++; else pending++;
       });
-
       document.getElementById("anaTotalProfit").innerText = "Rs. " + profit.toLocaleString();
       const margin = revenue > 0 ? ((profit / revenue) * 100).toFixed(1) : 0;
-      document.getElementById("anaMarginRate").innerText = `منافع کی شرح (Margin Rate): ${margin}%`;
-
+      document.getElementById("anaMarginRate").innerText = `منافع کی شرح: ${margin}%`;
       document.getElementById("anaRevAmount").innerText = "Rs. " + revenue.toLocaleString();
       document.getElementById("anaCostAmount").innerText = "Rs. " + cost.toLocaleString();
       document.getElementById("anaProfitAmount").innerText = "Rs. " + profit.toLocaleString();
-
       document.getElementById("anaDoneCountVal").innerText = done;
       document.getElementById("anaPendingCountVal").innerText = pending;
 
-      const totalTasks = done + pending;
-      const progressPercent = totalTasks > 0 ? ((done / totalTasks) * 100) : 0;
-      document.getElementById("anaProgressBar").style.width = progressPercent + "%";
+      const total = done + pending;
+      document.getElementById("anaProgressBar").style.width = (total > 0 ? (done / total) * 100 : 0) + "%";
 
       const maxVal = Math.max(revenue, 1);
-      document.getElementById("chartRevenueBar").style.height = Math.max((revenue / maxVal) * 100, 8) + "px";
-      document.getElementById("chartCostBar").style.height = Math.max((cost / maxVal) * 100, 8) + "px";
-      document.getElementById("chartProfitBar").style.height = Math.max((Math.max(profit, 0) / maxVal) * 100, 8) + "px";
+      document.getElementById("chartRevenueBar").style.height = Math.max((revenue / maxVal) * 95, 8) + "px";
+      document.getElementById("chartCostBar").style.height = Math.max((cost / maxVal) * 95, 8) + "px";
+      document.getElementById("chartProfitBar").style.height = Math.max((Math.max(profit, 0) / maxVal) * 95, 8) + "px";
     }
 
-    /* EXPORT TO CSV / EXCEL */
     function exportToCsvFile() {
-      if (customerRecords.length === 0) {
-        showToast("ایکسپورٹ کے لیے کوئی ڈیٹا نہیں ہے!", "⚠️");
-        return;
-      }
-
+      if (customerRecords.length === 0) { showToast("ایکسپورٹ کے لیے ڈیٹا نہیں ہے!", "⚠️"); return; }
       let csv = "\uFEFFنام,موبائل 1,موبائل 2,کام کی تفصیل,وصولی رقم,لاگت,منافع,حالت,تاریخ\n";
       customerRecords.forEach(r => {
-        const row = [
-          `"${(r.name || "").replace(/"/g, '""')}"`,
-          `"${r.phone1 || ""}"`,
-          `"${r.phone2 || ""}"`,
-          `"${(r.work || "").replace(/"/g, '""')}"`,
-          r.amount || 0,
-          r.fee || 0,
-          r.profit || 0,
-          `"${r.status || ""}"`,
-          `"${r.date || ""}"`
-        ];
-        csv += row.join(",") + "\n";
+        csv += `"${(r.name || "").replace(/"/g, '""')}","${r.phone1 || ""}","${r.phone2 || ""}","${(r.work || "").replace(/"/g, '""')}",${r.amount || 0},${r.fee || 0},${r.profit || 0},"${r.status || ""}","${r.date || ""}"\n`;
       });
-
       const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
-      a.href = url;
+      a.href = URL.createObjectURL(blob);
       a.download = "AZ_Flow_Khata_" + new Date().toISOString().slice(0, 10) + ".csv";
       document.body.appendChild(a);
       a.click();
@@ -1592,61 +977,45 @@
       showToast("Excel CSV فائل ڈاؤن لوڈ ہو گئی!", "📊");
     }
 
-    /* DEMO RECORDS */
     function populateDemoRecords() {
       customerRecords = [
-        { id: 201, name: "محمد عثمان غنی", phone1: "03001234567", work: "سی آر سی (CRC / ب فارم رجسٹریشن نادرا)", amount: 2500, fee: 700, profit: 1800, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") },
-        { id: 202, name: "چوہدری طارق محمود", phone1: "03334445566", work: "ایف آر سی (FRC نادرا فیملی رجسٹریشن)", amount: 3000, fee: 1000, profit: 2000, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") },
-        { id: 203, name: "رانا زین العابدین", phone1: "03125556677", work: "نکاح نامہ کمپیوٹرائزڈ تصدیق", amount: 3500, fee: 1200, profit: 2300, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") },
-        { id: 204, name: "حاجی بشیر احمد", phone1: "03451239870", work: "فوتیدگی سرٹیفکیٹ (Death Certificate)", amount: 2000, fee: 500, profit: 1500, status: "جاری ہے", date: new Date().toLocaleDateString("ur-PK") },
-        { id: 205, name: "سید علی رضا رضوی", phone1: "03089998877", work: "تاریخ پیدائش سرٹیفکیٹ (Birth Certificate)", amount: 1800, fee: 400, profit: 1400, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") },
-        { id: 206, name: "ملک وقار یونس", phone1: "03227654321", work: "آن لائن پاسپورٹ فیس و ٹوکن چالان", amount: 4500, fee: 1500, profit: 3000, status: "جاری ہے", date: new Date().toLocaleDateString("ur-PK") }
+        { id: 101, name: "محمد عثمان", phone1: "03001234567", work: "سی آر سی (CRC / ب فارم رجسٹریشن)", amount: 3500, fee: 1000, profit: 2500, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") },
+        { id: 102, name: "بلال احمد ڈوگر", phone1: "03125556677", work: "بینر اور فلیکس ڈیزائننگ", amount: 5000, fee: 1800, profit: 3200, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") },
+        { id: 103, name: "چوہدری طارق محمود", phone1: "03334445566", work: "شناختی کارڈ تجدید اور فوٹو شوٹ", amount: 2200, fee: 600, profit: 1600, status: "جاری ہے", date: new Date().toLocaleDateString("ur-PK") },
+        { id: 104, name: "رانا سرفراز خان", phone1: "03058889900", work: "نکاح نامہ کمپیوٹرائزڈ تصدیق", amount: 3000, fee: 900, profit: 2100, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") },
+        { id: 105, name: "حاجی عبد الرشید", phone1: "03451122334", work: "فوتیدگی سرٹیفکیٹ (Death Certificate)", amount: 2500, fee: 700, profit: 1800, status: "جاری ہے", date: new Date().toLocaleDateString("ur-PK") },
+        { id: 106, name: "ملک شعیب اختر", phone1: "03214455667", work: "آن لائن پاسپورٹ فیس و ٹوکن چالان", amount: 4500, fee: 1500, profit: 3000, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") }
       ];
       commitStorageData();
       refreshDashboardMetrics();
       renderRecordsList();
-      showToast("ڈیمو کسٹمر ریکارڈز کامیابی سے لوڈ ہو گئے!", "🌟");
+      showToast("ڈیمو ریکارڈز لوڈ ہو گئے!", "🌟");
       switchActiveScreen("Records", document.querySelectorAll(".bottom-nav-item")[1]);
     }
 
-    /* JSON BACKUP DOWNLOAD */
     function downloadBackupFile() {
-      if (customerRecords.length === 0) {
-        showToast("بیک اپ کے لیے کوئی ریکارڈ موجود نہیں!", "⚠️");
-        return;
-      }
-      const backupPayload = {
-        app: "AZ Flow",
-        version: "14.0",
-        poweredBy: "Ansar AZ",
-        backupDate: new Date().toISOString(),
-        records: customerRecords
-      };
-      const blob = new Blob([JSON.stringify(backupPayload, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
+      if (customerRecords.length === 0) { showToast("بیک اپ کے لیے ڈیٹا نہیں ہے!", "⚠️"); return; }
+      const payload = { app: "AZ Flow", version: "15.0", poweredBy: "Ansar AZ", backupDate: new Date().toISOString(), records: customerRecords };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
       const a = document.createElement("a");
-      a.href = url;
+      a.href = URL.createObjectURL(blob);
       a.download = "AZ_Flow_Backup_" + new Date().toISOString().slice(0, 10) + ".json";
       document.body.appendChild(a);
       a.click();
       a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
       showToast("بیک اپ فائل ڈاؤن لوڈ ہو گئی!", "📤");
     }
 
-    /* JSON BACKUP RESTORE */
     function restoreBackupFile(event) {
       const file = event.target.files[0];
       if (!file) return;
-
       const reader = new FileReader();
       reader.onload = function(e) {
         try {
           const parsed = JSON.parse(e.target.result);
           const list = Array.isArray(parsed) ? parsed : (parsed.records || []);
-          if (!Array.isArray(list)) throw new Error("Invalid format");
-
-          if (confirm("کیا آپ موجودہ ریکارڈز کو اس فائل سے بحال (Restore) کرنا چاہتے ہیں؟")) {
+          if (!Array.isArray(list)) throw new Error("Format error");
+          if (confirm("کیا آپ واقعی ریکارڈز بحال کرنا چاہتے ہیں؟")) {
             customerRecords = list;
             commitStorageData();
             refreshDashboardMetrics();
@@ -1655,16 +1024,15 @@
             switchActiveScreen("Records", document.querySelectorAll(".bottom-nav-item")[1]);
           }
         } catch (err) {
-          showToast("بیک اپ فائل پڑھنے میں خرابی پیش آئی!", "❌");
+          showToast("فائل پڑھنے میں خرابی پیش آئی!", "❌");
         }
         event.target.value = "";
       };
       reader.readAsText(file);
     }
 
-    /* CLEAR ALL */
     function wipeAllData() {
-      if (confirm("⚠️ خطرہ!\n\nکیا آپ تمام کسٹمرز کا ڈیٹا ہمیشہ کے لیے ڈیلیٹ کرنا چاہتے ہیں؟")) {
+      if (confirm("⚠️ خطرہ!\n\nکیا آپ تمام کسٹمرز کا کھاتہ ہمیشہ کے لیے ڈیلیٹ کرنا چاہتے ہیں؟")) {
         customerRecords = [];
         commitStorageData();
         refreshDashboardMetrics();
@@ -1673,21 +1041,18 @@
       }
     }
 
-    function escapeHtmlStr(str) {
+    function escapeHtml(str) {
       return String(str ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     }
 
-    /* INITIALIZATION */
     loadStorageData();
     refreshDashboardMetrics();
-
     window.addEventListener("load", function() {
-      setTimeout(function() {
-        const splash = document.getElementById("splashScreen");
-        if (splash) splash.classList.add("hide");
-      }, 1900);
+      setTimeout(() => {
+        const s = document.getElementById("splashScreen");
+        if (s) s.classList.add("hide");
+      }, 1600);
     });
   </script>
-
 </body>
 </html>
