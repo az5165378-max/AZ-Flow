@@ -5,27 +5,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#06152e">
-  <title>AZ Flow - Smart Khata & Customer Manager</title>
+  <title>AZ Flow ⚡ - Smart Khata & Customer Manager</title>
 
   <style>
     /* =====================================================
-       ROOT & THEME VARIABLES
+       DESIGN TOKENS & SYSTEM VARIABLES
     ===================================================== */
     :root {
       --primary: #0284c7;
+      --primary-hover: #0369a1;
       --primary-light: #38bdf8;
-      --primary-dark: #0369a1;
-      --bg: #06152e;
-      --bg-surface: #0f2347;
-      --text: #0f172a;
-      --muted: #64748b;
+      --primary-subtle: #e0f2fe;
+      --cyan-accent: #00d9ff;
+      --bg-dark: #06152e;
+      --bg-surface: #0a1e3f;
+      --bg-card: #0f2752;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
       --profit: #059669;
       --profit-light: #d1fae5;
+      --profit-text: #065f46;
       --expense: #e11d48;
       --expense-light: #ffe4e6;
+      --expense-text: #9f1239;
       --pending: #d97706;
       --pending-light: #fef3c7;
+      --pending-text: #92400e;
       --whatsapp: #16a34a;
+      --whatsapp-hover: #15803d;
+      --border-color: #cbd5e1;
+      --border-light: #e2e8f0;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 22px;
+      --shadow-sm: 0 2px 6px rgba(0, 0, 0, .06);
+      --shadow-md: 0 8px 20px rgba(0, 0, 0, .10);
+      --shadow-lg: 0 14px 34px rgba(0, 0, 0, .18);
     }
 
     * {
@@ -38,31 +54,33 @@
     html, body {
       width: 100%;
       min-height: 100%;
-      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-      background: radial-gradient(circle at 20% 10%, rgba(14, 165, 233, .20), transparent 30%),
-                  radial-gradient(circle at 90% 80%, rgba(37, 99, 235, .20), transparent 30%),
-                  linear-gradient(135deg, #020617, #06152e 50%, #0b2a55);
-      color: #0f172a;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Nastaliq Urdu", Tahoma, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(14, 165, 233, .22), transparent 32%),
+        radial-gradient(circle at 85% 85%, rgba(37, 99, 235, .20), transparent 35%),
+        linear-gradient(135deg, #020617 0%, #06152e 50%, #0b2a55 100%);
+      color: var(--text-main);
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: 10px 10px 85px;
+      padding: 12px 12px 90px;
     }
 
     /* =====================================================
-       SPLASH SCREEN
+       SPLASH SCREEN ANIMATION
     ===================================================== */
     #splashScreen {
       position: fixed;
       inset: 0;
       z-index: 99999;
-      background: radial-gradient(circle at 50% 35%, rgba(14, 165, 233, .25), transparent 35%),
-                  linear-gradient(145deg, #020617 0%, #06152e 50%, #0b2a55 100%);
+      background:
+        radial-gradient(circle at 50% 30%, rgba(0, 217, 255, .25), transparent 35%),
+        linear-gradient(145deg, #020617 0%, #06152e 50%, #0a254d 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      transition: opacity .5s ease, visibility .5s ease;
+      transition: opacity .5s cubic-bezier(0.4, 0, 0.2, 1), visibility .5s ease;
     }
 
     #splashScreen.hide {
@@ -73,309 +91,342 @@
 
     .splash-content {
       width: 100%;
-      max-width: 400px;
-      padding: 20px;
+      max-width: 420px;
+      padding: 24px;
     }
 
-    .splash-logo {
-      width: 170px;
-      height: 170px;
+    .splash-logo-wrap {
+      width: 175px;
+      height: 175px;
       margin: 0 auto 20px;
       border-radius: 50%;
-      background: radial-gradient(circle at 40% 30%, #163e75, #031631 75%);
-      border: 3px solid #00d9ff;
-      box-shadow: 0 0 25px rgba(0, 217, 255, .45), inset 0 0 25px rgba(0, 217, 255, .2);
+      background: radial-gradient(circle at 40% 30%, #163e75, #031631 80%);
+      border: 3.5px solid var(--cyan-accent);
+      box-shadow: 0 0 30px rgba(0, 217, 255, .5), inset 0 0 25px rgba(0, 217, 255, .25);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
       padding: 8px;
+      animation: pulseGlow 2.5s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      from { box-shadow: 0 0 20px rgba(0, 217, 255, .4); }
+      to { box-shadow: 0 0 40px rgba(0, 217, 255, .7); }
     }
 
     .splash-title {
-      color: #fff;
-      font-size: 38px;
+      color: #ffffff;
+      font-size: 40px;
       font-weight: 900;
       letter-spacing: 1px;
     }
 
     .splash-title span {
-      color: #38bdf8;
+      color: var(--primary-light);
     }
 
     .splash-subtitle {
       color: #bfdbfe;
       font-size: 14px;
+      font-weight: 500;
       margin-top: 4px;
     }
 
-    .splash-loading {
-      width: 220px;
+    .splash-loading-bar-wrap {
+      width: 230px;
       height: 6px;
-      background: #123b70;
+      background: #103362;
       border-radius: 20px;
-      margin: 24px auto 12px;
+      margin: 24px auto 14px;
       overflow: hidden;
     }
 
     .splash-loading-bar {
       width: 0;
       height: 100%;
-      background: linear-gradient(90deg, #06b6d4, #38bdf8, #0284c7);
+      background: linear-gradient(90deg, #00d9ff, #38bdf8, #0284c7);
       border-radius: 20px;
-      animation: loadProgress 1.8s linear forwards;
+      animation: splashProgress 1.8s linear forwards;
     }
 
-    @keyframes loadProgress {
-      from { width: 0; }
-      to { width: 100%; }
+    @keyframes splashProgress {
+      0% { width: 0; }
+      100% { width: 100%; }
     }
 
-    .splash-note {
+    .splash-tagline {
       color: #94a3b8;
-      font-size: 12px;
+      font-size: 13px;
     }
 
-    .splash-powered {
-      color: #38bdf8;
+    .splash-powered-by {
+      color: var(--cyan-accent);
       font-size: 14px;
       font-weight: 800;
       margin-top: 24px;
-      letter-spacing: 0.6px;
+      letter-spacing: 0.8px;
     }
 
     /* =====================================================
-       MAIN CONTAINER
+       APP CONTAINER
     ===================================================== */
-    .container {
+    .app-container {
       width: 100%;
-      max-width: 520px;
+      max-width: 530px;
       background: #ffffff;
-      padding: 14px;
-      border-radius: 20px;
-      box-shadow: 0 20px 45px rgba(0, 0, 0, .45);
-      margin-top: 5px;
+      padding: 16px;
+      border-radius: var(--radius-xl);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, .45);
+      position: relative;
     }
 
     /* =====================================================
-       HEADER
+       TOP APP HEADER
     ===================================================== */
     .app-header {
-      background: linear-gradient(135deg, #020617, #06152e 60%, #0f2347);
-      color: #fff;
-      padding: 12px 14px;
-      border-radius: 14px;
+      background: linear-gradient(135deg, #020617 0%, #06152e 55%, #0e2954 100%);
+      color: #ffffff;
+      padding: 14px 16px;
+      border-radius: var(--radius-lg);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 12px;
-      border: 1px solid rgba(56, 189, 248, .25);
+      margin-bottom: 14px;
+      border: 1px solid rgba(56, 189, 248, .28);
+      box-shadow: var(--shadow-sm);
     }
 
-    .app-header h1 {
-      font-size: 20px;
-      color: #38bdf8;
+    .header-text h1 {
+      font-size: 21px;
+      color: var(--primary-light);
       font-weight: 900;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
     }
 
-    .app-header p {
-      font-size: 11px;
+    .header-text p {
+      font-size: 11.5px;
       color: #cbd5e1;
       margin-top: 3px;
     }
 
-    .header-badge {
-      width: 42px;
-      height: 42px;
-      background: #031631;
-      border: 2px solid #38bdf8;
+    .header-logo-badge {
+      width: 44px;
+      height: 44px;
+      background: #04142d;
+      border: 2px solid var(--primary-light);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #38bdf8;
+      color: var(--primary-light);
       font-weight: 900;
       font-size: 15px;
-      box-shadow: 0 0 10px rgba(56, 189, 248, .35);
+      box-shadow: 0 0 12px rgba(56, 189, 248, .4);
     }
 
     /* =====================================================
-       SUMMARY CARDS
+       METRIC KPI CARDS
     ===================================================== */
-    .summary-box {
+    .metrics-row {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       margin-bottom: 14px;
     }
 
-    .stat-card {
+    .metric-card {
       flex: 1;
       background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      padding: 10px;
-      border-radius: 12px;
-      text-align: center;
+      border: 1px solid var(--border-light);
+      padding: 11px 12px;
+      border-radius: var(--radius-md);
+      transition: transform .2s ease, box-shadow .2s ease;
     }
 
-    .stat-card h3 {
+    .metric-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .metric-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .metric-card-title {
       font-size: 11px;
-      color: var(--muted);
-      font-weight: 600;
+      color: var(--text-muted);
+      font-weight: 700;
     }
 
-    .stat-card .amount {
-      font-size: 16px;
+    .metric-card-val {
+      font-size: 17px;
       font-weight: 900;
-      margin-top: 3px;
+      letter-spacing: .2px;
     }
 
-    .stat-card.total .amount {
-      color: var(--primary);
-    }
-
-    .stat-card.profit .amount {
-      color: var(--profit);
-    }
+    .metric-card.revenue .metric-card-val { color: var(--primary); }
+    .metric-card.profit .metric-card-val { color: var(--profit); }
 
     /* =====================================================
-       SCREENS
+       SCREENS & VIEWS
     ===================================================== */
-    .app-screen {
+    .screen-view {
       display: none;
+      animation: fadeIn .25s ease forwards;
     }
 
-    .app-screen.active {
+    .screen-view.active {
       display: block;
     }
 
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .section-title {
-      font-size: 14px;
+      font-size: 14.5px;
       font-weight: 900;
       color: var(--primary);
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
     /* =====================================================
-       FORMS & INPUTS
+       INPUTS & FORM ELEMENTS
     ===================================================== */
     .form-group {
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
-    .form-group label {
-      font-size: 11px;
+    .form-label {
+      font-size: 11.5px;
       font-weight: 700;
-      color: var(--text);
+      color: var(--text-main);
       display: block;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
     }
 
-    .form-control {
+    .input-control {
       width: 100%;
-      padding: 9px 11px;
-      border: 1px solid #cbd5e1;
-      border-radius: 9px;
-      font-size: 12px;
-      background: #fff;
-      color: #0f172a;
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 12.5px;
+      background: #ffffff;
+      color: var(--text-main);
       outline: none;
-      transition: .2s;
+      transition: border-color .2s ease, box-shadow .2s ease;
+      font-family: inherit;
     }
 
-    .form-control:focus {
+    .input-control:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(2, 132, 199, .15);
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, .14);
     }
 
-    .row {
+    .input-row {
       display: flex;
-      gap: 6px;
+      gap: 8px;
     }
 
-    .row .form-group {
+    .input-row .form-group {
       flex: 1;
     }
 
     /* =====================================================
        CATEGORIZED SERVICE CHIPS
     ===================================================== */
-    .service-categories {
+    .service-category-tabs {
       display: flex;
-      gap: 5px;
+      gap: 6px;
       overflow-x: auto;
-      padding-bottom: 5px;
-      margin-bottom: 6px;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+      scrollbar-width: none;
     }
 
-    .cat-btn {
-      padding: 4px 9px;
-      border-radius: 8px;
-      font-size: 10px;
+    .service-category-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category-tab-btn {
+      padding: 5px 11px;
+      border-radius: 9px;
+      font-size: 11px;
       font-weight: 700;
-      border: 1px solid #cbd5e1;
+      border: 1px solid var(--border-color);
       background: #f1f5f9;
       color: #475569;
       cursor: pointer;
       white-space: nowrap;
+      transition: all .2s ease;
+      font-family: inherit;
     }
 
-    .cat-btn.active {
+    .category-tab-btn.active {
       background: var(--primary);
-      color: #fff;
+      color: #ffffff;
       border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(2, 132, 199, .25);
     }
 
-    .chips-grid {
+    .service-chips-wrap {
       display: flex;
       flex-wrap: wrap;
-      gap: 5px;
-      margin-bottom: 10px;
+      gap: 6px;
+      margin-bottom: 12px;
     }
 
-    .service-chip {
-      background: #e0f2fe;
+    .service-chip-item {
+      background: var(--primary-subtle);
       color: #0369a1;
       border: 1px solid #bae6fd;
-      border-radius: 12px;
-      padding: 4px 8px;
-      font-size: 10.5px;
+      border-radius: 14px;
+      padding: 5px 10px;
+      font-size: 11px;
       font-weight: 600;
       cursor: pointer;
-      transition: .15s;
+      transition: all .15s ease;
+      user-select: none;
     }
 
-    .service-chip:hover {
-      background: #0284c7;
-      color: #fff;
+    .service-chip-item:hover, .service-chip-item:active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-1px);
     }
 
-    /* Profit Card */
-    .profit-preview-card {
+    /* Profit Live Card */
+    .profit-calculation-card {
       background: #ecfdf5;
       border: 1px solid #a7f3d0;
-      border-radius: 10px;
-      padding: 9px 12px;
-      margin-bottom: 12px;
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
-    .profit-preview-card span {
-      font-size: 11px;
-      color: #065f46;
+    .profit-calc-label {
+      font-size: 11.5px;
+      color: var(--profit-text);
       font-weight: 700;
     }
 
-    .profit-preview-card .val {
-      font-size: 15px;
-      color: #059669;
+    .profit-calc-val {
+      font-size: 17px;
+      color: var(--profit);
       font-weight: 900;
     }
 
@@ -384,222 +435,341 @@
     ===================================================== */
     .btn {
       width: 100%;
-      padding: 11px;
+      padding: 12px 14px;
       border: none;
-      border-radius: 10px;
+      border-radius: 11px;
       font-weight: 800;
-      font-size: 13px;
+      font-size: 13.5px;
       cursor: pointer;
-      color: #fff;
+      color: #ffffff;
       background: var(--primary);
-      box-shadow: 0 4px 12px rgba(2, 132, 199, .25);
-      transition: .2s;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, .28);
+      transition: all .2s ease;
       text-align: center;
       text-decoration: none;
-      display: block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+    }
+
+    .btn:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 6px 18px rgba(2, 132, 199, .35);
     }
 
     .btn:active {
       transform: scale(.98);
     }
 
-    .btn-danger {
-      background: var(--expense);
-      box-shadow: 0 4px 12px rgba(225, 29, 72, .25);
-    }
-
     .btn-success {
       background: var(--profit);
-      box-shadow: 0 4px 12px rgba(5, 150, 105, .25);
+      box-shadow: 0 4px 14px rgba(5, 150, 105, .28);
     }
+    .btn-success:hover { background: #047857; }
+
+    .btn-danger {
+      background: var(--expense);
+      box-shadow: 0 4px 14px rgba(225, 29, 72, .28);
+    }
+    .btn-danger:hover { background: #be123c; }
 
     .btn-whatsapp {
       background: var(--whatsapp);
-      box-shadow: 0 4px 12px rgba(22, 163, 74, .25);
+      box-shadow: 0 4px 14px rgba(22, 163, 74, .28);
+    }
+    .btn-whatsapp:hover { background: var(--whatsapp-hover); }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      box-shadow: none;
+    }
+    .btn-outline:hover {
+      background: #f1f5f9;
     }
 
     /* =====================================================
-       RECORDS LIST
+       RECORDS LIST & CARDS
     ===================================================== */
-    .customer-item {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 11px;
-      margin-bottom: 8px;
+    .record-card {
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      box-shadow: var(--shadow-sm);
       position: relative;
+      transition: border-color .2s ease, box-shadow .2s ease;
     }
 
-    .customer-header {
+    .record-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: var(--shadow-md);
+    }
+
+    .record-card-top {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 5px;
-      padding-left: 75px;
+      margin-bottom: 6px;
+      padding-left: 85px;
     }
 
-    .customer-name {
+    .customer-avatar-name {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .customer-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary-subtle);
+      color: var(--primary-dark);
       font-weight: 800;
       font-size: 13px;
-      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .customer-phones {
+    .customer-info h4 {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .customer-info span {
       font-size: 11px;
-      color: var(--muted);
-      margin-top: 1px;
+      color: var(--text-muted);
     }
 
-    .customer-work {
+    .status-pill {
+      padding: 3px 8px;
+      border-radius: 8px;
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+
+    .status-pill.done {
+      background: var(--profit-light);
+      color: var(--profit-text);
+    }
+
+    .status-pill.pending {
+      background: var(--pending-light);
+      color: var(--pending-text);
+    }
+
+    .record-work-line {
       font-size: 12px;
       color: #334155;
-      margin-bottom: 6px;
+      margin: 6px 0;
+      line-height: 1.4;
     }
 
-    .customer-footer {
+    .record-financial-bar {
+      background: #f8fafc;
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
       display: flex;
       justify-content: space-between;
-      border-top: 1px dashed #cbd5e1;
-      padding-top: 6px;
-      margin-top: 6px;
-      font-size: 11px;
-      font-weight: 800;
+      align-items: center;
+      font-size: 11.5px;
+      font-weight: 700;
+      margin: 6px 0;
     }
 
-    .status-badge {
-      padding: 2px 7px;
-      border-radius: 6px;
-      font-size: 9px;
-      font-weight: 800;
-    }
-
-    .status-done {
-      background: #d1fae5;
-      color: #059669;
-    }
-
-    .status-pending {
-      background: #fef3c7;
-      color: #d97706;
-    }
-
-    .card-actions {
+    .record-card-actions {
       position: absolute;
       top: 10px;
-      left: 10px;
+      left: 12px;
       display: flex;
       gap: 4px;
     }
 
-    .icon-action-btn {
-      background: #fff;
-      border: 1px solid #cbd5e1;
+    .icon-btn {
+      width: 28px;
+      height: 28px;
       border-radius: 6px;
-      padding: 3px 6px;
-      font-size: 11px;
+      border: 1px solid var(--border-color);
+      background: #ffffff;
       cursor: pointer;
-    }
-
-    /* =====================================================
-       ANALYTICS & CHARTS
-    ===================================================== */
-    .analytics-box {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 10px;
-    }
-
-    .chart-container {
       display: flex;
-      align-items: flex-end;
-      justify-content: space-around;
-      height: 120px;
-      padding: 10px 0;
-      border-bottom: 1px solid #cbd5e1;
-      margin-bottom: 10px;
-    }
-
-    .chart-bar-wrap {
-      display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 4px;
+      justify-content: center;
+      font-size: 12px;
+      transition: background .15s ease;
     }
 
-    .chart-bar {
-      width: 45px;
-      border-radius: 6px 6px 0 0;
-      transition: height .5s ease;
-      min-height: 5px;
+    .icon-btn:hover {
+      background: #f1f5f9;
     }
 
     /* =====================================================
-       SETTINGS & MODAL
+       ANALYTICS & METRICS
     ===================================================== */
-    .settings-card {
+    .analytics-panel {
       background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      padding: 12px;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 14px;
       margin-bottom: 12px;
     }
 
-    .settings-card h4 {
-      font-size: 13px;
+    .chart-container-bar {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      height: 130px;
+      padding: 12px 0 6px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 10px;
+    }
+
+    .bar-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .bar-shape {
+      width: 48px;
+      border-radius: 8px 8px 0 0;
+      transition: height .6s cubic-bezier(0.4, 0, 0.2, 1);
+      min-height: 8px;
+    }
+
+    /* =====================================================
+       SETTINGS & CARDS
+    ===================================================== */
+    .settings-group-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .settings-group-card h3 {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--text-main);
       margin-bottom: 5px;
-      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .settings-card p {
-      font-size: 11px;
-      color: var(--muted);
+    .settings-group-card p {
+      font-size: 11.5px;
+      color: var(--text-muted);
       line-height: 1.5;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
-    .powered-badge {
+    .powered-by-box {
       background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      border-radius: 8px;
-      padding: 8px;
+      border: 1.5px dashed var(--primary-light);
+      border-radius: var(--radius-md);
+      padding: 10px;
       text-align: center;
+      font-size: 13px;
       font-weight: 800;
       color: var(--primary);
-      font-size: 12px;
-      margin-top: 8px;
+      margin-top: 10px;
+      letter-spacing: .4px;
     }
 
-    /* Receipt Dialog Modal */
-    .modal-overlay {
+    /* =====================================================
+       RECEIPT INVOICE DIALOG & PRINT
+    ===================================================== */
+    .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, .6);
+      background: rgba(0, 0, 0, .65);
+      backdrop-filter: blur(4px);
       z-index: 10000;
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 15px;
+      padding: 16px;
     }
 
-    .modal-overlay.active {
+    .modal-backdrop.open {
       display: flex;
     }
 
-    .modal-box {
-      background: #fff;
+    .invoice-modal {
+      background: #ffffff;
       width: 100%;
-      max-width: 380px;
-      border-radius: 16px;
-      padding: 18px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, .5);
+      max-width: 400px;
+      border-radius: var(--radius-xl);
+      padding: 20px;
+      box-shadow: var(--shadow-lg);
+      animation: modalPop .2s ease forwards;
+    }
+
+    @keyframes modalPop {
+      from { transform: scale(.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printArea, #printArea * {
+        visibility: visible;
+      }
+      #printArea {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+      }
     }
 
     /* =====================================================
-       BOTTOM NAVIGATION
+       TOAST NOTIFICATIONS
     ===================================================== */
-    .bottom-nav {
+    #toastMessage {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-60px);
+      background: #020617;
+      color: #ffffff;
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-size: 12.5px;
+      font-weight: 700;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .4);
+      border: 1px solid rgba(56, 189, 248, .3);
+      z-index: 100000;
+      opacity: 0;
+      transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #toastMessage.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* =====================================================
+       BOTTOM NAVIGATION BAR
+    ===================================================== */
+    .bottom-navbar {
       position: fixed;
       bottom: 0;
       left: 0;
@@ -612,7 +782,7 @@
       z-index: 1000;
     }
 
-    .nav-btn {
+    .bottom-nav-item {
       background: none;
       border: none;
       color: #94a3b8;
@@ -623,15 +793,17 @@
       flex-direction: column;
       align-items: center;
       gap: 2px;
-      min-width: 65px;
+      min-width: 70px;
+      transition: color .15s ease;
+      font-family: inherit;
     }
 
-    .nav-btn span {
-      font-size: 18px;
+    .bottom-nav-item span {
+      font-size: 19px;
     }
 
-    .nav-btn.active {
-      color: #38bdf8;
+    .bottom-nav-item.active {
+      color: var(--primary-light);
     }
   </style>
 </head>
@@ -643,15 +815,15 @@
   ===================================================== -->
   <div id="splashScreen">
     <div class="splash-content">
-      <div class="splash-logo">
+      <div class="splash-logo-wrap">
         <svg viewBox="0 0 300 300" style="width: 100%; height: 100%;">
           <defs>
-            <linearGradient id="blueLine" x1="0" y1="1" x2="1" y2="0">
+            <linearGradient id="blueLineGlow" x1="0" y1="1" x2="1" y2="0">
               <stop offset="0%" stop-color="#00a8ff" />
               <stop offset="50%" stop-color="#00d9ff" />
               <stop offset="100%" stop-color="#7dd3fc" />
             </linearGradient>
-            <filter id="glow">
+            <filter id="splashGlowFilter">
               <feGaussianBlur stdDeviation="3" result="blur" />
               <feMerge>
                 <feMergeNode in="blur" />
@@ -659,23 +831,23 @@
               </feMerge>
             </filter>
           </defs>
-          <text x="92" y="137" text-anchor="middle" font-family="Arial" font-size="100" font-weight="900" fill="#fff">A</text>
-          <text x="185" y="137" text-anchor="middle" font-family="Arial" font-size="100" font-weight="900" fill="#fff">Z</text>
-          <path d="M42 178 C70 153 92 178 119 158 L151 130 L178 153 L222 92" fill="none" stroke="url(#blueLine)" stroke-width="19" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)" />
+          <text x="92" y="137" text-anchor="middle" font-family="Arial, sans-serif" font-size="100" font-weight="900" fill="#fff">A</text>
+          <text x="185" y="137" text-anchor="middle" font-family="Arial, sans-serif" font-size="100" font-weight="900" fill="#fff">Z</text>
+          <path d="M42 178 C70 153 92 178 119 158 L151 130 L178 153 L222 92" fill="none" stroke="url(#blueLineGlow)" stroke-width="19" stroke-linecap="round" stroke-linejoin="round" filter="url(#splashGlowFilter)" />
           <path d="M205 96 L238 70 L231 105" fill="none" stroke="#7dd3fc" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
-          <text x="150" y="222" text-anchor="middle" font-family="Arial" font-size="28" font-weight="700" fill="#fff">اے زی فلو</text>
+          <text x="150" y="222" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#fff">اے زی فلو</text>
         </svg>
       </div>
 
       <h1 class="splash-title">AZ Flow <span>⚡</span></h1>
       <div class="splash-subtitle">Smart Khata &amp; Customer Manager</div>
 
-      <div class="splash-loading">
+      <div class="splash-loading-bar-wrap">
         <div class="splash-loading-bar"></div>
       </div>
 
-      <div class="splash-note">آپ کے کاروبار میں آسانی...</div>
-      <div class="splash-powered">Powered by Ansar AZ</div>
+      <div class="splash-tagline">آپ کے کاروبار میں آسانی...</div>
+      <div class="splash-powered-by">Powered by Ansar AZ</div>
     </div>
   </div>
 
@@ -683,246 +855,283 @@
   <!-- =====================================================
        MAIN APP CONTAINER
   ===================================================== -->
-  <div class="container">
+  <div class="app-container">
 
-    <!-- Header -->
-    <div class="app-header">
-      <div>
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="header-text">
         <h1>AZ Flow <span>⚡</span></h1>
         <p>اسمارٹ کھاتہ اور کسٹمر مینیجر • Powered by Ansar AZ</p>
       </div>
-      <div class="header-badge">AZ</div>
-    </div>
+      <div class="header-logo-badge">AZ</div>
+    </header>
 
-    <!-- Quick Summary -->
-    <div class="summary-box">
-      <div class="stat-card total">
-        <h3>کل وصولی (Total)</h3>
-        <div class="amount" id="totalCollected">Rs. 0</div>
+    <!-- Quick Metric Cards -->
+    <div class="metrics-row">
+      <div class="metric-card revenue">
+        <div class="metric-card-header">
+          <span class="metric-card-title">کل وصولی (Total Revenue)</span>
+          <span>💰</span>
+        </div>
+        <div class="metric-card-val" id="totalCollectedVal">Rs. 0</div>
       </div>
-      <div class="stat-card profit">
-        <h3>کل منافع (Profit)</h3>
-        <div class="amount" id="totalProfit">Rs. 0</div>
+      <div class="metric-card profit">
+        <div class="metric-card-header">
+          <span class="metric-card-title">کل خالص منافع (Profit)</span>
+          <span>📈</span>
+        </div>
+        <div class="metric-card-val" id="totalProfitVal">Rs. 0</div>
       </div>
     </div>
 
 
     <!-- =====================================================
-         SCREEN 1: HOME (NEW ENTRY)
+         SCREEN 1: HOME (NEW ENTRY & PRESETS)
     ===================================================== -->
-    <div id="screenHome" class="app-screen active">
+    <div id="screenHome" class="screen-view active">
       <div class="section-title">
-        <span id="formTitle">➕ نیا گاہک درج کریں</span>
-        <button id="cancelEditBtn" onclick="clearForm()" style="display:none; background:none; border:none; color:var(--expense); font-size:11px; cursor:pointer;">کینسل کریں ✖</button>
+        <span id="formHeaderTitle">➕ نیا گاہک درج کریں (New Customer)</span>
+        <button id="cancelEditingBtn" onclick="resetEntryForm()" style="display:none; background:none; border:none; color:var(--expense); font-size:11.5px; font-weight:800; cursor:pointer;">کینسل کریں ✖</button>
       </div>
 
       <div class="form-group">
-        <label>گاہک کا نام (Customer Name) *:</label>
-        <input type="text" id="custName" class="form-control" placeholder="گاہک کا نام درج کریں">
+        <label class="form-label">گاہک کا نام (Customer Name) *:</label>
+        <input type="text" id="inputName" class="input-control" placeholder="مثلاً: محمد احمد خان">
       </div>
 
-      <div class="row">
+      <div class="input-row">
         <div class="form-group">
-          <label>موبائل 1:</label>
-          <input type="tel" id="custPhone1" class="form-control" placeholder="پہلا نمبر">
+          <label class="form-label">موبائل نمبر 1 *:</label>
+          <input type="tel" id="inputPhone1" class="input-control" placeholder="03001234567">
         </div>
         <div class="form-group">
-          <label>موبائل 2:</label>
-          <input type="tel" id="custPhone2" class="form-control" placeholder="دوسرا نمبر">
+          <label class="form-label">موبائل نمبر 2:</label>
+          <input type="tel" id="inputPhone2" class="input-control" placeholder="دوسرا نمبر">
         </div>
         <div class="form-group">
-          <label>موبائل 3:</label>
-          <input type="tel" id="custPhone3" class="form-control" placeholder="اختیاری">
+          <label class="form-label">موبائل نمبر 3:</label>
+          <input type="tel" id="inputPhone3" class="input-control" placeholder="اختیاری">
         </div>
       </div>
 
       <div class="form-group">
-        <label>کام کی تفصیل (Service / Work):</label>
-        <input type="text" id="custWork" class="form-control" placeholder="کام منتخب کریں یا خود لکھیں">
+        <label class="form-label">کام کی تفصیل (Service / Description):</label>
+        <input type="text" id="inputWork" class="input-control" placeholder="کام منتخب کریں یا خود لکھیں">
       </div>
 
-      <!-- Service Categories & Presets -->
+      <!-- Quick Categorized Presets -->
       <div class="form-group">
-        <label>تیز ترین انتخاب (Quick Presets):</label>
-        <div class="service-categories">
-          <button type="button" class="cat-btn active" onclick="switchCategory('nadra', this)">نادرا و سرٹیفکیٹ</button>
-          <button type="button" class="cat-btn" onclick="switchCategory('online', this)">آن لائن ای-سروسز</button>
-          <button type="button" class="cat-btn" onclick="switchCategory('shop', this)">دکان و پرنٹنگ</button>
+        <label class="form-label">تیز ترین سروسز کا انتخاب (Quick Services):</label>
+
+        <div class="service-category-tabs">
+          <button type="button" class="category-tab-btn active" onclick="activatePresetCategory('nadra', this)">نادرا و سرٹیفکیٹس</button>
+          <button type="button" class="category-tab-btn" onclick="activatePresetCategory('online', this)">آن لائن ای-خدمات</button>
+          <button type="button" class="category-tab-btn" onclick="activatePresetCategory('legal', this)">قانونی و نکاح نامہ</button>
+          <button type="button" class="category-tab-btn" onclick="activatePresetCategory('shop', this)">دکان و پرنٹنگ</button>
         </div>
 
         <!-- Nadra Category -->
-        <div id="cat_nadra" class="chips-grid">
-          <div class="service-chip" onclick="addWorkPreset('سی آر سی (CRC / ب فارم)')">+ سی آر سی (B-Form)</div>
-          <div class="service-chip" onclick="addWorkPreset('ایف آر سی (FRC نادرا فیملی)')">+ ایف آر سی (FRC)</div>
-          <div class="service-chip" onclick="addWorkPreset('نکاح نامہ کمپیوٹرائزڈ تصدیق')">+ نکاح نامہ</div>
-          <div class="service-chip" onclick="addWorkPreset('فوتیدگی سرٹیفکیٹ (Death Certificate)')">+ فوتیدگی سرٹیفکیٹ</div>
-          <div class="service-chip" onclick="addWorkPreset('تاریخ پیدائش سرٹیفکیٹ (Birth Certificate)')">+ تاریخ پیدائش</div>
-          <div class="service-chip" onclick="addWorkPreset('شناختی کارڈ تجدید و درستی')">+ شناختی کارڈ تجدید</div>
-          <div class="service-chip" onclick="addWorkPreset('ڈومیسائل سرٹیفکیٹ')">+ ڈومیسائل سرٹیفکیٹ</div>
+        <div id="chips_nadra" class="service-chips-wrap">
+          <div class="service-chip-item" onclick="insertServicePreset('سی آر سی (CRC / ب فارم رجسٹریشن)')">+ سی آر سی (B-Form)</div>
+          <div class="service-chip-item" onclick="insertServicePreset('ایف آر سی (FRC نادرا فیملی سرٹیفکیٹ)')">+ ایف آر سی (FRC)</div>
+          <div class="service-chip-item" onclick="insertServicePreset('شناختی کارڈ تجدید و اسمارٹ کارڈ')">+ شناختی کارڈ تجدید</div>
+          <div class="service-chip-item" onclick="insertServicePreset('ڈومیسائل سرٹیفکیٹ')">+ ڈومیسائل سرٹیفکیٹ</div>
+          <div class="service-chip-item" onclick="insertServicePreset('گمشدہ شناختی کارڈ ری پرنٹ')">+ شناختی کارڈ ری پرنٹ</div>
         </div>
 
         <!-- Online Category -->
-        <div id="cat_online" class="chips-grid" style="display:none;">
-          <div class="service-chip" onclick="addWorkPreset('آن لائن پاسپورٹ فیس و چالان')">+ آن لائن پاسپورٹ</div>
-          <div class="service-chip" onclick="addWorkPreset('پولیس کریکٹر تصدیق')">+ پولیس کریکٹر تصدیق</div>
-          <div class="service-chip" onclick="addWorkPreset('ای اسٹامپ و بیان حلفی')">+ ای اسٹامپ / حلف نامہ</div>
-          <div class="service-chip" onclick="addWorkPreset('ڈرائیونگ لائسنس لرنر / تجدید')">+ ڈرائیونگ لائسنس</div>
-          <div class="service-chip" onclick="addWorkPreset('ٹیکس ریٹرن فائلنگ (FBR)')">+ ٹیکس ریٹرن فائلنگ</div>
-          <div class="service-chip" onclick="addWorkPreset('آن لائن جاب / داخلہ فارم')">+ جاب / داخلہ فارم</div>
+        <div id="chips_online" class="service-chips-wrap" style="display:none;">
+          <div class="service-chip-item" onclick="insertServicePreset('آن لائن پاسپورٹ فیس و ٹوکن چالان')">+ آن لائن پاسپورٹ</div>
+          <div class="service-chip-item" onclick="insertServicePreset('پولیس کریکٹر سرٹیفکیٹ تصدیق')">+ پولیس کریکٹر تصدیق</div>
+          <div class="service-chip-item" onclick="insertServicePreset('ڈرائیونگ لائسنس لرنر / تجدید')">+ ڈرائیونگ لائسنس</div>
+          <div class="service-chip-item" onclick="insertServicePreset('انکم ٹیکس ریٹرن فائلنگ (FBR Filer)')">+ ٹیکس ریٹرن فائلنگ</div>
+          <div class="service-chip-item" onclick="insertServicePreset('آن لائن جاب / داخلہ فارم')">+ جاب / داخلہ فارم</div>
+        </div>
+
+        <!-- Legal Category -->
+        <div id="chips_legal" class="service-chips-wrap" style="display:none;">
+          <div class="service-chip-item" onclick="insertServicePreset('نکاح نامہ کمپیوٹرائزڈ تصدیق')">+ نکاح نامہ</div>
+          <div class="service-chip-item" onclick="insertServicePreset('تاریخ پیدائش سرٹیفکیٹ (Birth Certificate)')">+ تاریخ پیدائش</div>
+          <div class="service-chip-item" onclick="insertServicePreset('فوتیدگی سرٹیفکیٹ (Death Certificate)')">+ فوتیدگی سرٹیفکیٹ</div>
+          <div class="service-chip-item" onclick="insertServicePreset('ای اسٹامپ پیپر و بیان حلفی')">+ ای اسٹامپ / حلف نامہ</div>
+          <div class="service-chip-item" onclick="insertServicePreset('طلاق موثر سرٹیفکیٹ')">+ طلاق سرٹیفکیٹ</div>
         </div>
 
         <!-- Shop Category -->
-        <div id="cat_shop" class="chips-grid" style="display:none;">
-          <div class="service-chip" onclick="addWorkPreset('فوٹو شوٹ و فوری پرنٹنگ')">+ فوٹو شوٹ و پرنٹنگ</div>
-          <div class="service-chip" onclick="addWorkPreset('فلیکس و بینر ڈیزائننگ')">+ فلیکس و ڈیزائننگ</div>
-          <div class="service-chip" onclick="addWorkPreset('فوٹو کاپی و لیمینیشن')">+ فوٹو کاپی و لیمینیشن</div>
-          <div class="service-chip" onclick="addWorkPreset('کھاتہ ادھار بل')">+ کھاتہ ادھار بل</div>
+        <div id="chips_shop" class="service-chips-wrap" style="display:none;">
+          <div class="service-chip-item" onclick="insertServicePreset('فوری فوٹو شوٹ و ویزا سائز تصاویر')">+ فوٹو شوٹ و پرنٹنگ</div>
+          <div class="service-chip-item" onclick="insertServicePreset('فلیکس، بینر و کارڈ ڈیزائننگ')">+ فلیکس و ڈیزائننگ</div>
+          <div class="service-chip-item" onclick="insertServicePreset('کلر پرنٹنگ و لیمینیشن')">+ پرنٹنگ و فوٹو کاپی</div>
+          <div class="service-chip-item" onclick="insertServicePreset('کھاتہ ادھار بل')">+ کھاتہ ادھار بل</div>
         </div>
       </div>
 
-      <div class="row">
+      <div class="input-row">
         <div class="form-group">
-          <label>وصولی رقم (Rs.) *:</label>
-          <input type="number" id="custAmount" class="form-control" placeholder="0" min="0" oninput="calcProfitPreview()">
+          <label class="form-label">وصولی رقم (Bill Amount Rs.) *:</label>
+          <input type="number" id="inputAmount" class="input-control" placeholder="0" min="0" oninput="updateLiveProfitPreview()">
         </div>
         <div class="form-group">
-          <label>فیس / لاگت (Rs.):</label>
-          <input type="number" id="custFee" class="form-control" placeholder="0" min="0" oninput="calcProfitPreview()">
+          <label class="form-label">فیس / لاگت (Cost / Fee Rs.):</label>
+          <input type="number" id="inputFee" class="input-control" placeholder="0" min="0" oninput="updateLiveProfitPreview()">
         </div>
       </div>
 
-      <!-- Real-time Profit Preview -->
-      <div class="profit-preview-card">
-        <span>حساب شدہ منافع (Profit):</span>
-        <div class="val" id="profitPreviewVal">Rs. 0</div>
+      <!-- Real-time Profit Preview Card -->
+      <div class="profit-calculation-card">
+        <div>
+          <div class="profit-calc-label">حساب شدہ خالص منافع (Calculated Net Profit):</div>
+          <div style="font-size:10.5px; color:#64748b;" id="profitMarginPercentLabel">مارجن: 0%</div>
+        </div>
+        <div class="profit-calc-val" id="profitPreviewBadge">Rs. 0</div>
       </div>
 
       <div class="form-group">
-        <label>کام کی حالت:</label>
-        <select id="custStatus" class="form-control">
-          <option value="مکمل ہو گیا">✅ کام مکمل ہو گیا</option>
-          <option value="جاری ہے">⏳ کام جاری ہے</option>
+        <label class="form-label">کام کی حالت (Work Status):</label>
+        <select id="inputStatus" class="input-control">
+          <option value="مکمل ہو گیا">✅ کام مکمل ہو گیا (Completed)</option>
+          <option value="جاری ہے">⏳ کام جاری ہے (In Progress)</option>
         </select>
       </div>
 
-      <button class="btn" id="saveUpdateBtn" onclick="saveCustomerRecord()">ریکارڈ محفوظ کریں (Save)</button>
+      <button class="btn" id="saveRecordBtn" onclick="submitCustomerForm()">
+        <span>💾</span> ریکارڈ محفوظ کریں (Save Record)
+      </button>
     </div>
 
 
     <!-- =====================================================
-         SCREEN 2: RECORDS LIST
+         SCREEN 2: RECORDS LIST & SEARCH
     ===================================================== -->
-    <div id="screenRecords" class="app-screen">
+    <div id="screenRecords" class="screen-view">
       <div class="section-title">
-        <span>👥 تمام گاہکوں کا ریکارڈ</span>
-        <span style="font-size:11px; color:var(--muted);" id="recordsCountBadge">کل: 0</span>
+        <span>👥 تمام گاہکوں کا کھاتہ و ریکارڈ</span>
+        <span style="font-size:11.5px; color:var(--text-muted);" id="recordsTotalBadge">کل: 0</span>
       </div>
 
       <div class="form-group">
-        <input type="text" id="searchBox" class="form-control" placeholder="🔍 نام، کام یا موبائل سے تلاش کریں..." oninput="renderRecords()">
+        <input type="text" id="searchFilterBox" class="input-control" placeholder="🔍 نام، کام یا موبائل نمبر سے تلاش کریں..." oninput="renderRecordsList()">
       </div>
 
-      <div style="display:flex; gap:6px; margin-bottom:10px;">
-        <button class="cat-btn active" id="filterAll" onclick="filterByStatus('all', this)">سب (All)</button>
-        <button class="cat-btn" id="filterDone" onclick="filterByStatus('done', this)">✅ مکمل</button>
-        <button class="cat-btn" id="filterPending" onclick="filterByStatus('pending', this)">⏳ جاری ہے</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <div style="display:flex; gap:6px;">
+          <button class="category-tab-btn active" id="tabFilterAll" onclick="setRecordFilter('all', this)">سب (All)</button>
+          <button class="category-tab-btn" id="tabFilterDone" onclick="setRecordFilter('done', this)">✅ مکمل</button>
+          <button class="category-tab-btn" id="tabFilterPending" onclick="setRecordFilter('pending', this)">⏳ جاری ہے</button>
+        </div>
+
+        <button class="category-tab-btn" onclick="exportToCsvFile()" title="Excel / CSV فائل ڈاؤن لوڈ کریں">
+          📊 Excel شیٹ
+        </button>
       </div>
 
-      <div id="recordsList" style="max-height: 440px; overflow-y: auto;"></div>
+      <div id="customerRecordsContainer" style="max-height: 460px; overflow-y: auto; padding-left: 2px;"></div>
     </div>
 
 
     <!-- =====================================================
-         SCREEN 3: ANALYTICS & REPORTS
+         SCREEN 3: ANALYTICS & FINANCIAL REPORTS
     ===================================================== -->
-    <div id="screenAnalytics" class="app-screen">
-      <div class="section-title">📊 مالیاتی تجزیہ و رپورٹس</div>
+    <div id="screenAnalytics" class="screen-view">
+      <div class="section-title">📊 مالیاتی تجزیہ و کاروباری رپورٹس</div>
 
-      <div class="analytics-box" style="background:#06152e; color:#fff;">
-        <div style="font-size:12px; color:#94a3b8;">خالص منافع (Net Profit)</div>
-        <div style="font-size:24px; font-weight:900; color:#34d399; margin:4px 0 10px;" id="anaNetProfit">Rs. 0</div>
-        <div style="font-size:11px; color:#cbd5e1;" id="anaMargin">منافع کی شرح (Margin): 0%</div>
+      <div class="analytics-panel" style="background: linear-gradient(135deg, #020617, #06152e); color:#ffffff; border-color:rgba(56, 189, 248, .3);">
+        <div style="font-size:12px; color:#94a3b8; font-weight:700;">خالص منافع (Net Profit)</div>
+        <div style="font-size:26px; font-weight:900; color:#34d399; margin:4px 0 10px;" id="anaTotalProfit">Rs. 0</div>
+        <div style="font-size:12px; color:#cbd5e1; font-weight:600;" id="anaMarginRate">منافع کی شرح (Margin Rate): 0%</div>
       </div>
 
-      <div class="analytics-box">
-        <div style="font-weight:800; font-size:12px; margin-bottom:8px;">📈 مالیاتی موازنہ گراف</div>
-        <div class="chart-container">
-          <div class="chart-bar-wrap">
-            <div class="chart-bar" id="barRevenue" style="height:10px; background:#0284c7;"></div>
-            <div style="font-size:10px; font-weight:700;">آمدنی</div>
+      <div class="analytics-panel">
+        <div style="font-weight:800; font-size:13px; margin-bottom:8px; color:var(--text-main);">📈 مالیاتی موازنہ گراف</div>
+        <div class="chart-container-bar">
+          <div class="bar-column">
+            <div class="bar-shape" id="chartRevenueBar" style="height:10px; background:var(--primary);"></div>
+            <div style="font-size:10.5px; font-weight:700;">آمدنی</div>
           </div>
-          <div class="chart-bar-wrap">
-            <div class="chart-bar" id="barCost" style="height:10px; background:#e11d48;"></div>
-            <div style="font-size:10px; font-weight:700;">لاگت</div>
+          <div class="bar-column">
+            <div class="bar-shape" id="chartCostBar" style="height:10px; background:var(--expense);"></div>
+            <div style="font-size:10.5px; font-weight:700;">لاگت</div>
           </div>
-          <div class="chart-bar-wrap">
-            <div class="chart-bar" id="barProfit" style="height:10px; background:#059669;"></div>
-            <div style="font-size:10px; font-weight:700;">منافع</div>
+          <div class="bar-column">
+            <div class="bar-shape" id="chartProfitBar" style="height:10px; background:var(--profit);"></div>
+            <div style="font-size:10.5px; font-weight:700;">منافع</div>
           </div>
         </div>
-        <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:700;">
-          <span style="color:#0284c7;" id="anaRevVal">Rs. 0</span>
-          <span style="color:#e11d48;" id="anaCostVal">Rs. 0</span>
-          <span style="color:#059669;" id="anaProfVal">Rs. 0</span>
+        <div style="display:flex; justify-content:space-between; font-size:11.5px; font-weight:800;">
+          <span style="color:var(--primary);" id="anaRevAmount">Rs. 0</span>
+          <span style="color:var(--expense);" id="anaCostAmount">Rs. 0</span>
+          <span style="color:var(--profit);" id="anaProfitAmount">Rs. 0</span>
         </div>
       </div>
 
-      <div class="analytics-box">
-        <div style="font-weight:800; font-size:12px; margin-bottom:6px;">🛠️ آرڈرز کی تکمیل</div>
-        <div style="display:flex; justify-content:space-between; font-size:11px;">
-          <span>مکمل کام: <b id="anaDoneCount" style="color:var(--profit);">0</b></span>
-          <span>زیرِ تکمیل کام: <b id="anaPendingCount" style="color:var(--pending);">0</b></span>
+      <div class="analytics-panel">
+        <div style="font-weight:800; font-size:13px; margin-bottom:8px; color:var(--text-main);">🛠️ کاموں کی تکمیل کی شرح</div>
+        <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px;">
+          <span>مکمل کام: <b id="anaDoneCountVal" style="color:var(--profit);">0</b></span>
+          <span>زیرِ تکمیل کام: <b id="anaPendingCountVal" style="color:var(--pending);">0</b></span>
+        </div>
+        <div style="width:100%; height:8px; background:#e2e8f0; border-radius:10px; overflow:hidden;">
+          <div id="anaProgressBar" style="width:0; height:100%; background:var(--profit); border-radius:10px; transition:width .5s ease;"></div>
         </div>
       </div>
     </div>
 
 
     <!-- =====================================================
-         SCREEN 4: SETTINGS & BACKUP
+         SCREEN 4: SETTINGS & BACKUP MANAGER
     ===================================================== -->
-    <div id="screenSettings" class="app-screen">
+    <div id="screenSettings" class="screen-view">
       <div class="section-title">⚙️ ایپ کی سیٹنگز و بیک اپ</div>
 
-      <div class="settings-card" style="background:#eff6ff; border-color:#93c5fd;">
-        <h4 style="color:#0369a1;">🔐 مستقل ڈیٹا اور بیک اپ</h4>
-        <p>آپ کا ڈیٹا موبائل کی اسٹوریج میں مستقل محفوظ رہتا ہے۔ حفاظت کے لیے باقاعدگی سے بیک اپ ڈاؤن لوڈ کر کے اپنے پاس رکھیں۔</p>
-        <button class="btn btn-success" onclick="exportData()" style="margin-bottom:8px;">📤 ڈیٹا بیک اپ ڈاؤن لوڈ کریں</button>
+      <div class="settings-group-card" style="background:#eff6ff; border-color:#93c5fd;">
+        <h3 style="color:#0369a1;">🔐 مستقل ڈیٹا بیس اور بیک اپ</h3>
+        <p>آپ کا ریکارڈ موبائل کی اسٹوریج میں مستقل محفوظ ہے۔ حفاظت کے لیے JSON یا Excel فائل ڈاؤن لوڈ کر کے اپنے پاس محفوظ رکھیں۔</p>
+        <button class="btn btn-success" onclick="downloadBackupFile()" style="margin-bottom:8px;">
+          <span>📤</span> ڈیٹا بیک اپ ڈاؤن لوڈ کریں (JSON)
+        </button>
 
-        <label class="btn" style="background:#475569; cursor:pointer;">
-          📥 بیک اپ فائل سے Restore کریں
-          <input type="file" id="importFile" accept=".json,application/json" style="display:none" onchange="importData(event)">
+        <label class="btn btn-outline" style="cursor:pointer; width:100%;">
+          <span>📥</span> بیک اپ فائل سے Restore کریں
+          <input type="file" id="fileRestoreInput" accept=".json,application/json" style="display:none" onchange="restoreBackupFile(event)">
         </label>
       </div>
 
-      <div class="settings-card" style="background:#ecfdf5; border-color:#86efac;">
-        <h4 style="color:#166534;">📞 ایڈمن سے رابطہ (Contact)</h4>
-        <p>کسی بھی مسئلے یا ایپ کے بارے میں براہ راست WhatsApp پر رابطہ کریں۔</p>
-        <a href="https://wa.me/923298191689?text=السلام%20علیکم%20Ansar%20AZ!%20AZ%20Flow%20ایپ" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">💬 WhatsApp پر رابطہ کریں (03298191689)</a>
-        <div style="text-align:center; font-size:12px; font-weight:800; color:#166534; margin-top:6px;">Admin: Ansar AZ (03298191689)</div>
+      <div class="settings-group-card" style="background:#ecfdf5; border-color:#86efac;">
+        <h3 style="color:#166534;">📞 ایڈمن سے رابطہ (Contact Support)</h3>
+        <p>کسی بھی مدد، رہنمائی یا ایپ سے متعلق سوال کے لیے ایڈمن Ansar AZ سے WhatsApp پر رابطہ کریں۔</p>
+        <a href="https://wa.me/923298191689?text=السلام%20علیکم%20Ansar%20AZ!%20AZ%20Flow%20ایپ" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+          <span>💬</span> WhatsApp پر رابطہ کریں (03298191689)
+        </a>
+        <div style="text-align:center; font-size:12px; font-weight:800; color:#166534; margin-top:8px;">Admin: Ansar AZ (03298191689)</div>
       </div>
 
-      <div class="settings-card">
-        <h4>🌟 ڈیمو ڈیٹا لوڈ کریں</h4>
-        <p>ایپ کو جانچنے کے لیے سی آر سی، ایف آر سی، نکاح نامہ، تاریخ پیدائش وغیرہ کے نمونہ کسٹمرز لوڈ کریں۔</p>
-        <button class="btn" onclick="loadSampleDemoData()" style="background:#0284c7;">ڈیمو ریکارڈز لوڈ کریں</button>
+      <div class="settings-group-card">
+        <h3>🌟 ڈیمو کسٹمرز لوڈ کریں</h3>
+        <p>ایپ کی کارکردگی جانچنے کے لیے سی آر سی، ایف آر سی، نکاح نامہ، تاریخ پیدائش وغیرہ کا نمونہ ڈیٹا شامل کریں۔</p>
+        <button class="btn" onclick="populateDemoRecords()" style="background:var(--primary);">
+          <span>🔄</span> ڈیمو ریکارڈز لوڈ کریں
+        </button>
       </div>
 
-      <div class="settings-card">
-        <h4>📱 ایپ کی معلومات</h4>
+      <div class="settings-group-card">
+        <h3>📱 ایپ کی تفصیلات</h3>
         <p>
           <b>AZ Flow ⚡</b> ورژن 14.0 (پروفیشنل)<br>
-          ایڈمن: Ansar AZ
+          ایڈمن و ڈویلپر: Ansar AZ<br>
+          لوکل اسٹوریج: SQLite / Local Storage (100% آف لائن فعال)
         </p>
-        <div class="powered-badge">⚡ Powered by Ansar AZ</div>
+        <div class="powered-by-box">⚡ Powered by Ansar AZ</div>
       </div>
 
-      <div class="settings-card" style="border-color:#fca5a5;">
-        <h4 style="color:var(--expense);">⚠️ ڈیٹا کنٹرول</h4>
-        <p>یہ بٹن تمام کسٹمر ریکارڈز ہمیشہ کے لیے ختم کر دے گا۔</p>
-        <button class="btn btn-danger" onclick="clearAllData()">تمام ڈیٹا ڈیلیٹ کریں</button>
+      <div class="settings-group-card" style="border-color:#fca5a5;">
+        <h3 style="color:var(--expense);">⚠️ ڈیٹا ڈیلیٹ کنٹرول</h3>
+        <p>یہ بٹن تمام کسٹمرز کا کھاتہ ہمیشہ کے لیے ختم کر دے گا۔ پہلے بیک اپ لے لیں۔</p>
+        <button class="btn btn-danger" onclick="wipeAllData()">
+          <span>🗑️</span> تمام ڈیٹا ڈیلیٹ کریں
+        </button>
       </div>
 
-      <div style="text-align:center; font-weight:800; font-size:13px; color:var(--primary); margin:15px 0 25px;">
+      <div style="text-align:center; font-weight:800; font-size:13.5px; color:var(--primary); margin:18px 0 25px; letter-spacing:0.5px;">
         Powered by Ansar AZ
       </div>
     </div>
@@ -931,143 +1140,182 @@
 
 
   <!-- =====================================================
-       DIGITAL RECEIPT MODAL
+       CUSTOMER INVOICE / RECEIPT MODAL
   ===================================================== -->
-  <div id="receiptModal" class="modal-overlay">
-    <div class="modal-box">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-        <div>
-          <b style="color:var(--primary); font-size:16px;">AZ Flow ⚡</b>
-          <div style="font-size:10px; color:var(--muted);">کسٹمر رسید سِلپ</div>
+  <div id="invoiceModal" class="modal-backdrop">
+    <div class="invoice-modal">
+      <div id="printArea">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <div>
+            <h2 style="color:var(--primary); font-size:18px; font-weight:900;">AZ Flow ⚡</h2>
+            <div style="font-size:11px; color:var(--text-muted);">اسمارٹ کسٹمر رسید / انوائس</div>
+          </div>
+          <button onclick="dismissReceiptModal()" style="background:none; border:none; font-size:20px; cursor:pointer; color:var(--text-muted);">✖</button>
         </div>
-        <button onclick="closeReceipt()" style="background:none; border:none; font-size:18px; cursor:pointer;">✖</button>
+
+        <hr style="border:none; border-top:1px dashed var(--border-color); margin-bottom:12px;">
+
+        <div id="receiptContentDetails" style="font-size:12.5px; line-height:1.7; color:#1e293b;"></div>
       </div>
-      <hr style="border:none; border-top:1px dashed #cbd5e1; margin-bottom:10px;">
 
-      <div id="receiptBody" style="font-size:12px; line-height:1.6; color:#1e293b;"></div>
-
-      <button class="btn btn-whatsapp" id="receiptWhatsAppBtn" style="margin-top:14px;">💬 WhatsApp پر رسید بھیجیں</button>
+      <div style="display:flex; gap:8px; margin-top:16px;">
+        <button class="btn btn-whatsapp" id="btnShareWhatsAppReceipt" style="flex:2;">
+          <span>💬</span> WhatsApp پر بھیجیں
+        </button>
+        <button class="btn btn-outline" onclick="window.print()" style="flex:1;">
+          <span>🖨️</span> پرنٹ
+        </button>
+      </div>
     </div>
   </div>
 
 
   <!-- =====================================================
-       BOTTOM NAVIGATION
+       TOAST NOTIFICATION BOX
   ===================================================== -->
-  <div class="bottom-nav">
-    <button class="nav-btn active" onclick="switchScreen('Home', this)">
-      <span>🏠</span> ہوم
-    </button>
-    <button class="nav-btn" onclick="switchScreen('Records', this)">
-      <span>👥</span> تمام ریکارڈ
-    </button>
-    <button class="nav-btn" onclick="switchScreen('Analytics', this)">
-      <span>📊</span> تجزیہ
-    </button>
-    <button class="nav-btn" onclick="switchScreen('Settings', this)">
-      <span>⚙️</span> سیٹنگز
-    </button>
+  <div id="toastMessage">
+    <span id="toastIcon">✅</span>
+    <span id="toastText">پیغام محفوظ ہو گیا!</span>
   </div>
 
 
   <!-- =====================================================
-       JAVASCRIPT LOGIC
+       BOTTOM NAVIGATION BAR
+  ===================================================== -->
+  <nav class="bottom-navbar">
+    <button class="bottom-nav-item active" onclick="switchActiveScreen('Home', this)">
+      <span>🏠</span> ہوم
+    </button>
+    <button class="bottom-nav-item" onclick="switchActiveScreen('Records', this)">
+      <span>👥</span> تمام ریکارڈ
+    </button>
+    <button class="bottom-nav-item" onclick="switchActiveScreen('Analytics', this)">
+      <span>📊</span> تجزیہ
+    </button>
+    <button class="bottom-nav-item" onclick="switchActiveScreen('Settings', this)">
+      <span>⚙️</span> سیٹنگز
+    </button>
+  </nav>
+
+
+  <!-- =====================================================
+       JAVASCRIPT APPLICATION ENGINE
   ===================================================== -->
   <script>
-    const STORAGE_KEY = "az_flow_permanent_master_records";
-    let records = [];
-    let editingId = null;
-    let currentFilter = 'all';
+    const MASTER_STORAGE_KEY = "az_flow_permanent_master_records";
+    let customerRecords = [];
+    let activeEditingId = null;
+    let currentFilterStatus = 'all';
 
     /* LOAD DATA */
-    function loadData() {
+    function loadStorageData() {
       try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        records = saved ? JSON.parse(saved) : [];
-        if (!Array.isArray(records)) records = [];
-      } catch (e) {
-        records = [];
+        const raw = localStorage.getItem(MASTER_STORAGE_KEY);
+        customerRecords = raw ? JSON.parse(raw) : [];
+        if (!Array.isArray(customerRecords)) customerRecords = [];
+      } catch (err) {
+        console.error("Storage loading error:", err);
+        customerRecords = [];
       }
     }
 
     /* SAVE DATA */
-    function saveData() {
+    function commitStorageData() {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+        localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(customerRecords));
         return true;
-      } catch (e) {
-        alert("ڈیٹا محفوظ کرنے میں مسئلہ آیا!");
+      } catch (err) {
+        showToast("ڈیٹا محفوظ کرنے میں مسئلہ آیا!", "⚠️");
         return false;
       }
     }
 
-    /* SWITCH SCREEN */
-    function switchScreen(screenName, btn) {
-      document.querySelectorAll(".app-screen").forEach(s => s.classList.remove("active"));
-      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+    /* TOAST ALERT */
+    function showToast(message, icon = "✅") {
+      const toast = document.getElementById("toastMessage");
+      document.getElementById("toastIcon").innerText = icon;
+      document.getElementById("toastText").innerText = message;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2600);
+    }
+
+    /* SCREEN SWITCHER */
+    function switchActiveScreen(screenName, buttonEl) {
+      document.querySelectorAll(".screen-view").forEach(view => view.classList.remove("active"));
+      document.querySelectorAll(".bottom-nav-item").forEach(btn => btn.classList.remove("active"));
 
       document.getElementById("screen" + screenName).classList.add("active");
-      if (btn) btn.classList.add("active");
+      if (buttonEl) buttonEl.classList.add("active");
 
-      if (screenName === "Records") renderRecords();
-      if (screenName === "Analytics") renderAnalytics();
-      updateSummary();
+      if (screenName === "Records") renderRecordsList();
+      if (screenName === "Analytics") computeAndRenderAnalytics();
+      refreshDashboardMetrics();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    /* PRESET CHIP CATEGORIES */
-    function switchCategory(cat, btn) {
-      document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
+    /* PRESET CATEGORIES */
+    function activatePresetCategory(catKey, tabBtn) {
+      document.querySelectorAll(".category-tab-btn").forEach(t => t.classList.remove("active"));
+      tabBtn.classList.add("active");
 
-      document.getElementById("cat_nadra").style.display = (cat === 'nadra') ? 'flex' : 'none';
-      document.getElementById("cat_online").style.display = (cat === 'online') ? 'flex' : 'none';
-      document.getElementById("cat_shop").style.display = (cat === 'shop') ? 'flex' : 'none';
+      document.getElementById("chips_nadra").style.display = (catKey === 'nadra') ? 'flex' : 'none';
+      document.getElementById("chips_online").style.display = (catKey === 'online') ? 'flex' : 'none';
+      document.getElementById("chips_legal").style.display = (catKey === 'legal') ? 'flex' : 'none';
+      document.getElementById("chips_shop").style.display = (catKey === 'shop') ? 'flex' : 'none';
     }
 
-    function addWorkPreset(preset) {
-      const field = document.getElementById("custWork");
-      field.value = field.value ? field.value + " ، " + preset : preset;
+    function insertServicePreset(serviceName) {
+      const workInput = document.getElementById("inputWork");
+      const current = workInput.value.trim();
+      workInput.value = current ? current + " ، " + serviceName : serviceName;
+      showToast(`شامل کیا گیا: ${serviceName}`, "➕");
     }
 
-    /* PROFIT PREVIEW */
-    function calcProfitPreview() {
-      const amount = parseFloat(document.getElementById("custAmount").value) || 0;
-      const fee = parseFloat(document.getElementById("custFee").value) || 0;
-      const profit = amount - fee;
-      document.getElementById("profitPreviewVal").innerText = "Rs. " + profit.toLocaleString();
+    /* LIVE PROFIT & MARGIN CALCULATION */
+    function updateLiveProfitPreview() {
+      const amt = parseFloat(document.getElementById("inputAmount").value) || 0;
+      const fee = parseFloat(document.getElementById("inputFee").value) || 0;
+      const profit = amt - fee;
+      const margin = amt > 0 ? ((profit / amt) * 100).toFixed(1) : 0;
+
+      document.getElementById("profitPreviewBadge").innerText = "Rs. " + profit.toLocaleString();
+      document.getElementById("profitMarginPercentLabel").innerText = `مارجن: ${margin}%`;
     }
 
-    /* SAVE / UPDATE CUSTOMER */
-    function saveCustomerRecord() {
-      const name = document.getElementById("custName").value.trim();
-      const phone1 = document.getElementById("custPhone1").value.trim();
-      const phone2 = document.getElementById("custPhone2").value.trim();
-      const phone3 = document.getElementById("custPhone3").value.trim();
-      const work = document.getElementById("custWork").value.trim();
-      const amount = parseFloat(document.getElementById("custAmount").value) || 0;
-      const fee = parseFloat(document.getElementById("custFee").value) || 0;
-      const status = document.getElementById("custStatus").value;
+    /* SAVE / EDIT CUSTOMER */
+    function submitCustomerForm() {
+      const name = document.getElementById("inputName").value.trim();
+      const phone1 = document.getElementById("inputPhone1").value.trim();
+      const phone2 = document.getElementById("inputPhone2").value.trim();
+      const phone3 = document.getElementById("inputPhone3").value.trim();
+      const work = document.getElementById("inputWork").value.trim();
+      const amount = parseFloat(document.getElementById("inputAmount").value) || 0;
+      const fee = parseFloat(document.getElementById("inputFee").value) || 0;
+      const status = document.getElementById("inputStatus").value;
 
       if (!name) {
-        alert("براہ کرم گاہک کا نام درج کریں!");
+        showToast("گاہک کا نام درج کریں!", "⚠️");
         return;
       }
       if (amount <= 0) {
-        alert("براہ کرم وصولی کی درست رقم درج کریں!");
+        showToast("درست وصولی رقم درج کریں!", "⚠️");
         return;
       }
 
       const profit = amount - fee;
 
-      if (editingId !== null) {
-        records = records.map(r => {
-          if (r.id === editingId) {
-            return { ...r, name, phone1, phone2, phone3, work, amount, fee, profit, status, updatedAt: new Date().toISOString() };
+      if (activeEditingId !== null) {
+        customerRecords = customerRecords.map(item => {
+          if (item.id === activeEditingId) {
+            return {
+              ...item,
+              name, phone1, phone2, phone3, work, amount, fee, profit, status,
+              updatedAt: new Date().toISOString()
+            };
           }
-          return r;
+          return item;
         });
-        alert("ریکارڈ اپڈیٹ ہو گیا!");
+        showToast("ریکارڈ کامیابی سے اپڈیٹ ہو گیا!", "✏️");
       } else {
         const newRecord = {
           id: Date.now() + Math.floor(Math.random() * 1000),
@@ -1075,227 +1323,306 @@
           date: new Date().toLocaleDateString("ur-PK"),
           createdAt: Date.now()
         };
-        records.unshift(newRecord);
-        alert("نیا ریکارڈ محفوظ ہو گیا!");
+        customerRecords.unshift(newRecord);
+        showToast("نیا کسٹمر محفوظ ہو گیا!", "💾");
       }
 
-      clearForm();
-      saveData();
-      updateSummary();
-      switchScreen("Records", document.querySelectorAll(".nav-btn")[1]);
+      resetEntryForm();
+      commitStorageData();
+      refreshDashboardMetrics();
+      switchActiveScreen("Records", document.querySelectorAll(".bottom-nav-item")[1]);
     }
 
-    /* CLEAR FORM */
-    function clearForm() {
-      document.getElementById("custName").value = "";
-      document.getElementById("custPhone1").value = "";
-      document.getElementById("custPhone2").value = "";
-      document.getElementById("custPhone3").value = "";
-      document.getElementById("custWork").value = "";
-      document.getElementById("custAmount").value = "";
-      document.getElementById("custFee").value = "";
-      document.getElementById("custStatus").value = "مکمل ہو گیا";
-      document.getElementById("profitPreviewVal").innerText = "Rs. 0";
+    /* RESET FORM */
+    function resetEntryForm() {
+      document.getElementById("inputName").value = "";
+      document.getElementById("inputPhone1").value = "";
+      document.getElementById("inputPhone2").value = "";
+      document.getElementById("inputPhone3").value = "";
+      document.getElementById("inputWork").value = "";
+      document.getElementById("inputAmount").value = "";
+      document.getElementById("inputFee").value = "";
+      document.getElementById("inputStatus").value = "مکمل ہو گیا";
+      document.getElementById("profitPreviewBadge").innerText = "Rs. 0";
+      document.getElementById("profitMarginPercentLabel").innerText = "مارجن: 0%";
 
-      editingId = null;
-      document.getElementById("formTitle").innerText = "➕ نیا گاہک درج کریں";
-      document.getElementById("saveUpdateBtn").innerText = "ریکارڈ محفوظ کریں (Save)";
-      document.getElementById("cancelEditBtn").style.display = "none";
+      activeEditingId = null;
+      document.getElementById("formHeaderTitle").innerText = "➕ نیا گاہک درج کریں (New Customer)";
+      document.getElementById("saveRecordBtn").innerHTML = `<span>💾</span> ریکارڈ محفوظ کریں (Save Record)`;
+      document.getElementById("cancelEditingBtn").style.display = "none";
     }
 
     /* EDIT RECORD */
-    function editRecord(id) {
-      const rec = records.find(r => r.id === id);
-      if (!rec) return;
+    function startEditingRecord(recordId) {
+      const target = customerRecords.find(r => r.id === recordId);
+      if (!target) return;
 
-      document.getElementById("custName").value = rec.name || "";
-      document.getElementById("custPhone1").value = rec.phone1 || "";
-      document.getElementById("custPhone2").value = rec.phone2 || "";
-      document.getElementById("custPhone3").value = rec.phone3 || "";
-      document.getElementById("custWork").value = rec.work || "";
-      document.getElementById("custAmount").value = rec.amount || 0;
-      document.getElementById("custFee").value = rec.fee || 0;
-      document.getElementById("custStatus").value = rec.status || "مکمل ہو گیا";
-      calcProfitPreview();
+      document.getElementById("inputName").value = target.name || "";
+      document.getElementById("inputPhone1").value = target.phone1 || "";
+      document.getElementById("inputPhone2").value = target.phone2 || "";
+      document.getElementById("inputPhone3").value = target.phone3 || "";
+      document.getElementById("inputWork").value = target.work || "";
+      document.getElementById("inputAmount").value = target.amount || 0;
+      document.getElementById("inputFee").value = target.fee || 0;
+      document.getElementById("inputStatus").value = target.status || "مکمل ہو گیا";
+      updateLiveProfitPreview();
 
-      editingId = id;
-      document.getElementById("formTitle").innerText = "✏️ ریکارڈ ایڈٹ کریں (Update)";
-      document.getElementById("saveUpdateBtn").innerText = "تبدیلی محفوظ کریں (Update)";
-      document.getElementById("cancelEditBtn").style.display = "inline";
+      activeEditingId = recordId;
+      document.getElementById("formHeaderTitle").innerText = "✏️ ریکارڈ میں ترمیم کریں (Edit Customer)";
+      document.getElementById("saveRecordBtn").innerHTML = `<span>💾</span> تبدیلی محفوظ کریں (Update)`;
+      document.getElementById("cancelEditingBtn").style.display = "inline";
 
-      switchScreen("Home", document.querySelectorAll(".nav-btn")[0]);
+      switchActiveScreen("Home", document.querySelectorAll(".bottom-nav-item")[0]);
     }
 
     /* DELETE RECORD */
-    function deleteRecord(id) {
+    function removeCustomerRecord(recordId) {
       if (!confirm("کیا آپ واقعی یہ ریکارڈ ڈیلیٹ کرنا چاہتے ہیں؟")) return;
-      records = records.filter(r => r.id !== id);
-      if (editingId === id) clearForm();
-      saveData();
-      renderRecords();
-      updateSummary();
+      customerRecords = customerRecords.filter(r => r.id !== recordId);
+      if (activeEditingId === recordId) resetEntryForm();
+      commitStorageData();
+      renderRecordsList();
+      refreshDashboardMetrics();
+      showToast("ریکارڈ ڈیلیٹ کر دیا گیا", "🗑️");
     }
 
-    /* STATUS FILTER */
-    function filterByStatus(type, btn) {
-      currentFilter = type;
-      document.querySelectorAll("#filterAll, #filterDone, #filterPending").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      renderRecords();
+    /* FILTER STATUS */
+    function setRecordFilter(statusKey, btnElement) {
+      currentFilterStatus = statusKey;
+      document.querySelectorAll("#tabFilterAll, #tabFilterDone, #tabFilterPending").forEach(b => b.classList.remove("active"));
+      btnElement.classList.add("active");
+      renderRecordsList();
     }
 
-    /* RENDER RECORDS */
-    function renderRecords() {
-      const list = document.getElementById("recordsList");
-      const query = (document.getElementById("searchBox").value || "").trim().toLowerCase();
-      list.innerHTML = "";
+    /* RENDER RECORDS LIST */
+    function renderRecordsList() {
+      const container = document.getElementById("customerRecordsContainer");
+      const query = (document.getElementById("searchFilterBox").value || "").trim().toLowerCase();
+      container.innerHTML = "";
 
-      let filtered = records.filter(r => {
-        const matchQuery = (r.name || "").toLowerCase().includes(query) ||
-                           (r.work || "").toLowerCase().includes(query) ||
-                           (r.phone1 || "").includes(query) ||
-                           (r.phone2 || "").includes(query);
-        if (!matchQuery) return false;
-        if (currentFilter === 'done') return r.status === "مکمل ہو گیا";
-        if (currentFilter === 'pending') return r.status === "جاری ہے";
+      let filtered = customerRecords.filter(item => {
+        const matchesQuery =
+          (item.name || "").toLowerCase().includes(query) ||
+          (item.work || "").toLowerCase().includes(query) ||
+          (item.phone1 || "").includes(query) ||
+          (item.phone2 || "").includes(query) ||
+          (item.phone3 || "").includes(query);
+
+        if (!matchesQuery) return false;
+        if (currentFilterStatus === 'done') return item.status === "مکمل ہو گیا";
+        if (currentFilterStatus === 'pending') return item.status === "جاری ہے";
         return true;
       });
 
-      document.getElementById("recordsCountBadge").innerText = "کل: " + filtered.length;
+      document.getElementById("recordsTotalBadge").innerText = "کل: " + filtered.length;
 
       if (filtered.length === 0) {
-        list.innerHTML = `<div style="text-align:center; padding:35px 10px; color:var(--muted); font-size:12px;">📂 کوئی کسٹمر ریکارڈ نہیں ملا</div>`;
+        container.innerHTML = `
+          <div style="text-align:center; padding:40px 10px; color:var(--text-muted); font-size:12.5px;">
+            <div style="font-size:32px; margin-bottom:8px;">📂</div>
+            کوئی مماثل کسٹمر ریکارڈ موجود نہیں ہے
+          </div>`;
         return;
       }
 
-      filtered.forEach(r => {
-        const isDone = r.status === "مکمل ہو گیا";
-        const phones = [r.phone1, r.phone2, r.phone3].filter(Boolean).join(" ، ");
+      filtered.forEach(item => {
+        const isDone = item.status === "مکمل ہو گیا";
+        const initial = (item.name || "A").trim().charAt(0);
+        const phonesJoined = [item.phone1, item.phone2, item.phone3].filter(Boolean).join(" • ");
 
-        const item = document.createElement("div");
-        item.className = "customer-item";
-        item.innerHTML = `
-          <div class="card-actions">
-            <button class="icon-action-btn" onclick="openReceipt(${r.id})" title="رسید">📄</button>
-            <button class="icon-action-btn" onclick="editRecord(${r.id})" title="ایڈٹ">✏️</button>
-            <button class="icon-action-btn" onclick="deleteRecord(${r.id})" title="ڈیلیٹ" style="color:var(--expense);">🗑️</button>
+        const card = document.createElement("div");
+        card.className = "record-card";
+        card.innerHTML = `
+          <div class="record-card-actions">
+            <button class="icon-btn" onclick="openInvoiceSlip(${item.id})" title="رسید دیکھیں">📄</button>
+            <button class="icon-btn" onclick="startEditingRecord(${item.id})" title="ترمیم">✏️</button>
+            <button class="icon-btn" onclick="removeCustomerRecord(${item.id})" title="ڈیلیٹ" style="color:var(--expense);">🗑️</button>
           </div>
-          <div class="customer-header">
-            <div>
-              <div class="customer-name">👤 ${escapeHTML(r.name)}</div>
-              ${phones ? `<div class="customer-phones">📞 ${escapeHTML(phones)}</div>` : ''}
+
+          <div class="record-card-top">
+            <div class="customer-avatar-name">
+              <div class="customer-avatar">${escapeHtmlStr(initial)}</div>
+              <div class="customer-info">
+                <h4>${escapeHtmlStr(item.name)}</h4>
+                ${phonesJoined ? `<span>📞 ${escapeHtmlStr(phonesJoined)}</span>` : ''}
+              </div>
             </div>
-            <span class="status-badge ${isDone ? 'status-done' : 'status-pending'}">${escapeHTML(r.status)}</span>
+            <span class="status-pill ${isDone ? 'done' : 'pending'}">${escapeHtmlStr(item.status)}</span>
           </div>
-          <div class="customer-work">🛠️ <b>${escapeHTML(r.work || "کام مقرر نہیں")}</b></div>
-          <div class="customer-footer">
-            <span>وصولی: Rs. ${Number(r.amount || 0).toLocaleString()} | لاگت: <span style="color:var(--expense);">Rs. ${Number(r.fee || 0).toLocaleString()}</span></span>
-            <span style="color:var(--profit);">منافع: Rs. ${Number(r.profit || 0).toLocaleString()}</span>
+
+          <div class="record-work-line">
+            🛠️ <b>${escapeHtmlStr(item.work || "کام مقرر نہیں")}</b>
           </div>
-          <div style="font-size:9px; color:var(--muted); margin-top:5px; display:flex; justify-content:space-between; align-items:center;">
-            <span>📅 ${escapeHTML(r.date || "")}</span>
-            ${r.phone1 ? `<a href="https://wa.me/92${r.phone1.replace(/^0/,'')}?text=محترم%20${encodeURIComponent(r.name)}%20صاحب!%20آپ%20کا%20کام:%20${encodeURIComponent(r.work)}%20کا%20بل%20Rs.%20${r.amount}%20ہے۔" target="_blank" style="text-decoration:none; color:var(--whatsapp); font-weight:800; font-size:11px;">💬 WhatsApp</a>` : ''}
+
+          <div class="record-financial-bar">
+            <span>وصولی: Rs. ${Number(item.amount || 0).toLocaleString()} | لاگت: <span style="color:var(--expense);">Rs. ${Number(item.fee || 0).toLocaleString()}</span></span>
+            <span style="color:var(--profit);">منافع: Rs. ${Number(item.profit || 0).toLocaleString()}</span>
+          </div>
+
+          <div style="font-size:10px; color:var(--text-muted); margin-top:6px; display:flex; justify-content:space-between; align-items:center;">
+            <span>📅 ${escapeHtmlStr(item.date || "")}</span>
+            <div style="display:flex; gap:8px;">
+              ${item.phone1 ? `<a href="tel:${item.phone1}" style="text-decoration:none; color:var(--primary); font-weight:800;">📞 کال</a>` : ''}
+              ${item.phone1 ? `<a href="https://wa.me/92${item.phone1.replace(/[^0-9]/g,'').replace(/^0/,'')}?text=محترم%20${encodeURIComponent(item.name)}%20صاحب!%20آپ%20کا%20کام:%20${encodeURIComponent(item.work)}%20کا%20بل%20Rs.%20${item.amount}%20ہے۔%20شکریہ!%20(Powered%20by%20Ansar%20AZ)" target="_blank" style="text-decoration:none; color:var(--whatsapp); font-weight:800;">💬 WhatsApp</a>` : ''}
+            </div>
           </div>
         `;
-        list.appendChild(item);
+        container.appendChild(card);
       });
     }
 
-    /* DIGITAL RECEIPT */
-    function openReceipt(id) {
-      const r = records.find(x => x.id === id);
-      if (!r) return;
+    /* DIGITAL RECEIPT INVOICE */
+    function openInvoiceSlip(recordId) {
+      const item = customerRecords.find(x => x.id === recordId);
+      if (!item) return;
 
-      const body = document.getElementById("receiptBody");
-      body.innerHTML = `
-        <div><b>گاہک کا نام:</b> ${escapeHTML(r.name)}</div>
-        ${r.phone1 ? `<div><b>موبائل:</b> ${escapeHTML(r.phone1)}</div>` : ''}
-        <div><b>کام کی تفصیل:</b> ${escapeHTML(r.work || "سروس")}</div>
-        <hr style="border:none; border-top:1px dashed #e2e8f0; margin:6px 0;">
-        <div style="display:flex; justify-content:space-between;"><span>کل وصولی بل:</span> <b>Rs. ${Number(r.amount).toLocaleString()}</b></div>
-        <div style="display:flex; justify-content:space-between;"><span>حالت:</span> <b>${escapeHTML(r.status)}</b></div>
-        <div style="display:flex; justify-content:space-between;"><span>تاریخ:</span> <b>${escapeHTML(r.date)}</b></div>
-        <div style="text-align:center; font-size:10px; color:var(--muted); margin-top:8px;">Powered by Ansar AZ (03298191689)</div>
+      const detailsDiv = document.getElementById("receiptContentDetails");
+      detailsDiv.innerHTML = `
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+          <span><b>رسید نمبر:</b> #${item.id.toString().slice(-6)}</span>
+          <span><b>تاریخ:</b> ${escapeHtmlStr(item.date || "")}</span>
+        </div>
+        <div style="margin-bottom:4px;"><b>گاہک کا نام:</b> ${escapeHtmlStr(item.name)}</div>
+        ${item.phone1 ? `<div style="margin-bottom:4px;"><b>موبائل:</b> ${escapeHtmlStr(item.phone1)}</div>` : ''}
+        <div style="margin-bottom:8px;"><b>کام کی تفصیل:</b> ${escapeHtmlStr(item.work || "سروس چارجز")}</div>
+
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:8px 10px; margin:8px 0;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+            <span>وصولی بل:</span>
+            <b>Rs. ${Number(item.amount).toLocaleString()}</b>
+          </div>
+          <div style="display:flex; justify-content:space-between; color:var(--text-muted); font-size:11.5px;">
+            <span>حالت:</span>
+            <b>${escapeHtmlStr(item.status)}</b>
+          </div>
+        </div>
+
+        <div style="text-align:center; font-size:10.5px; color:var(--text-muted); margin-top:10px;">
+          شکریہ! Powered by Ansar AZ (03298191689)
+        </div>
       `;
 
-      const waBtn = document.getElementById("receiptWhatsAppBtn");
-      waBtn.onclick = function() {
-        const text = `📄 *AZ Flow کسٹمر رسید* ⚡\n--------------------------\n👤 *گاہک:* ${r.name}\n🛠️ *کام:* ${r.work}\n💰 *کل رقم:* Rs. ${r.amount}\n📌 *حالت:* ${r.status}\n📅 *تاریخ:* ${r.date}\n--------------------------\nشکریہ! Powered by Ansar AZ (03298191689)`;
-        const phone = (r.phone1 || "").replace(/[^0-9]/g, "").replace(/^0/, "92");
+      document.getElementById("btnShareWhatsAppReceipt").onclick = function() {
+        const text = `📄 *AZ Flow کسٹمر رسید* ⚡\n---------------------------\n👤 *گاہک:* ${item.name}\n🛠️ *کام:* ${item.work}\n💰 *کل رقم:* Rs. ${Number(item.amount).toLocaleString()}\n📌 *حالت:* ${item.status}\n📅 *تاریخ:* ${item.date}\n---------------------------\nشکریہ! Powered by Ansar AZ (03298191689)`;
+        const phone = (item.phone1 || "").replace(/[^0-9]/g, "").replace(/^0/, "92");
         window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, "_blank");
       };
 
-      document.getElementById("receiptModal").classList.add("active");
+      document.getElementById("invoiceModal").classList.add("open");
     }
 
-    function closeReceipt() {
-      document.getElementById("receiptModal").classList.remove("active");
+    function dismissReceiptModal() {
+      document.getElementById("invoiceModal").classList.remove("open");
     }
 
-    /* SUMMARY & ANALYTICS */
-    function updateSummary() {
-      let tot = 0, prof = 0, fee = 0, done = 0, pending = 0;
-      records.forEach(r => {
-        tot += Number(r.amount) || 0;
-        fee += Number(r.fee) || 0;
-        prof += Number(r.profit) || 0;
+    /* DASHBOARD REFRESH */
+    function refreshDashboardMetrics() {
+      let revenue = 0, profit = 0;
+      customerRecords.forEach(r => {
+        revenue += Number(r.amount) || 0;
+        profit += Number(r.profit) || 0;
+      });
+
+      document.getElementById("totalCollectedVal").innerText = "Rs. " + revenue.toLocaleString();
+      document.getElementById("totalProfitVal").innerText = "Rs. " + profit.toLocaleString();
+    }
+
+    /* ANALYTICS */
+    function computeAndRenderAnalytics() {
+      let revenue = 0, profit = 0, cost = 0, done = 0, pending = 0;
+      customerRecords.forEach(r => {
+        revenue += Number(r.amount) || 0;
+        cost += Number(r.fee) || 0;
+        profit += Number(r.profit) || 0;
         if (r.status === "مکمل ہو گیا") done++; else pending++;
       });
 
-      document.getElementById("totalCollected").innerText = "Rs. " + tot.toLocaleString();
-      document.getElementById("totalProfit").innerText = "Rs. " + prof.toLocaleString();
+      document.getElementById("anaTotalProfit").innerText = "Rs. " + profit.toLocaleString();
+      const margin = revenue > 0 ? ((profit / revenue) * 100).toFixed(1) : 0;
+      document.getElementById("anaMarginRate").innerText = `منافع کی شرح (Margin Rate): ${margin}%`;
+
+      document.getElementById("anaRevAmount").innerText = "Rs. " + revenue.toLocaleString();
+      document.getElementById("anaCostAmount").innerText = "Rs. " + cost.toLocaleString();
+      document.getElementById("anaProfitAmount").innerText = "Rs. " + profit.toLocaleString();
+
+      document.getElementById("anaDoneCountVal").innerText = done;
+      document.getElementById("anaPendingCountVal").innerText = pending;
+
+      const totalTasks = done + pending;
+      const progressPercent = totalTasks > 0 ? ((done / totalTasks) * 100) : 0;
+      document.getElementById("anaProgressBar").style.width = progressPercent + "%";
+
+      const maxVal = Math.max(revenue, 1);
+      document.getElementById("chartRevenueBar").style.height = Math.max((revenue / maxVal) * 100, 8) + "px";
+      document.getElementById("chartCostBar").style.height = Math.max((cost / maxVal) * 100, 8) + "px";
+      document.getElementById("chartProfitBar").style.height = Math.max((Math.max(profit, 0) / maxVal) * 100, 8) + "px";
     }
 
-    function renderAnalytics() {
-      let tot = 0, prof = 0, fee = 0, done = 0, pending = 0;
-      records.forEach(r => {
-        tot += Number(r.amount) || 0;
-        fee += Number(r.fee) || 0;
-        prof += Number(r.profit) || 0;
-        if (r.status === "مکمل ہو گیا") done++; else pending++;
-      });
-
-      document.getElementById("anaNetProfit").innerText = "Rs. " + prof.toLocaleString();
-      const margin = tot > 0 ? ((prof / tot) * 100).toFixed(1) : 0;
-      document.getElementById("anaMargin").innerText = `منافع کی شرح (Profit Margin): ${margin}%`;
-
-      document.getElementById("anaRevVal").innerText = "Rs. " + tot.toLocaleString();
-      document.getElementById("anaCostVal").innerText = "Rs. " + fee.toLocaleString();
-      document.getElementById("anaProfVal").innerText = "Rs. " + prof.toLocaleString();
-
-      document.getElementById("anaDoneCount").innerText = done;
-      document.getElementById("anaPendingCount").innerText = pending;
-
-      const maxVal = Math.max(tot, 1);
-      document.getElementById("barRevenue").style.height = Math.max((tot / maxVal) * 90, 8) + "px";
-      document.getElementById("barCost").style.height = Math.max((fee / maxVal) * 90, 8) + "px";
-      document.getElementById("barProfit").style.height = Math.max((Math.max(prof, 0) / maxVal) * 90, 8) + "px";
-    }
-
-    /* DEMO DATA */
-    function loadSampleDemoData() {
-      records = [
-        { id: 101, name: "محمد عثمان غنی", phone1: "03001234567", work: "سی آر سی (CRC / ب فارم رجسٹریشن)", amount: 2500, fee: 700, profit: 1800, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") },
-        { id: 102, name: "چوہدری طارق محمود", phone1: "03334445566", work: "ایف آر سی (FRC نادرا فیملی رجسٹریشن)", amount: 3000, fee: 1000, profit: 2000, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") },
-        { id: 103, name: "رانا زین العابدین", phone1: "03125556677", work: "نکاح نامہ کمپیوٹرائزڈ تصدیق", amount: 3500, fee: 1200, profit: 2300, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") },
-        { id: 104, name: "حاجی بشیر احمد", phone1: "03451239870", work: "فوتیدگی سرٹیفکیٹ (Death Certificate)", amount: 2000, fee: 500, profit: 1500, status: "جاری ہے", date: new Date().toLocaleDateString("ur-PK") },
-        { id: 105, name: "سید علی رضا رضوی", phone1: "03089998877", work: "تاریخ پیدائش سرٹیفکیٹ (Birth Certificate)", amount: 1800, fee: 400, profit: 1400, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") }
-      ];
-      saveData();
-      updateSummary();
-      renderRecords();
-      alert("ڈیمو کسٹمر ریکارڈز کامیابی سے لوڈ ہو گئے!");
-      switchScreen("Records", document.querySelectorAll(".nav-btn")[1]);
-    }
-
-    /* EXPORT & IMPORT BACKUP */
-    function exportData() {
-      if (records.length === 0) {
-        alert("کوئی ریکارڈ موجود نہیں ہے!");
+    /* EXPORT TO CSV / EXCEL */
+    function exportToCsvFile() {
+      if (customerRecords.length === 0) {
+        showToast("ایکسپورٹ کے لیے کوئی ڈیٹا نہیں ہے!", "⚠️");
         return;
       }
-      const data = { app: "AZ Flow", version: "14.0", poweredBy: "Ansar AZ", backupDate: new Date().toISOString(), records: records };
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+
+      let csv = "\uFEFFنام,موبائل 1,موبائل 2,کام کی تفصیل,وصولی رقم,لاگت,منافع,حالت,تاریخ\n";
+      customerRecords.forEach(r => {
+        const row = [
+          `"${(r.name || "").replace(/"/g, '""')}"`,
+          `"${r.phone1 || ""}"`,
+          `"${r.phone2 || ""}"`,
+          `"${(r.work || "").replace(/"/g, '""')}"`,
+          r.amount || 0,
+          r.fee || 0,
+          r.profit || 0,
+          `"${r.status || ""}"`,
+          `"${r.date || ""}"`
+        ];
+        csv += row.join(",") + "\n";
+      });
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "AZ_Flow_Khata_" + new Date().toISOString().slice(0, 10) + ".csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      showToast("Excel CSV فائل ڈاؤن لوڈ ہو گئی!", "📊");
+    }
+
+    /* DEMO RECORDS */
+    function populateDemoRecords() {
+      customerRecords = [
+        { id: 201, name: "محمد عثمان غنی", phone1: "03001234567", work: "سی آر سی (CRC / ب فارم رجسٹریشن نادرا)", amount: 2500, fee: 700, profit: 1800, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") },
+        { id: 202, name: "چوہدری طارق محمود", phone1: "03334445566", work: "ایف آر سی (FRC نادرا فیملی رجسٹریشن)", amount: 3000, fee: 1000, profit: 2000, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") },
+        { id: 203, name: "رانا زین العابدین", phone1: "03125556677", work: "نکاح نامہ کمپیوٹرائزڈ تصدیق", amount: 3500, fee: 1200, profit: 2300, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") },
+        { id: 204, name: "حاجی بشیر احمد", phone1: "03451239870", work: "فوتیدگی سرٹیفکیٹ (Death Certificate)", amount: 2000, fee: 500, profit: 1500, status: "جاری ہے", date: new Date().toLocaleDateString("ur-PK") },
+        { id: 205, name: "سید علی رضا رضوی", phone1: "03089998877", work: "تاریخ پیدائش سرٹیفکیٹ (Birth Certificate)", amount: 1800, fee: 400, profit: 1400, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") },
+        { id: 206, name: "ملک وقار یونس", phone1: "03227654321", work: "آن لائن پاسپورٹ فیس و ٹوکن چالان", amount: 4500, fee: 1500, profit: 3000, status: "جاری ہے", date: new Date().toLocaleDateString("ur-PK") }
+      ];
+      commitStorageData();
+      refreshDashboardMetrics();
+      renderRecordsList();
+      showToast("ڈیمو کسٹمر ریکارڈز کامیابی سے لوڈ ہو گئے!", "🌟");
+      switchActiveScreen("Records", document.querySelectorAll(".bottom-nav-item")[1]);
+    }
+
+    /* JSON BACKUP DOWNLOAD */
+    function downloadBackupFile() {
+      if (customerRecords.length === 0) {
+        showToast("بیک اپ کے لیے کوئی ریکارڈ موجود نہیں!", "⚠️");
+        return;
+      }
+      const backupPayload = {
+        app: "AZ Flow",
+        version: "14.0",
+        poweredBy: "Ansar AZ",
+        backupDate: new Date().toISOString(),
+        records: customerRecords
+      };
+      const blob = new Blob([JSON.stringify(backupPayload, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -1304,58 +1631,61 @@
       a.click();
       a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
-      alert("بیک اپ ڈاؤن لوڈ ہو گیا!");
+      showToast("بیک اپ فائل ڈاؤن لوڈ ہو گئی!", "📤");
     }
 
-    function importData(e) {
-      const file = e.target.files[0];
+    /* JSON BACKUP RESTORE */
+    function restoreBackupFile(event) {
+      const file = event.target.files[0];
       if (!file) return;
+
       const reader = new FileReader();
-      reader.onload = function(evt) {
+      reader.onload = function(e) {
         try {
-          const parsed = JSON.parse(evt.target.result);
+          const parsed = JSON.parse(e.target.result);
           const list = Array.isArray(parsed) ? parsed : (parsed.records || []);
-          if (!Array.isArray(list)) throw new Error();
+          if (!Array.isArray(list)) throw new Error("Invalid format");
+
           if (confirm("کیا آپ موجودہ ریکارڈز کو اس فائل سے بحال (Restore) کرنا چاہتے ہیں؟")) {
-            records = list;
-            saveData();
-            updateSummary();
-            renderRecords();
-            alert("ریکارڈز کامیابی سے ری سٹور ہو گئے!");
-            switchScreen("Records", document.querySelectorAll(".nav-btn")[1]);
+            customerRecords = list;
+            commitStorageData();
+            refreshDashboardMetrics();
+            renderRecordsList();
+            showToast(`${list.length} ریکارڈز ری سٹور ہو گئے!`, "📥");
+            switchActiveScreen("Records", document.querySelectorAll(".bottom-nav-item")[1]);
           }
         } catch (err) {
-          alert("فائل درست نہیں ہے!");
+          showToast("بیک اپ فائل پڑھنے میں خرابی پیش آئی!", "❌");
         }
-        e.target.value = "";
+        event.target.value = "";
       };
       reader.readAsText(file);
     }
 
     /* CLEAR ALL */
-    function clearAllData() {
+    function wipeAllData() {
       if (confirm("⚠️ خطرہ!\n\nکیا آپ تمام کسٹمرز کا ڈیٹا ہمیشہ کے لیے ڈیلیٹ کرنا چاہتے ہیں؟")) {
-        records = [];
-        saveData();
-        updateSummary();
-        renderRecords();
-        alert("تمام ڈیٹا صاف ہو گیا!");
+        customerRecords = [];
+        commitStorageData();
+        refreshDashboardMetrics();
+        renderRecordsList();
+        showToast("تمام ڈیٹا صاف کر دیا گیا!", "🗑️");
       }
     }
 
-    function escapeHTML(str) {
+    function escapeHtmlStr(str) {
       return String(str ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     }
 
-    /* INIT */
-    loadData();
-    updateSummary();
+    /* INITIALIZATION */
+    loadStorageData();
+    refreshDashboardMetrics();
 
     window.addEventListener("load", function() {
       setTimeout(function() {
-        const s = document.getElementById("splashScreen");
-        if (s) s.classList.add("hide");
-      }, 2000);
+        const splash = document.getElementById("splashScreen");
+        if (splash) splash.classList.add("hide");
+      }, 1900);
     });
   </script>
 
