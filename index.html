@@ -1,724 +1,824 @@
+
 <!DOCTYPE html>
 <html lang="ur" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#06152e">
-  <title>AZ Flow - اسمارٹ کھاتہ مینیجر • Powered by Ansar AZ</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <style>
-    :root{--p:#0284c7;--pd:#0369a1;--g:#10b981;--gd:#059669;--r:#ef4444;--rd:#dc2626;--bg:#f1f5f9;--surf:#fff;--txt:#0f172a;--mut:#64748b;--brd:#cbd5e1;--rad:12px;}
-    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-    body{font-family:'Plus Jakarta Sans','Noto Nastaliq Urdu',system-ui,sans-serif;background:var(--bg);color:var(--txt);direction:rtl;padding-bottom:80px;min-height:100vh;}
-    .hdr{background:linear-gradient(135deg,#06152e,#0c2554);color:#fff;padding:14px 18px;position:sticky;top:0;z-index:50;box-shadow:0 4px 20px rgba(6,21,46,.3);}
-    .hdr-wrap{max-width:850px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
-    .hdr h1{font-size:20px;font-weight:900;display:flex;align-items:center;gap:6px;}
-    .hdr p{font-size:11px;color:#94a3b8;font-weight:600;}
-    .hdr-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;padding:6px 12px;border-radius:var(--rad);font-size:12px;font-weight:700;cursor:pointer;}
-    .user-pill{background:#10b98126;border:1px solid #10b981;color:#6ee7b7;font-size:11px;padding:3px 9px;border-radius:20px;font-weight:700;}
-    .container{max-width:850px;margin:0 auto;padding:14px;}
-    .wa-banner{background:linear-gradient(135deg,#059669,#10b981);color:#fff;border-radius:var(--rad);padding:14px 16px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 14px rgba(16,185,129,.25);}
-    .wa-banner h4{font-size:14.5px;font-weight:800;}
-    .wa-banner p{font-size:11px;opacity:.9;}
-    .tabs{display:flex;background:#e2e8f0;border-radius:var(--rad);padding:4px;margin-bottom:14px;}
-    .tab{flex:1;padding:9px;border:none;background:transparent;border-radius:8px;font-size:13.5px;font-weight:800;color:var(--mut);cursor:pointer;transition:.2s;}
-    .tab.act{background:var(--surf);color:var(--pd);box-shadow:0 2px 6px rgba(0,0,0,.08);}
-    .card{background:var(--surf);border-radius:var(--rad);padding:16px;margin-bottom:14px;border:1px solid var(--brd);box-shadow:0 3px 10px rgba(0,0,0,.04);}
-    .card-hdr{font-size:15px;font-weight:800;margin-bottom:12px;color:var(--pd);display:flex;justify-content:space-between;align-items:center;}
-    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:14px;}
-    .stat{background:var(--surf);border:1px solid var(--brd);border-radius:10px;padding:12px;text-align:center;}
-    .stat-lbl{font-size:11px;font-weight:700;color:var(--mut);margin-bottom:4px;}
-    .stat-val{font-size:17px;font-weight:900;}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;}
-    .f-grp{display:flex;flex-direction:column;gap:4px;}
-    .f-grp label{font-size:11.5px;font-weight:700;color:var(--mut);}
-    .ctrl{padding:9px 11px;border:1.5px solid var(--brd);border-radius:8px;font-size:13.5px;font-family:inherit;background:#fff;}
-    .ctrl:focus{outline:none;border-color:var(--p);box-shadow:0 0 0 3px rgba(2,132,199,.15);}
-    .chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 12px;}
-    .chip{background:#f1f5f9;border:1px solid var(--brd);border-radius:16px;padding:4px 10px;font-size:11.5px;font-weight:700;cursor:pointer;}
-    .chip:hover{background:var(--p);color:#fff;border-color:var(--p);}
-    .btn{padding:9px 15px;border:none;border-radius:8px;font-size:13.5px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:.2s;}
-    .btn-p{background:var(--p);color:#fff;}
-    .btn-p:hover{background:var(--pd);}
-    .btn-g{background:var(--g);color:#fff;}
-    .btn-r{background:var(--r);color:#fff;}
-    .btn-out{background:transparent;border:1.5px solid var(--brd);color:var(--txt);}
-    .btn-wa{background:#25D366;color:#fff;}
-    .btn-sm{padding:5px 9px;font-size:11.5px;border-radius:6px;}
-    .btn-blk{width:100%;}
-    .badge{padding:3px 7px;border-radius:10px;font-size:11px;font-weight:800;display:inline-block;}
-    .b-g{background:#dcfce7;color:#15803d;}
-    .b-a{background:#fef3c7;color:#b45309;}
-    .b-r{background:#fee2e2;color:#b91c1c;}
-    .b-b{background:#e0f2fe;color:#0369a1;}
-    .list{display:flex;flex-direction:column;gap:10px;}
-    .item{background:var(--surf);border:1.5px solid var(--brd);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:7px;transition:.15s;}
-    .item.done{border-right:5px solid var(--g);}
-    .item.pend{border-right:5px solid #f59e0b;}
-    .item.lena{border-right:5px solid var(--g);}
-    .item.dena{border-right:5px solid var(--r);}
-    .item-top{display:flex;justify-content:space-between;align-items:flex-start;}
-    .item-name{font-size:14.5px;font-weight:800;}
-    .item-phone{font-size:11.5px;color:var(--mut);direction:ltr;display:inline-block;}
-    .item-meta{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;padding:7px 0;border-top:1px dashed var(--brd);border-bottom:1px dashed var(--brd);}
-    .item-acts{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;}
-    .modal-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(6,21,46,.65);backdrop-filter:blur(3px);z-index:100;display:none;align-items:center;justify-content:center;padding:14px;}
-    .modal-bg.act{display:flex;}
-    .modal{background:#fff;border-radius:16px;max-width:460px;width:100%;max-height:90vh;overflow-y:auto;padding:20px;box-shadow:0 12px 30px rgba(0,0,0,.25);}
-    .modal-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding-bottom:8px;border-bottom:1.5px solid var(--brd);}
-    .modal-x{background:#f1f5f9;border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;font-weight:900;}
-    .slip{border:2px dashed #94a3b8;border-radius:10px;padding:16px;margin:10px 0;background:#fff;}
-    .slip-hdr{text-align:center;border-bottom:1px dashed var(--brd);padding-bottom:10px;margin-bottom:10px;}
-    .slip-hdr h3{font-size:17px;font-weight:900;color:#06152e;}
-    .slip-row{display:flex;justify-content:space-between;padding:5px 0;font-size:12.5px;border-bottom:1px dotted #f1f5f9;}
-    .slip-row.bold{font-weight:800;font-size:13.5px;border-bottom:1.5px solid var(--brd);background:#f8fafc;padding:6px;}
-    .slip-ftr{text-align:center;margin-top:12px;padding-top:8px;border-top:1px dashed var(--brd);font-size:11px;color:var(--mut);}
-    .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(100px);background:#0f172a;color:#fff;padding:8px 18px;border-radius:24px;font-size:12.5px;font-weight:700;z-index:999;transition:.3s;box-shadow:0 6px 18px rgba(0,0,0,.25);}
-    .toast.show{transform:translateX(-50%) translateY(0);}
-    .ftr{text-align:center;padding:16px;font-size:11.5px;color:var(--mut);font-weight:700;}
-    @media print{body *{visibility:hidden;}.slip,.slip *{visibility:visible;}.slip{position:absolute;left:0;top:0;width:100%;border:none;}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#071b35">
+<title>AZ Flow — Business Manager</title>
+
+<style>
+:root{
+  --navy:#071b35;--blue:#087fbd;--green:#0a9f70;
+  --red:#dc3545;--gold:#f4a623;--bg:#f1f5f9;
+  --white:#fff;--text:#152238;--muted:#64748b;
+  --border:#dbe3ec;--radius:15px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Arial,"Noto Nastaliq Urdu",sans-serif;
+  padding-bottom:85px
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+header{
+  background:linear-gradient(135deg,#071b35,#123e70);
+  color:#fff;padding:17px 15px;position:sticky;top:0;z-index:5;
+  box-shadow:0 4px 14px #071b3520
+}
+.header-inner{
+  max-width:760px;margin:auto;display:flex;
+  align-items:center;justify-content:space-between;gap:10px
+}
+.brand{font-size:23px;font-weight:900;direction:ltr}
+.brand small{display:block;font-size:10px;color:#a9d9ff;font-weight:600}
+.wrap{max-width:760px;margin:auto;padding:14px}
+h2{font-size:19px;margin:5px 0 14px}
+h3{font-size:16px;margin:0 0 12px}
+.card{
+  background:#fff;border:1px solid var(--border);border-radius:var(--radius);
+  padding:15px;margin-bottom:14px;box-shadow:0 3px 12px #0f172a08
+}
+.hero{
+  background:linear-gradient(135deg,#087fbd,#07528e);
+  color:#fff;border:0
+}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stat{
+  background:#f8fafc;border:1px solid var(--border);
+  border-radius:12px;padding:11px 6px;text-align:center;min-width:0
+}
+.stat small{display:block;color:var(--muted);font-size:11px}
+.stat strong{display:block;margin-top:6px;font-size:16px;overflow-wrap:anywhere}
+.green{color:var(--green)!important}
+.red{color:var(--red)!important}
+.blue{color:var(--blue)!important}
+label{display:block;font-size:12px;font-weight:800;margin:10px 0 5px}
+input,textarea,select{
+  width:100%;padding:11px;border:1px solid #cbd5e1;
+  border-radius:10px;background:#fff;color:var(--text);min-width:0
+}
+textarea{resize:vertical;min-height:75px}
+input:focus,textarea:focus,select:focus{
+  outline:2px solid #bae6fd;border-color:var(--blue)
+}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:10px 12px;border:0;border-radius:10px;font-size:13px;
+  font-weight:800;text-decoration:none;text-align:center
+}
+.primary{background:var(--blue);color:#fff}
+.success{background:var(--green);color:#fff}
+.whatsapp{background:#20b85a;color:#fff}
+.danger{background:var(--red);color:#fff}
+.light{background:#edf2f7;color:#203047}
+.gold{background:#fff0c9;color:#855500}
+.btn-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.btn-row .btn{flex:1}
+.nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:10;
+  background:#fff;border-top:1px solid var(--border);
+  display:flex;justify-content:space-around;padding:7px 3px;
+  padding-bottom:max(7px,env(safe-area-inset-bottom))
+}
+.nav button{
+  background:transparent;border:0;color:#64748b;
+  font-size:11px;font-weight:800;padding:6px 5px;flex:1
+}
+.nav button.active{color:var(--blue);background:#e5f5ff;border-radius:9px}
+.nav span{display:block;font-size:19px;margin-bottom:3px}
+.hidden{display:none!important}
+.record{border-right:4px solid var(--blue)}
+.record.pending{border-right-color:var(--gold)}
+.record.done{border-right-color:var(--green)}
+.record-title{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.record-title strong{font-size:16px;overflow-wrap:anywhere}
+.muted{color:var(--muted);font-size:12px}
+.receipt-lines{background:#f8fafc;border:1px dashed #b8c6d6;border-radius:10px;padding:12px;margin-top:12px}
+.line{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid #e5eaf0;font-size:13px}
+.line:last-child{border-bottom:0}
+.line span:first-child{color:#475569}
+.line strong{text-align:left;overflow-wrap:anywhere}
+.badge{display:inline-block;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:800}
+.badge-green{background:#dcfce7;color:#166534}
+.badge-red{background:#fee2e2;color:#991b1b}
+.badge-gold{background:#fef3c7;color:#92400e}
+.modal{
+  display:none;position:fixed;inset:0;z-index:20;background:#071b35a8;
+  padding:12px;align-items:center;justify-content:center
+}
+.modal.open{display:flex}
+.modal-box{
+  width:100%;max-width:560px;max-height:92vh;overflow:auto;
+  background:#fff;border-radius:18px;padding:17px
+}
+.modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.close{border:0;background:#edf2f7;border-radius:9px;padding:7px 12px}
+.empty{text-align:center;padding:25px;color:var(--muted)}
+.credit{text-align:center;color:#64748b;font-size:11px;padding:12px}
+hr{border:0;border-top:1px solid var(--border);margin:14px 0}
+@media(max-width:420px){
+  .stats{grid-template-columns:1fr 1fr}
+  .record-title{flex-direction:column}
+  .btn{font-size:12px;padding:10px 8px}
+}
+@media print{
+  header,.nav,.no-print,.credit{display:none!important}
+  body{background:#fff;padding:0}
+  .wrap{max-width:100%;padding:0}
+  .card{box-shadow:none;break-inside:avoid}
+}
+</style>
 </head>
+
 <body>
-  <header class="hdr">
-    <div class="hdr-wrap">
-      <div>
-        <h1>AZ Flow <span>⚡</span></h1>
-        <p>دکانداری و ادھار کھاتہ مینیجر • Powered by Ansar AZ</p>
-      </div>
-      <div style="display:flex;gap:6px;align-items:center;">
-        <span id="userPill" class="user-pill" style="display:none;"></span>
-        <button class="hdr-btn" onclick="openM('mAuth')">👤 <span id="authTxt">لاگ ان</span></button>
-      </div>
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      AZ Flow
+      <small>Business & Ledger Manager</small>
     </div>
-  </header>
+    <button class="btn primary" onclick="newCustomer()">+ نیا کسٹمر</button>
+  </div>
+</header>
 
-  <div class="container">
-    <div class="wa-banner">
-      <div>
-        <h4>سرکاری واٹس ایپ گروپ جوائن کریں 💬</h4>
-        <p>تمام نئے ممبرز کے لیے خصوصی سپورٹ اور رہنمائی</p>
-      </div>
-      <a href="https://chat.whatsapp.com/ESePIIyZUJKAtvm8WJE6Yf?s=cl&p=a&mlu=4&ilr=4&iam=2" target="_blank" class="btn btn-wa btn-sm" style="text-decoration:none;">شامل ہوں</a>
-    </div>
+<main class="wrap">
 
-    <div class="tabs">
-      <button class="tab act" id="tCust" onclick="setTab('cust')">🏪 گاہک اور دکانداری کھاتہ</button>
-      <button class="tab" id="tUdh" onclick="setTab('udh')">📒 ادھار کھاتہ (لینا / دینا)</button>
-    </div>
-
-    <!-- Section 1: Customer -->
-    <div id="secCust">
-      <div class="stats">
-        <div class="stat"><div class="stat-lbl">کل گاہک</div><div class="stat-val" style="color:var(--p);" id="sCTot">0</div></div>
-        <div class="stat"><div class="stat-lbl">کل وصولی</div><div class="stat-val" id="sCRev">Rs 0</div></div>
-        <div class="stat"><div class="stat-lbl">سرکاری لاگت / فیس</div><div class="stat-val" style="color:var(--rd);" id="sCExp">Rs 0</div></div>
-        <div class="stat"><div class="stat-lbl">خالص منافع / بچت</div><div class="stat-val" style="color:var(--gd);" id="sCPrf">Rs 0</div></div>
-      </div>
-
-      <div class="card">
-        <div class="card-hdr">
-          <span id="fCHdr">➕ نیا گاہک / سروس اندراج</span>
-          <button class="btn btn-out btn-sm" id="btnCancelC" style="display:none;" onclick="cancelCust()">منسوخ</button>
-        </div>
-        <form onsubmit="saveCust(event)">
-          <div class="grid">
-            <div class="f-grp"><label>گاہک کا نام *</label><input type="text" id="cName" class="ctrl" placeholder="محمد احمد" required></div>
-            <div class="f-grp"><label>موبائل نمبر (WhatsApp)</label><input type="tel" id="cPhone" class="ctrl" placeholder="03001234567" dir="ltr"></div>
-            <div class="f-grp"><label>کام / سروس تفصیل *</label><input type="text" id="cWork" class="ctrl" placeholder="شناختی کارڈ، بل، چالان" required></div>
-            <div class="f-grp"><label>تاریخ</label><input type="date" id="cDate" class="ctrl"></div>
-            <div class="f-grp"><label>کل وصولی رقم (Rs) *</label><input type="number" id="cTotal" class="ctrl" placeholder="0" min="0" required oninput="calcCustPrf()"></div>
-            <div class="f-grp"><label>لاگت فیس / چالان (Rs)</label><input type="number" id="cFee" class="ctrl" placeholder="0" min="0" oninput="calcCustPrf()"></div>
-            <div class="f-grp"><label>خالص بچت</label><input type="text" id="cPrfPrev" class="ctrl" readonly style="background:#f1f5f9;font-weight:800;color:var(--gd);" value="Rs 0"></div>
-            <div class="f-grp"><label>حالت</label>
-              <select id="cStatus" class="ctrl">
-                <option value="مکمل">مکمل (Done)</option>
-                <option value="جاری">جاری (Pending)</option>
-              </select>
-            </div>
-          </div>
-          <div class="chips">
-            <span class="chip" onclick="applyChip('بے فارم (CRC)', 500)">بے فارم (500)</span>
-            <span class="chip" onclick="applyChip('شناختی کارڈ نارمل', 750)">CNIC نارمل (750)</span>
-            <span class="chip" onclick="applyChip('شناختی کارڈ ارجنٹ', 1500)">CNIC ارجنٹ (1500)</span>
-            <span class="chip" onclick="applyChip('ڈومیسائل چالان', 300)">ڈومیسائل (300)</span>
-            <span class="chip" onclick="applyChip('بجلی بل ادائیگی', 50)">بجلی بل (50)</span>
-            <span class="chip" onclick="applyChip('پاسپورٹ فیس', 3000)">پاسپورٹ (3000)</span>
-          </div>
-          <button type="submit" class="btn btn-p btn-blk">محفوظ کریں 💾</button>
-        </form>
-      </div>
-
-      <div class="card">
-        <div class="card-hdr"><span>📋 گاہک کھاتہ فہرست</span></div>
-        <div style="display:flex;gap:8px;margin-bottom:12px;">
-          <input type="text" id="qCust" class="ctrl" style="flex:1;" placeholder="نام یا نمبر سے تلاش کریں..." oninput="renderCust()">
-          <select id="fltCust" class="ctrl" style="width:auto;" onchange="renderCust()">
-            <option value="all">تمام</option><option value="مکمل">صرف مکمل</option><option value="جاری">صرف جاری</option>
-          </select>
-        </div>
-        <div class="list" id="listCust"></div>
+  <!-- HOME -->
+  <section id="home">
+    <div class="card hero">
+      <h2>خوش آمدید!</h2>
+      <p>دکانداری، کسٹمر رسیدیں اور ادھار کا حساب ایک جگہ رکھیں۔</p>
+      <div class="grid">
+        <button class="btn light" onclick="newCustomer()">➕ نیا کام / کسٹمر</button>
+        <button class="btn success" onclick="newDebt()">📒 نیا ادھار</button>
       </div>
     </div>
 
-    <!-- Section 2: Udhaar -->
-    <div id="secUdh" style="display:none;">
-      <div class="stats">
-        <div class="stat"><div class="stat-lbl">کل لینا ہے (وصولی)</div><div class="stat-val" style="color:var(--gd);" id="sULena">Rs 0</div></div>
-        <div class="stat"><div class="stat-lbl">کل دینا ہے (ادائیگی)</div><div class="stat-val" style="color:var(--rd);" id="sUDena">Rs 0</div></div>
-        <div class="stat"><div class="stat-lbl">خالص بقایا جات</div><div class="stat-val" style="color:var(--p);" id="sUNet">Rs 0</div></div>
-        <div class="stat"><div class="stat-lbl">کل ادھار ریکارڈز</div><div class="stat-val" id="sUTot">0</div></div>
-      </div>
-
-      <div class="card">
-        <div class="card-hdr">
-          <span id="fUHdr">➕ نیا ادھار اندراج</span>
-          <button class="btn btn-out btn-sm" id="btnCancelU" style="display:none;" onclick="cancelUdh()">منسوخ</button>
-        </div>
-        <form onsubmit="saveUdh(event)">
-          <div style="display:flex;gap:8px;margin-bottom:12px;">
-            <label id="lblLena" style="flex:1;text-align:center;padding:9px;border:2px solid var(--g);background:#f0fdf4;border-radius:8px;font-weight:800;cursor:pointer;">
-              <input type="radio" name="uT" value="LENA" checked onchange="setUdhT('LENA')"> <span style="color:var(--gd);">لینا ہے 📥</span>
-            </label>
-            <label id="lblDena" style="flex:1;text-align:center;padding:9px;border:2px solid var(--brd);background:#fff;border-radius:8px;font-weight:800;cursor:pointer;">
-              <input type="radio" name="uT" value="DENA" onchange="setUdhT('DENA')"> <span style="color:var(--rd);">دینا ہے 📤</span>
-            </label>
-          </div>
-          <div class="grid">
-            <div class="f-grp"><label>شخص / دکان کا نام *</label><input type="text" id="uName" class="ctrl" placeholder="نام درج کریں" required></div>
-            <div class="f-grp"><label>موبائل نمبر (WhatsApp)</label><input type="tel" id="uPhone" class="ctrl" placeholder="03001234567" dir="ltr"></div>
-            <div class="f-grp"><label>ادھار رقم (Rs) *</label><input type="number" id="uAmt" class="ctrl" placeholder="0" min="1" required></div>
-            <div class="f-grp"><label>مد / تفصیل</label><input type="text" id="uDet" class="ctrl" placeholder="تفصیل یا سبب"></div>
-            <div class="f-grp"><label>تاریخ</label><input type="date" id="uDate" class="ctrl"></div>
-            <div class="f-grp"><label>واپسی کا وعدہ (Due Date)</label><input type="date" id="uDueDate" class="ctrl"></div>
-          </div>
-          <button type="submit" class="btn btn-p btn-blk" style="margin-top:12px;">ادھار کھاتے میں درج کریں 💾</button>
-        </form>
-      </div>
-
-      <div class="card">
-        <div class="card-hdr"><span>📒 ادھار کھاتہ فہرست</span></div>
-        <div style="display:flex;gap:8px;margin-bottom:12px;">
-          <input type="text" id="qUdh" class="ctrl" style="flex:1;" placeholder="نام یا تفصیل سے تلاش کریں..." oninput="renderUdh()">
-          <select id="fltUdh" class="ctrl" style="width:auto;" onchange="renderUdh()">
-            <option value="all">تمام</option><option value="LENA">لینا ہے</option><option value="DENA">دینا ہے</option><option value="SET">بے باق</option>
-          </select>
-        </div>
-        <div class="list" id="listUdh"></div>
-      </div>
-    </div>
-
-    <!-- Backup Card -->
     <div class="card">
-      <div class="card-hdr"><span>🔄 بیک اپ اور سیکیورٹی</span></div>
-      <p style="font-size:11.5px;color:var(--mut);margin-bottom:10px;">گوگل یا ای میل سے لاگ ان کریں؛ موبائل تبدیل کرنے پر بھی سارا ڈیٹا محفوظ رہے گا۔</p>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;">
-        <button class="btn btn-out btn-sm" onclick="expJSON()">📁 ڈاؤنلوڈ بیک اپ (JSON)</button>
-        <button class="btn btn-out btn-sm" onclick="document.getElementById('fImp').click()">📥 فائل سے بحال کریں</button>
-        <button class="btn btn-wa btn-sm" onclick="waBackup()">💬 واٹس ایپ بیک اپ</button>
-        <input type="file" id="fImp" style="display:none;" accept=".json" onchange="impJSON(event)">
+      <h3>📊 کاروبار کا حساب</h3>
+      <div class="stats">
+        <div class="stat"><small>کل وصولی / فیس</small><strong id="homeRevenue">Rs. 0</strong></div>
+        <div class="stat"><small>کل لاگت</small><strong id="homeCost">Rs. 0</strong></div>
+        <div class="stat"><small>خالص بچت</small><strong class="green" id="homeProfit">Rs. 0</strong></div>
       </div>
     </div>
 
-    <div class="ftr">
-      <div>رابطہ و ایڈمن: Ansar AZ (03298191689)</div>
-      <div style="color:var(--p);font-weight:800;margin-top:3px;">⚡ Powered by Ansar AZ</div>
+    <div class="card">
+      <h3>📒 ادھار کا خلاصہ</h3>
+      <div class="grid">
+        <div class="stat"><small>وصول کرنا ہے</small><strong class="green" id="homeReceive">Rs. 0</strong></div>
+        <div class="stat"><small>ادا کرنا ہے</small><strong class="red" id="homePay">Rs. 0</strong></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn primary" onclick="showTab('debts')">ادھار کی تفصیل دیکھیں</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🕒 حالیہ کسٹمرز</h3>
+      <div id="recentCustomers"></div>
+    </div>
+  </section>
+
+  <!-- CUSTOMERS -->
+  <section id="customers" class="hidden">
+    <h2>👥 دکانداری اور کسٹمر رسیدیں</h2>
+    <div class="card">
+      <button class="btn primary" style="width:100%" onclick="newCustomer()">➕ نیا کسٹمر / کام شامل کریں</button>
+      <label for="customerSearch">کسٹمر تلاش کریں</label>
+      <input id="customerSearch" placeholder="نام، فون یا کام..." oninput="renderCustomers()">
+      <label for="customerFilter">کام کی حالت</label>
+      <select id="customerFilter" onchange="renderCustomers()">
+        <option value="all">تمام ریکارڈ</option>
+        <option value="pending">کام جاری ہے</option>
+        <option value="done">کام مکمل ہو گیا</option>
+      </select>
+    </div>
+    <div id="customerList"></div>
+  </section>
+
+  <!-- DEBTS -->
+  <section id="debts" class="hidden">
+    <h2>📒 ادھار کھاتہ</h2>
+    <div class="card">
+      <div class="grid">
+        <div class="stat"><small>وصول کرنا ہے</small><strong class="green" id="debtReceive">Rs. 0</strong></div>
+        <div class="stat"><small>ادا کرنا ہے</small><strong class="red" id="debtPay">Rs. 0</strong></div>
+      </div>
+      <button class="btn success" style="width:100%;margin-top:12px" onclick="newDebt()">➕ نیا ادھار درج کریں</button>
+      <label for="debtSearch">نام یا تفصیل تلاش کریں</label>
+      <input id="debtSearch" placeholder="نام، سامان، تفصیل..." oninput="renderDebts()">
+      <label for="debtFilter">کھاتے کی قسم</label>
+      <select id="debtFilter" onchange="renderDebts()">
+        <option value="all">تمام کھاتے</option>
+        <option value="receive">کسٹمر سے وصول کرنا ہے</option>
+        <option value="pay">کسٹمر / پارٹی کو ادا کرنا ہے</option>
+        <option value="open">صرف بقایا</option>
+        <option value="settled">صرف ادا شدہ</option>
+      </select>
+    </div>
+    <div id="debtList"></div>
+  </section>
+
+  <!-- BACKUP / SETTINGS -->
+  <section id="settings" class="hidden">
+    <h2>⚙️ سیٹنگز اور بیک اپ</h2>
+    <div class="card">
+      <h3>اپنے ریکارڈ محفوظ رکھیں</h3>
+      <p class="muted">بیک اپ فائل ڈاؤن لوڈ کریں۔ موبائل یا براؤزر کا ڈیٹا صاف کرنے سے پہلے بیک اپ ضرور بنائیں۔</p>
+      <div class="btn-row">
+        <button class="btn primary" onclick="exportBackup()">JSON بیک اپ ڈاؤن لوڈ</button>
+        <button class="btn light" onclick="document.getElementById('importFile').click()">بیک اپ بحال کریں</button>
+      </div>
+      <input id="importFile" type="file" accept=".json,application/json" class="hidden" onchange="importBackup(event)">
+      <hr>
+      <button class="btn danger" style="width:100%" onclick="clearAll()">تمام ریکارڈ ختم کریں</button>
+      <p class="muted" style="margin-top:8px">ریکارڈ ختم کرنے سے پہلے بیک اپ بنائیں۔ یہ عمل واپس نہیں ہوگا۔</p>
+    </div>
+    <div class="card">
+      <h3>ایپ کے بارے میں</h3>
+      <p>AZ Flow — کسٹمر مینیجر، دکانداری اور ادھار کھاتہ۔</p>
+      <p class="credit">Powered by Ansar AZ</p>
+    </div>
+  </section>
+
+</main>
+
+<nav class="nav no-print">
+  <button id="nav-home" class="active" onclick="showTab('home')"><span>🏠</span>ہوم</button>
+  <button id="nav-customers" onclick="showTab('customers')"><span>👥</span>دکانداری</button>
+  <button id="nav-debts" onclick="showTab('debts')"><span>📒</span>ادھار</button>
+  <button id="nav-settings" onclick="showTab('settings')"><span>⚙️</span>سیٹنگز</button>
+</nav>
+
+<!-- CUSTOMER FORM -->
+<div class="modal" id="customerModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="customerModalTitle">نیا کسٹمر</h3>
+      <button class="close" onclick="closeModal('customerModal')">✕</button>
+    </div>
+    <input id="cId" type="hidden">
+
+    <label for="cName">کسٹمر کا نام *</label>
+    <input id="cName" placeholder="کسٹمر کا مکمل نام">
+
+    <div class="grid">
+      <div><label for="cPhone">موبائل نمبر</label><input id="cPhone" type="tel" placeholder="03XXXXXXXXX"></div>
+      <div><label for="cDate">تاریخ</label><input id="cDate" type="date"></div>
+    </div>
+
+    <label for="cWork">کام / سروس کی مکمل تفصیل *</label>
+    <textarea id="cWork" placeholder="مثال: شناختی کارڈ فارم، فوٹو کاپی، آن لائن درخواست وغیرہ"></textarea>
+
+    <div class="grid">
+      <div><label for="cAmount">کل فیس / وصول شدہ رقم (روپے) *</label><input id="cAmount" type="number" min="0" placeholder="100"></div>
+      <div><label for="cCost">کام کی لاگت / خرچ (روپے)</label><input id="cCost" type="number" min="0" placeholder="50"></div>
+    </div>
+
+    <div class="card" style="background:#ecfdf5;margin-top:12px">
+      <div class="line"><span>خالص بچت / منافع</span><strong class="green" id="cProfitPreview">Rs. 0</strong></div>
+    </div>
+
+    <label for="cPaid">ادائیگی کی تفصیل</label>
+    <select id="cPaid">
+      <option value="full">مکمل رقم وصول ہوگئی</option>
+      <option value="advance">کچھ رقم ایڈوانس ملی، باقی بعد میں لینی ہے</option>
+      <option value="later">ادائیگی کام مکمل ہونے پر ہوگی</option>
+    </select>
+
+    <div class="grid">
+      <div><label for="cAdvance">اب تک وصول رقم</label><input id="cAdvance" type="number" min="0" placeholder="100"></div>
+      <div><label for="cDueDate">باقی رقم کی تاریخ</label><input id="cDueDate" type="date"></div>
+    </div>
+
+    <label for="cExtra">اضافی تفصیل / شرائط</label>
+    <textarea id="cExtra" placeholder="مثال: 50 روپے پہلے لیے، باقی کام مکمل ہونے پر ادا ہوں گے۔"></textarea>
+
+    <label for="cStatus">کام کی حالت</label>
+    <select id="cStatus">
+      <option value="pending">⏳ کام جاری ہے</option>
+      <option value="done">✅ کام مکمل ہو گیا</option>
+    </select>
+
+    <div class="btn-row">
+      <button class="btn primary" onclick="saveCustomer()">محفوظ کریں</button>
+      <button class="btn light" onclick="closeModal('customerModal')">منسوخ</button>
     </div>
   </div>
+</div>
 
-  <!-- Customer Receipt Modal -->
-  <div class="modal-bg" id="mCustR">
-    <div class="modal">
-      <div class="modal-hdr">
-        <h3 style="font-size:15px;font-weight:800;">🧾 باقاعدہ کسٹمر رسید</h3>
-        <button class="modal-x" onclick="closeM('mCustR')">✕</button>
-      </div>
-      <div class="slip" id="slipCArea">
-        <div class="slip-hdr">
-          <h3>AZ Flow</h3>
-          <p>ڈیجیٹل کسٹمر سروس واؤچر</p>
-          <p style="font-size:10px;color:var(--mut);" id="sCDate">-</p>
-        </div>
-        <div class="slip-row"><span>گاہک نام:</span><b id="sCName">-</b></div>
-        <div class="slip-row"><span>رابطہ:</span><span dir="ltr" id="sCPhone">-</span></div>
-        <div class="slip-row"><span>کام / سروس:</span><b id="sCWork">-</b></div>
-        <div class="slip-row"><span>حالت:</span><span id="sCStatBadge" class="badge b-g">-</span></div>
-        <div class="slip-row"><span>کل وصولی:</span><b style="color:var(--p);" id="sCTotVal">Rs 0</b></div>
-        <div class="slip-row"><span>لاگت فیس:</span><span style="color:var(--rd);" id="sCFeeVal">Rs 0</span></div>
-        <div class="slip-row bold"><span>خالص بچت:</span><b style="color:var(--gd);" id="sCPrfVal">Rs 0</b></div>
-        <div class="slip-ftr"><p>اعتماد کا شکریہ!</p><b style="color:var(--p);">Powered by Ansar AZ</b></div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:6px;margin-top:10px;">
-        <button class="btn btn-wa btn-blk" id="btnSlipCWA">💬 واٹس ایپ پر رسید بھیجیں</button>
-        <div style="display:flex;gap:6px;">
-          <button class="btn btn-out" style="flex:1;" onclick="window.print()">🖨️ پرنٹ / PDF</button>
-          <button class="btn btn-out" style="flex:1;" id="btnSlipCCpy">📋 کاپی کریں</button>
-        </div>
-      </div>
+<!-- DEBT FORM -->
+<div class="modal" id="debtModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="debtModalTitle">نیا ادھار</h3>
+      <button class="close" onclick="closeModal('debtModal')">✕</button>
+    </div>
+    <input id="dId" type="hidden">
+
+    <label for="dType">کھاتے کی قسم</label>
+    <select id="dType">
+      <option value="receive">کسٹمر سے رقم وصول کرنا ہے (لینا)</option>
+      <option value="pay">مجھے رقم ادا کرنی ہے (دینا)</option>
+    </select>
+
+    <label for="dName">کسٹمر / پارٹی کا نام *</label>
+    <input id="dName" placeholder="پورا نام">
+
+    <div class="grid">
+      <div><label for="dPhone">موبائل نمبر</label><input id="dPhone" type="tel" placeholder="03XXXXXXXXX"></div>
+      <div><label for="dDate">ادھار کی تاریخ</label><input id="dDate" type="date"></div>
+    </div>
+
+    <label for="dDetails">سامان / کام / ادھار کی تفصیل *</label>
+    <textarea id="dDetails" placeholder="مثال: دکان کا سامان، ادھار رقم یا کیے گئے کام کی تفصیل"></textarea>
+
+    <div class="grid">
+      <div><label for="dAmount">ادھار کی رقم (روپے) *</label><input id="dAmount" type="number" min="0" placeholder="500"></div>
+      <div><label for="dDueDate">واپسی / ادائیگی کی آخری تاریخ</label><input id="dDueDate" type="date"></div>
+    </div>
+
+    <label for="dExtra">اضافی تفصیل / شرائط</label>
+    <textarea id="dExtra" placeholder="مثال: 500 روپے 30 اکتوبر تک واپس کرنے ہیں۔"></textarea>
+
+    <div class="btn-row">
+      <button class="btn success" onclick="saveDebt()">ادھار محفوظ کریں</button>
+      <button class="btn light" onclick="closeModal('debtModal')">منسوخ</button>
     </div>
   </div>
+</div>
 
-  <!-- Udhaar Receipt Modal -->
-  <div class="modal-bg" id="mUdhR">
-    <div class="modal">
-      <div class="modal-hdr">
-        <h3 style="font-size:15px;font-weight:800;">🧾 ادھار کھاتہ واؤچر</h3>
-        <button class="modal-x" onclick="closeM('mUdhR')">✕</button>
-      </div>
-      <div class="slip" id="slipUArea">
-        <div class="slip-hdr">
-          <h3>AZ Flow</h3>
-          <p>ادھار لین دین رسید</p>
-          <p style="font-size:10px;color:var(--mut);" id="sUDate">-</p>
-        </div>
-        <div class="slip-row"><span>شخص نام:</span><b id="sUName">-</b></div>
-        <div class="slip-row"><span>رابطہ:</span><span dir="ltr" id="sUPhone">-</span></div>
-        <div class="slip-row"><span>نوعیت:</span><span id="sUTypeBadge" class="badge b-g">-</span></div>
-        <div class="slip-row"><span>مد / سبب:</span><span id="sUDet">-</span></div>
-        <div class="slip-row"><span>واپسی تاریخ:</span><span id="sUDue">-</span></div>
-        <div class="slip-row bold"><span>رقم:</span><b id="sUAmtVal">Rs 0</b></div>
-        <div class="slip-row"><span>حالت:</span><b id="sUStat">-</b></div>
-        <div class="slip-ftr"><p>رابطہ: 03298191689</p><b style="color:var(--p);">Powered by Ansar AZ</b></div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:6px;margin-top:10px;">
-        <button class="btn btn-wa btn-blk" id="btnSlipUWA">💬 واٹس ایپ پر ادھار رسید بھیجیں</button>
-        <div style="display:flex;gap:6px;">
-          <button class="btn btn-out" style="flex:1;" onclick="window.print()">🖨️ پرنٹ / PDF</button>
-          <button class="btn btn-out" style="flex:1;" id="btnSlipUCpy">📋 کاپی کریں</button>
-        </div>
-      </div>
+<div class="modal" id="receiptModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>🧾 رسید کا مکمل پیش منظر</h3>
+      <button class="close" onclick="closeModal('receiptModal')">✕</button>
+    </div>
+    <div id="receiptPreview"></div>
+    <div class="btn-row no-print">
+      <button class="btn whatsapp" id="receiptWhatsApp">WhatsApp پر بھیجیں</button>
+      <button class="btn primary" onclick="window.print()">رسید پرنٹ کریں</button>
     </div>
   </div>
+</div>
 
-  <!-- Auth Modal -->
-  <div class="modal-bg" id="mAuth">
-    <div class="modal">
-      <div class="modal-hdr">
-        <h3 style="font-size:15px;font-weight:800;">🔐 کلاؤڈ سیکیور لاگ ان</h3>
-        <button class="modal-x" onclick="closeM('mAuth')">✕</button>
+<div id="toast" style="display:none;position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#071b35;color:#fff;padding:12px 18px;border-radius:12px;z-index:99;max-width:90%;text-align:center"></div>
+
+<script>
+"use strict";
+
+const CUSTOMER_KEY = "az_flow_customers_complete_v1";
+const DEBT_KEY = "az_flow_debts_complete_v1";
+
+let customers = readData(CUSTOMER_KEY);
+let debts = readData(DEBT_KEY);
+let toastTimer;
+
+function readData(key){
+  try{
+    const value = JSON.parse(localStorage.getItem(key) || "[]");
+    return Array.isArray(value) ? value : [];
+  }catch(e){ return []; }
+}
+
+function saveData(){
+  try{
+    localStorage.setItem(CUSTOMER_KEY, JSON.stringify(customers));
+    localStorage.setItem(DEBT_KEY, JSON.stringify(debts));
+    return true;
+  }catch(e){
+    alert("ریکارڈ محفوظ نہیں ہو سکا۔ سیٹنگز میں بیک اپ بنائیں اور موبائل کی جگہ چیک کریں۔");
+    return false;
+  }
+}
+
+function money(n){
+  return "Rs. " + (Number(n)||0).toLocaleString("en-PK");
+}
+
+function today(){
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+
+function fmtDate(s){
+  if(!s) return "درج نہیں";
+  const p = s.split("-");
+  return p.length===3 ? `${p[2]}/${p[1]}/${p[0]}` : s;
+}
+
+function esc(s){
+  return String(s ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+}
+
+function showToast(message){
+  const el=document.getElementById("toast");
+  el.textContent=message;
+  el.style.display="block";
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.style.display="none",2600);
+}
+
+function showTab(tab){
+  ["home","customers","debts","settings"].forEach(id=>{
+    document.getElementById(id).classList.toggle("hidden",id!==tab);
+    const nav=document.getElementById("nav-"+id);
+    if(nav) nav.classList.toggle("active",id===tab);
+  });
+  if(tab==="home") renderHome();
+  if(tab==="customers") renderCustomers();
+  if(tab==="debts") renderDebts();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function openModal(id){document.getElementById(id).classList.add("open")}
+function closeModal(id){document.getElementById(id).classList.remove("open")}
+
+document.querySelectorAll(".modal").forEach(m=>{
+  m.addEventListener("click",e=>{if(e.target===m)m.classList.remove("open")});
+});
+
+function updateProfitPreview(){
+  const a=Number(document.getElementById("cAmount").value)||0;
+  const c=Number(document.getElementById("cCost").value)||0;
+  document.getElementById("cProfitPreview").textContent=money(a-c);
+}
+["cAmount","cCost"].forEach(id=>document.getElementById(id).addEventListener("input",updateProfitPreview));
+
+function newCustomer(){
+  document.getElementById("customerModalTitle").textContent="نیا کسٹمر / کام";
+  ["cId","cName","cPhone","cWork","cAmount","cCost","cAdvance","cDueDate","cExtra"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("cDate").value=today();
+  document.getElementById("cStatus").value="pending";
+  document.getElementById("cPaid").value="full";
+  document.getElementById("cAdvance").value="0";
+  updateProfitPreview();
+  openModal("customerModal");
+}
+
+function editCustomer(id){
+  const r=customers.find(x=>x.id===id); if(!r)return;
+  document.getElementById("customerModalTitle").textContent="کسٹمر ریکارڈ میں ترمیم";
+  const fields={
+    cId:r.id,cName:r.name,cPhone:r.phone,cWork:r.work,cAmount:r.amount,
+    cCost:r.cost,cAdvance:r.advance,cDueDate:r.dueDate,cExtra:r.extra,
+    cDate:r.date,cStatus:r.status,cPaid:r.paymentType
+  };
+  Object.entries(fields).forEach(([id,v])=>document.getElementById(id).value=v??"");
+  updateProfitPreview();
+  openModal("customerModal");
+}
+
+function saveCustomer(){
+  const id=document.getElementById("cId").value;
+  const name=document.getElementById("cName").value.trim();
+  const work=document.getElementById("cWork").value.trim();
+  const amount=Number(document.getElementById("cAmount").value)||0;
+  const cost=Number(document.getElementById("cCost").value)||0;
+  const advance=Number(document.getElementById("cAdvance").value)||0;
+  if(!name){showToast("کسٹمر کا نام درج کریں");return}
+  if(!work){showToast("کام کی تفصیل درج کریں");return}
+  if(amount<0||cost<0||advance<0){showToast("رقم درست درج کریں");return}
+  if(advance>amount){showToast("وصول رقم کل فیس سے زیادہ نہیں ہو سکتی");return}
+
+  const old=id?customers.find(x=>x.id===Number(id)):null;
+  const r={
+    id:id?Number(id):Date.now(),
+    name,phone:document.getElementById("cPhone").value.trim(),
+    work,amount,cost,profit:amount-cost,advance,
+    balance:Math.max(0,amount-advance),
+    paymentType:document.getElementById("cPaid").value,
+    dueDate:document.getElementById("cDueDate").value,
+    extra:document.getElementById("cExtra").value.trim(),
+    date:document.getElementById("cDate").value||today(),
+    status:document.getElementById("cStatus").value,
+    createdAt:old?.createdAt||Date.now()
+  };
+
+  if(id) customers=customers.map(x=>x.id===Number(id)?r:x);
+  else customers.unshift(r);
+
+  if(!saveData())return;
+  closeModal("customerModal");
+  renderAll();
+  showToast(id?"کسٹمر ریکارڈ اپڈیٹ ہوگیا":"کسٹمر ریکارڈ محفوظ ہوگیا");
+}
+
+function deleteCustomer(id){
+  if(!confirm("کیا یہ کسٹمر ریکارڈ حذف کرنا چاہتے ہیں؟"))return;
+  customers=customers.filter(x=>x.id!==id);
+  if(saveData()){renderAll();showToast("ریکارڈ حذف ہوگیا")}
+}
+
+function toggleCustomer(id){
+  const r=customers.find(x=>x.id===id);if(!r)return;
+  r.status=r.status==="done"?"pending":"done";
+  if(saveData()){renderAll();showToast("کام کی حالت تبدیل ہوگئی")}
+}
+
+function customerReceiptText(r){
+  const payment={
+    full:"مکمل ادائیگی",
+    advance:"ایڈوانس وصول، باقی رقم بعد میں",
+    later:"ادائیگی کام مکمل ہونے پر"
+  };
+  return `🧾 *AZ Flow — کسٹمر رسید*
+━━━━━━━━━━━━━━━━
+*رسید نمبر:* AZ-${r.id}
+*کسٹمر:* ${r.name}
+*تاریخ:* ${fmtDate(r.date)}
+*کام کی تفصیل:*
+${r.work}
+
+*کل فیس / رقم:* ${money(r.amount)}
+*اب تک وصول رقم:* ${money(r.advance)}
+*باقی وصول کرنا ہے:* ${money(r.balance)}
+*کام کی لاگت:* ${money(r.cost)}
+*خالص بچت / منافع:* ${money(r.profit)}
+
+*ادائیگی کی حالت:* ${payment[r.paymentType]||"درج نہیں"}
+*باقی رقم کی تاریخ:* ${fmtDate(r.dueDate)}
+*کام کی حالت:* ${r.status==="done"?"کام مکمل ہوگیا":"کام جاری ہے"}
+
+*اضافی تفصیل / شرائط:*
+${r.extra||"کوئی اضافی تفصیل درج نہیں"}
+
+شکریہ!
+*Powered by Ansar AZ*`;
+}
+
+function debtReceiptText(r){
+  return `🧾 *AZ Flow — ادھار کی رسید*
+━━━━━━━━━━━━━━━━
+*رسید نمبر:* AZ-U-${r.id}
+*نام:* ${r.name}
+*تاریخ:* ${fmtDate(r.date)}
+*کھاتے کی قسم:* ${r.type==="receive"?"کسٹمر سے رقم وصول کرنی ہے":"مجھے رقم ادا کرنی ہے"}
+
+*سامان / کام / ادھار کی تفصیل:*
+${r.details}
+
+*ادھار کی رقم:* ${money(r.amount)}
+*واپسی / ادائیگی کی آخری تاریخ:* ${fmtDate(r.dueDate)}
+*حالت:* ${r.settled?"ادائیگی مکمل":"رقم ابھی باقی ہے"}
+
+*اضافی تفصیل / شرائط:*
+${r.extra||"کوئی اضافی تفصیل درج نہیں"}
+${r.phone?"*رابطہ نمبر:* "+r.phone:""}
+
+یہ رسید باہمی حساب اور ریکارڈ کے لیے ہے۔
+*Powered by Ansar AZ*`;
+}
+
+function sendWhatsApp(phone,text){
+  let p=String(phone||"").replace(/\D/g,"");
+  if(p.startsWith("03"))p="92"+p.slice(1);
+  const url=p
+    ?"https://wa.me/"+p+"?text="+encodeURIComponent(text)
+    :"https://wa.me/?text="+encodeURIComponent(text);
+  window.open(url,"_blank","noopener");
+}
+
+function viewCustomerReceipt(id){
+  const r=customers.find(x=>x.id===id);if(!r)return;
+  document.getElementById("receiptPreview").innerHTML=`
+    <div class="card" id="printReceipt">
+      <div style="text-align:center">
+        <div style="font-size:23px;font-weight:900;direction:ltr">AZ Flow</div>
+        <h3>کسٹمر ادائیگی کی رسید</h3>
+        <div class="muted">رسید نمبر: AZ-${r.id}</div>
       </div>
-      <div id="vLoggedOut">
-        <p style="font-size:11.5px;color:var(--mut);margin-bottom:12px;">گوگل یا ای میل سے لاگ ان کریں، نیا فون تبدیل کرنے پر بھی کھاتہ محفوظ رہے گا۔</p>
-        <button class="btn btn-out btn-blk" style="border-color:#4285F4;margin-bottom:12px;font-size:12.5px;" onclick="gLogin()">
-          🌐 گوگل اکاؤنٹ سے لاگ ان (Google Sign-In)
-        </button>
-        <form onsubmit="emLogin(event)">
-          <div class="f-grp" style="margin-bottom:8px;"><label>ای میل</label><input type="email" id="aMail" class="ctrl" placeholder="name@gmail.com" required dir="ltr"></div>
-          <div class="f-grp" style="margin-bottom:12px;"><label>پاس ورڈ</label><input type="password" id="aPass" class="ctrl" placeholder="کم از کم 6 ہندسے" required minlength="6" dir="ltr"></div>
-          <div style="display:flex;gap:6px;">
-            <button type="submit" class="btn btn-p" style="flex:1;">لاگ ان</button>
-            <button type="button" class="btn btn-out" style="flex:1;" onclick="emReg()">نیا اکاؤنٹ</button>
-          </div>
-        </form>
-      </div>
-      <div id="vLoggedIn" style="display:none;text-align:center;">
-        <div style="font-size:36px;margin-bottom:8px;">👤</div>
-        <h4 id="uNameTxt" style="font-size:15px;font-weight:800;">-</h4>
-        <p id="uMailTxt" style="font-size:11.5px;color:var(--mut);margin-bottom:12px;">-</p>
-        <div style="background:#f0fdf4;border:1px solid #10b981;padding:8px;border-radius:8px;font-size:11.5px;color:#059669;font-weight:700;margin-bottom:12px;">
-          ✅ کلاؤڈ سنک فعال ہے (تمام ریکارڈز محفوظ ہیں)
-        </div>
-        <button class="btn btn-r btn-blk" onclick="logout()">لاگ آؤٹ</button>
-      </div>
-      <div style="text-align:center;margin-top:14px;font-size:11px;color:#94a3b8;font-weight:700;">Powered by Ansar AZ</div>
+      <hr>
+      <div class="line"><span>کسٹمر</span><strong>${esc(r.name)}</strong></div>
+      <div class="line"><span>تاریخ</span><strong>${esc(fmtDate(r.date))}</strong></div>
+      <div class="line"><span>کام کی مکمل تفصیل</span><strong>${esc(r.work)}</strong></div>
+      <div class="line"><span>کل فیس / رقم</span><strong>${money(r.amount)}</strong></div>
+      <div class="line"><span>اب تک وصول رقم</span><strong>${money(r.advance)}</strong></div>
+      <div class="line"><span>باقی رقم</span><strong>${money(r.balance)}</strong></div>
+      <div class="line"><span>کام کی لاگت</span><strong>${money(r.cost)}</strong></div>
+      <div class="line"><span>خالص بچت / منافع</span><strong class="green">${money(r.profit)}</strong></div>
+      <div class="line"><span>باقی رقم کی تاریخ</span><strong>${esc(fmtDate(r.dueDate))}</strong></div>
+      <div class="line"><span>کام کی حالت</span><strong>${r.status==="done"?"مکمل":"جاری ہے"}</strong></div>
+      <div style="margin-top:12px"><b>اضافی تفصیل / شرائط:</b><p>${esc(r.extra||"درج نہیں").replace(/\n/g,"<br>")}</p></div>
+      <p class="credit">Powered by Ansar AZ</p>
+    </div>`;
+  document.getElementById("receiptWhatsApp").onclick=()=>sendWhatsApp(r.phone,customerReceiptText(r));
+  openModal("receiptModal");
+}
+
+function customerCard(r){
+  const done=r.status==="done";
+  return `<article class="card record ${done?"done":"pending"}">
+    <div class="record-title">
+      <div><strong>${esc(r.name)}</strong><div class="muted">${esc(r.phone||"فون درج نہیں")}</div></div>
+      <span class="badge ${done?"badge-green":"badge-gold"}">${done?"کام مکمل":"کام جاری ہے"}</span>
     </div>
-  </div>
+    <div style="margin-top:10px"><b>کام کی تفصیل:</b><p>${esc(r.work)}</p></div>
+    <div class="receipt-lines">
+      <div class="line"><span>کل فیس / رقم</span><strong>${money(r.amount)}</strong></div>
+      <div class="line"><span>وصول رقم</span><strong>${money(r.advance)}</strong></div>
+      <div class="line"><span>باقی رقم</span><strong>${money(r.balance)}</strong></div>
+      <div class="line"><span>کام کی لاگت</span><strong>${money(r.cost)}</strong></div>
+      <div class="line"><span>خالص بچت</span><strong class="green">${money(r.profit)}</strong></div>
+      <div class="line"><span>تاریخ</span><strong>${esc(fmtDate(r.date))}</strong></div>
+      <div class="line"><span>باقی رقم کی تاریخ</span><strong>${esc(fmtDate(r.dueDate))}</strong></div>
+      <div style="margin-top:9px"><b>اضافی تفصیل:</b><p>${esc(r.extra||"درج نہیں").replace(/\n/g,"<br>")}</p></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn primary" onclick="viewCustomerReceipt(${r.id})">🧾 رسید دیکھیں</button>
+      <button class="btn whatsapp" onclick="sendWhatsApp(${JSON.stringify(r.phone||"")},customerReceiptText(customers.find(x=>x.id===${r.id})))">رسید بھیجیں</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn light" onclick="editCustomer(${r.id})">✏️ ترمیم</button>
+      <button class="btn gold" onclick="toggleCustomer(${r.id})">${done?"کام دوبارہ جاری کریں":"کام مکمل کریں"}</button>
+      <button class="btn danger" onclick="deleteCustomer(${r.id})">حذف</button>
+    </div>
+  </article>`;
+}
 
-  <div class="toast" id="tst">نوٹس</div>
+function renderCustomers(){
+  const q=(document.getElementById("customerSearch")?.value||"").toLowerCase().trim();
+  const filter=document.getElementById("customerFilter")?.value||"all";
+  const list=customers.filter(r=>{
+    const matches=[r.name,r.phone,r.work].some(v=>String(v||"").toLowerCase().includes(q));
+    return matches&&(filter==="all"||r.status===filter);
+  });
+  document.getElementById("customerList").innerHTML=list.length
+    ?list.map(customerCard).join("")
+    :'<div class="card empty">کوئی کسٹمر ریکارڈ نہیں ملا۔</div>';
+}
 
-  <script>
-    let custs=[], udhs=[], edCId=null, edUId=null, curUT='LENA', cUser=null;
-    const fbCfg={apiKey:"AIzaSyDummyFallbackKey12345",authDomain:"az-flow-khata.firebaseapp.com",projectId:"az-flow-khata",storageBucket:"az-flow-khata.appspot.com",messagingSenderId:"97370363565",appId:"1:97370363565:web:a90474070e0c4ef5a8695c"};
-    let fbAuth=null, fbDb=null;
+function newDebt(){
+  document.getElementById("debtModalTitle").textContent="نیا ادھار";
+  ["dId","dName","dPhone","dDetails","dAmount","dDueDate","dExtra"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("dDate").value=today();
+  document.getElementById("dType").value="receive";
+  openModal("debtModal");
+}
 
-    try {
-      if(typeof firebase!=='undefined' && firebase.initializeApp){
-        firebase.initializeApp(fbCfg);
-        fbAuth=firebase.auth(); fbDb=firebase.firestore();
-        fbAuth.onAuthStateChanged(u=>{ cUser=u; syncAuthUI(u); if(u) pullCloud(u.uid); });
-      }
-    } catch(e){}
+function editDebt(id){
+  const r=debts.find(x=>x.id===id);if(!r)return;
+  document.getElementById("debtModalTitle").textContent="ادھار ریکارڈ میں ترمیم";
+  const fields={dId:r.id,dType:r.type,dName:r.name,dPhone:r.phone,dDetails:r.details,dAmount:r.amount,dDate:r.date,dDueDate:r.dueDate,dExtra:r.extra};
+  Object.entries(fields).forEach(([id,v])=>document.getElementById(id).value=v??"");
+  openModal("debtModal");
+}
 
-    window.addEventListener("DOMContentLoaded",()=>{
-      const td=new Date().toISOString().split("T")[0];
-      const d1=document.getElementById("cDate"), d2=document.getElementById("uDate");
-      if(d1) d1.value=td; if(d2) d2.value=td;
-      loadLocal(); renderCust(); renderUdh();
-    });
+function saveDebt(){
+  const id=document.getElementById("dId").value;
+  const name=document.getElementById("dName").value.trim();
+  const details=document.getElementById("dDetails").value.trim();
+  const amount=Number(document.getElementById("dAmount").value)||0;
+  if(!name){showToast("نام درج کریں");return}
+  if(!details){showToast("ادھار کی تفصیل درج کریں");return}
+  if(amount<=0){showToast("درست رقم درج کریں");return}
+  const old=id?debts.find(x=>x.id===Number(id)):null;
+  const r={
+    id:id?Number(id):Date.now(),
+    type:document.getElementById("dType").value,
+    name,phone:document.getElementById("dPhone").value.trim(),
+    details,amount,date:document.getElementById("dDate").value||today(),
+    dueDate:document.getElementById("dDueDate").value,
+    extra:document.getElementById("dExtra").value.trim(),
+    settled:old?.settled||false,createdAt:old?.createdAt||Date.now()
+  };
+  if(id)debts=debts.map(x=>x.id===Number(id)?r:x);
+  else debts.unshift(r);
+  if(!saveData())return;
+  closeModal("debtModal");renderAll();
+  showToast(id?"ادھار ریکارڈ اپڈیٹ ہوگیا":"ادھار ریکارڈ محفوظ ہوگیا");
+}
 
-    function loadLocal(){
-      try{
-        const c=localStorage.getItem("az_c"), u=localStorage.getItem("az_u");
-        if(c) custs=JSON.parse(c); if(u) udhs=JSON.parse(u);
-      }catch(e){}
-    }
+function toggleDebt(id){
+  const r=debts.find(x=>x.id===id);if(!r)return;
+  r.settled=!r.settled;
+  if(saveData()){renderAll();showToast(r.settled?"ادائیگی مکمل درج ہوگئی":"بقایا دوبارہ کھول دیا گیا")}
+}
 
-    function saveLocal(){
-      try{
-        localStorage.setItem("az_c",JSON.stringify(custs));
-        localStorage.setItem("az_u",JSON.stringify(udhs));
-        if(cUser && fbDb){
-          fbDb.collection("users").doc(cUser.uid).set({customers:custs, udhaar:udhs, updAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true}).catch(()=>{});
-        }
-      }catch(e){}
-    }
+function deleteDebt(id){
+  if(!confirm("کیا یہ ادھار ریکارڈ حذف کرنا چاہتے ہیں؟"))return;
+  debts=debts.filter(x=>x.id!==id);
+  if(saveData()){renderAll();showToast("ادھار ریکارڈ حذف ہوگیا")}
+}
 
-    function pullCloud(uid){
-      if(!fbDb) return;
-      fbDb.collection("users").doc(uid).get().then(doc=>{
-        if(doc.exists){
-          const d=doc.data();
-          if(d.customers&&Array.isArray(d.customers)) custs=d.customers;
-          if(d.udhaar&&Array.isArray(d.udhaar)) udhs=d.udhaar;
-          saveLocal(); renderCust(); renderUdh(); toast("کلاؤڈ سے تمام ڈیٹا بحال ہو گیا! ☁️");
-        }
-      }).catch(()=>{});
-    }
+function debtCard(r){
+  const receive=r.type==="receive";
+  const due=r.dueDate&&r.dueDate<today()&&!r.settled;
+  return `<article class="card record ${r.settled?"done":"pending"}">
+    <div class="record-title">
+      <div><strong>${esc(r.name)}</strong><div class="muted">${esc(r.phone||"فون درج نہیں")}</div></div>
+      <span class="badge ${r.settled?"badge-green":due?"badge-red":"badge-gold"}">${r.settled?"ادائیگی مکمل":due?"تاریخ گزر گئی":"بقایا"}</span>
+    </div>
+    <div style="margin-top:10px"><span class="badge ${receive?"badge-green":"badge-red"}">${receive?"وصول کرنا ہے":"ادا کرنا ہے"}</span></div>
+    <div class="receipt-lines">
+      <div class="line"><span>ادھار کی رقم</span><strong>${money(r.amount)}</strong></div>
+      <div class="line"><span>اندراج کی تاریخ</span><strong>${esc(fmtDate(r.date))}</strong></div>
+      <div class="line"><span>واپسی / ادائیگی کی تاریخ</span><strong>${esc(fmtDate(r.dueDate))}</strong></div>
+      <div style="margin-top:9px"><b>سامان / کام کی تفصیل:</b><p>${esc(r.details).replace(/\n/g,"<br>")}</p></div>
+      <div style="margin-top:9px"><b>اضافی تفصیل:</b><p>${esc(r.extra||"درج نہیں").replace(/\n/g,"<br>")}</p></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn whatsapp" onclick="sendWhatsApp(${JSON.stringify(r.phone||"")},debtReceiptText(debts.find(x=>x.id===${r.id})))">🧾 ادھار رسید بھیجیں</button>
+      <button class="btn light" onclick="sendDebtReminder(${r.id})">یاد دہانی</button>
+    </div>
+    <div class="btn-row">
+      <button class="btn primary" onclick="editDebt(${r.id})">✏️ ترمیم</button>
+      <button class="btn gold" onclick="toggleDebt(${r.id})">${r.settled?"دوبارہ بقایا کریں":"وصول / ادا ہوگیا"}</button>
+      <button class="btn danger" onclick="deleteDebt(${r.id})">حذف</button>
+    </div>
+  </article>`;
+}
 
-    function setTab(t){
-      document.getElementById("secCust").style.display=(t==='cust'?"block":"none");
-      document.getElementById("secUdh").style.display=(t==='udh'?"block":"none");
-      document.getElementById("tCust").classList.toggle("act",t==='cust');
-      document.getElementById("tUdh").classList.toggle("act",t==='udh');
-    }
+function sendDebtReminder(id){
+  const r=debts.find(x=>x.id===id);if(!r)return;
+  const msg=`السلام علیکم ${r.name} صاحب!\n\nAZ Flow کھاتہ کی جانب سے یاد دہانی:\nتفصیل: ${r.details}\nرقم: ${money(r.amount)}\nواپسی کی تاریخ: ${fmtDate(r.dueDate)}\nحالت: ${r.settled?"ادائیگی مکمل":"رقم ابھی باقی ہے"}\n\nشکریہ!\n*Powered by Ansar AZ*`;
+  sendWhatsApp(r.phone,msg);
+}
 
-    function calcCustPrf(){
-      const t=parseFloat(document.getElementById("cTotal").value)||0, f=parseFloat(document.getElementById("cFee").value)||0;
-      document.getElementById("cPrfPrev").value="Rs "+Math.max(0,t-f).toLocaleString();
-    }
+function renderDebts(){
+  const q=(document.getElementById("debtSearch")?.value||"").toLowerCase().trim();
+  const filter=document.getElementById("debtFilter")?.value||"all";
+  const list=debts.filter(r=>{
+    const matches=[r.name,r.phone,r.details,r.extra].some(v=>String(v||"").toLowerCase().includes(q));
+    const typeMatch=filter==="all"||(filter==="receive"&&r.type==="receive")||(filter==="pay"&&r.type==="pay")||(filter==="open"&&!r.settled)||(filter==="settled"&&r.settled);
+    return matches&&typeMatch;
+  });
+  document.getElementById("debtList").innerHTML=list.length
+    ?list.map(debtCard).join("")
+    :'<div class="card empty">کوئی ادھار ریکارڈ نہیں ملا۔</div>';
+}
 
-    function applyChip(w,f){
-      document.getElementById("cWork").value=w; document.getElementById("cFee").value=f; calcCustPrf();
-    }
+function renderHome(){
+  const revenue=customers.reduce((s,r)=>s+(Number(r.advance)||0),0);
+  const cost=customers.reduce((s,r)=>s+(Number(r.cost)||0),0);
+  const profit=customers.reduce((s,r)=>s+(Number(r.profit)||0),0);
+  const receive=debts.filter(r=>!r.settled&&r.type==="receive").reduce((s,r)=>s+r.amount,0);
+  const pay=debts.filter(r=>!r.settled&&r.type==="pay").reduce((s,r)=>s+r.amount,0);
+  document.getElementById("homeRevenue").textContent=money(revenue);
+  document.getElementById("homeCost").textContent=money(cost);
+  document.getElementById("homeProfit").textContent=money(profit);
+  document.getElementById("homeReceive").textContent=money(receive);
+  document.getElementById("homePay").textContent=money(pay);
+  document.getElementById("recentCustomers").innerHTML=customers.length
+    ?customers.slice(0,3).map(customerCard).join("")
+    :'<div class="empty">ابھی کوئی کسٹمر شامل نہیں کیا گیا۔</div>';
+}
 
-    function saveCust(e){
-      e.preventDefault();
-      const name=document.getElementById("cName").value.trim(), phone=document.getElementById("cPhone").value.trim();
-      const work=document.getElementById("cWork").value.trim(), date=document.getElementById("cDate").value;
-      const total=parseFloat(document.getElementById("cTotal").value)||0, fee=parseFloat(document.getElementById("cFee").value)||0;
-      const status=document.getElementById("cStatus").value;
+function renderAll(){
+  renderHome();renderCustomers();renderDebts();
+  const receive=debts.filter(r=>!r.settled&&r.type==="receive").reduce((s,r)=>s+r.amount,0);
+  const pay=debts.filter(r=>!r.settled&&r.type==="pay").reduce((s,r)=>s+r.amount,0);
+  document.getElementById("debtReceive").textContent=money(receive);
+  document.getElementById("debtPay").textContent=money(pay);
+}
 
-      if(edCId){
-        const idx=custs.findIndex(c=>c.id===edCId);
-        if(idx!==-1) custs[idx]={...custs[idx], name, phone, work, date, total, fee, status};
-        edCId=null; document.getElementById("fCHdr").innerText="➕ نیا گاہک / سروس اندراج";
-        document.getElementById("btnCancelC").style.display="none";
-        toast("ریکارڈ اپڈیٹ ہو گیا! ✅");
-      } else {
-        custs.unshift({id:"c_"+Date.now(), name, phone, work, date, total, fee, status});
-        toast("نیا گاہک درج ہو گیا! 💾");
-      }
-      saveLocal(); document.getElementById("cName").value=""; document.getElementById("cPhone").value="";
-      document.getElementById("cWork").value=""; document.getElementById("cTotal").value=""; document.getElementById("cFee").value="";
-      calcCustPrf(); renderCust();
-    }
+function exportBackup(){
+  const data={app:"AZ Flow",version:1,exportedAt:new Date().toISOString(),customers,debts};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download="AZ_Flow_Backup_"+today()+".json";
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  showToast("بیک اپ ڈاؤن لوڈ ہوگیا");
+}
 
-    function cancelCust(){
-      edCId=null; document.getElementById("fCHdr").innerText="➕ نیا گاہک / سروس اندراج";
-      document.getElementById("btnCancelC").style.display="none";
-    }
+function importBackup(event){
+  const file=event.target.files?.[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      const data=JSON.parse(reader.result);
+      if(!Array.isArray(data.customers)||!Array.isArray(data.debts))throw new Error("invalid");
+      if(!confirm("موجودہ ریکارڈ بیک اپ کے ریکارڈ سے تبدیل ہوں گے۔ کیا جاری رکھیں؟"))return;
+      const oldC=customers,oldD=debts;
+      customers=data.customers;debts=data.debts;
+      if(!saveData()){customers=oldC;debts=oldD;return}
+      renderAll();showToast("بیک اپ بحال ہوگیا");
+    }catch(e){alert("یہ بیک اپ فائل درست نہیں ہے۔")}
+    finally{event.target.value=""}
+  };
+  reader.readAsText(file);
+}
 
-    function editCust(id){
-      const c=custs.find(x=>x.id===id); if(!c) return;
-      edCId=id; document.getElementById("cName").value=c.name; document.getElementById("cPhone").value=c.phone||'';
-      document.getElementById("cWork").value=c.work; document.getElementById("cDate").value=c.date||'';
-      document.getElementById("cTotal").value=c.total; document.getElementById("cFee").value=c.fee;
-      document.getElementById("cStatus").value=c.status; calcCustPrf();
-      document.getElementById("fCHdr").innerText="✏️ ریکارڈ میں ترمیم کریں";
-      document.getElementById("btnCancelC").style.display="inline-block";
-      window.scrollTo({top:100,behavior:'smooth'});
-    }
+function clearAll(){
+  if(!confirm("کیا واقعی تمام کسٹمر اور ادھار ریکارڈ ختم کرنے ہیں؟"))return;
+  if(!confirm("یہ عمل واپس نہیں ہوگا۔ کیا آپ نے بیک اپ بنا لیا ہے؟"))return;
+  const oldC=customers,oldD=debts;
+  customers=[];debts=[];
+  if(!saveData()){customers=oldC;debts=oldD;return}
+  renderAll();showToast("تمام ریکارڈ ختم ہوگئے");
+}
 
-    function delCust(id){
-      if(!confirm("کیا یہ ریکارڈ حذف کرنا ہے؟")) return;
-      custs=custs.filter(c=>c.id!==id); saveLocal(); renderCust(); toast("ریکارڈ حذف ہو گیا! 🗑️");
-    }
+renderAll();
+</script>
 
-    function toggleCust(id){
-      const c=custs.find(x=>x.id===id);
-      if(c){ c.status=(c.status==="مکمل"?"جاری":"مکمل"); saveLocal(); renderCust(); }
-    }
-
-    function renderCust(){
-      const q=(document.getElementById("qCust").value||"").toLowerCase(), f=document.getElementById("fltCust").value;
-      const list=document.getElementById("listCust");
-      let totR=0, totE=0, totP=0;
-      custs.forEach(c=>{ const t=Number(c.total)||0, fe=Number(c.fee)||0; totR+=t; totE+=fe; totP+=(t-fe); });
-      document.getElementById("sCTot").innerText=custs.length;
-      document.getElementById("sCRev").innerText="Rs "+totR.toLocaleString();
-      document.getElementById("sCExp").innerText="Rs "+totE.toLocaleString();
-      document.getElementById("sCPrf").innerText="Rs "+totP.toLocaleString();
-
-      const filtered=custs.filter(c=>{
-        const mQ=c.name.toLowerCase().includes(q)||(c.phone&&c.phone.includes(q))||c.work.toLowerCase().includes(q);
-        const mF=(f==="all"||c.status===f);
-        return mQ && mF;
-      });
-
-      if(!filtered.length){ list.innerHTML='<div style="text-align:center;padding:24px;color:#94a3b8;font-weight:700;">کوئی گاہک ریکارڈ نہیں ملا</div>'; return; }
-
-      list.innerHTML=filtered.map(c=>{
-        const prf=Math.max(0,(Number(c.total)||0)-(Number(c.fee)||0));
-        const isD=c.status==="مکمل";
-        return `<div class="item ${isD?'done':'pend'}">
-          <div class="item-top">
-            <div><span class="item-name">${c.name}</span>${c.phone?`<br><span class="item-phone">📞 ${c.phone}</span>`:''}</div>
-            <span class="badge ${isD?'b-g':'b-a'}">${c.status}</span>
-          </div>
-          <div style="font-size:12.5px;font-weight:700;color:var(--p);">${c.work}</div>
-          <div class="item-meta">
-            <span>وصولی: <b>Rs ${(Number(c.total)||0).toLocaleString()}</b></span>
-            <span>لاگت: <b>Rs ${(Number(c.fee)||0).toLocaleString()}</b></span>
-            <span style="color:var(--gd);">بچت: <b>Rs ${prf.toLocaleString()}</b></span>
-            ${c.date?`<span style="color:var(--mut);">📅 ${c.date}</span>`:''}
-          </div>
-          <div class="item-acts">
-            <button class="btn btn-out btn-sm" onclick="openSlipC('${c.id}')">🧾 رسید دیکھیں</button>
-            <button class="btn btn-out btn-sm" onclick="toggleCust('${c.id}')">${isD?'جاری کریں ⏳':'مکمل کریں ✅'}</button>
-            <button class="btn btn-out btn-sm" onclick="editCust('${c.id}')">✏️ ترمیم</button>
-            <button class="btn btn-r btn-sm" onclick="delCust('${c.id}')">🗑️</button>
-          </div>
-        </div>`;
-      }).join("");
-    }
-
-    function openSlipC(id){
-      const c=custs.find(x=>x.id===id); if(!c) return;
-      const t=Number(c.total)||0, f=Number(c.fee)||0, prf=Math.max(0,t-f);
-      document.getElementById("sCName").innerText=c.name;
-      document.getElementById("sCPhone").innerText=c.phone||"غیر درج شدہ";
-      document.getElementById("sCWork").innerText=c.work;
-      document.getElementById("sCDate").innerText="تاریخ: "+(c.date||"آج");
-      document.getElementById("sCTotVal").innerText="Rs "+t.toLocaleString();
-      document.getElementById("sCFeeVal").innerText="Rs "+f.toLocaleString();
-      document.getElementById("sCPrfVal").innerText="Rs "+prf.toLocaleString();
-      const b=document.getElementById("sCStatBadge");
-      b.innerText=c.status; b.className="badge "+(c.status==="مکمل"?"b-g":"b-a");
-
-      document.getElementById("btnSlipCWA").onclick=()=>{
-        let p=(c.phone||"").replace(/[^0-9]/g,"");
-        if(p.startsWith("0")) p="92"+p.substring(1);
-        const msg=`🧾 *AZ Flow - کسٹمر باقاعدہ رسید*\n------------------------------\n👤 *گاہک:* ${c.name}\n🛠️ *کام:* ${c.work}\n📅 *تاریخ:* ${c.date||''}\n\n💰 *کل وصولی:* Rs. ${t.toLocaleString()}\n💳 *لاگت فیس:* Rs. ${f.toLocaleString()}\n💵 *خالص بچت:* Rs. ${prf.toLocaleString()}\n📌 *حالت:* ${c.status}\n------------------------------\nاعتماد کا شکریہ!\n⚡ *Powered by Ansar AZ*`;
-        window.open(p?`https://wa.me/${p}?text=${encodeURIComponent(msg)}`:`https://wa.me/?text=${encodeURIComponent(msg)}`,"_blank");
-      };
-
-      document.getElementById("btnSlipCCpy").onclick=()=>{
-        const txt=`🧾 رسید: ${c.name} | سروس: ${c.work} | کل: Rs. ${t.toLocaleString()} | لاگت: Rs. ${f.toLocaleString()} | بچت: Rs. ${prf.toLocaleString()} • Powered by Ansar AZ`;
-        navigator.clipboard.writeText(txt).then(()=>toast("رسید تفصیلات کاپی ہو گئیں! 📋"));
-      };
-      openM('mCustR');
-    }
-
-    // Udhaar Methods
-    function setUdhT(t){
-      curUT=t;
-      document.getElementById("lblLena").style.borderColor=(t==='LENA'?'var(--g)':'var(--brd)');
-      document.getElementById("lblLena").style.background=(t==='LENA'?'#f0fdf4':'#fff');
-      document.getElementById("lblDena").style.borderColor=(t==='DENA'?'var(--r)':'var(--brd)');
-      document.getElementById("lblDena").style.background=(t==='DENA'?'#fef2f2':'#fff');
-    }
-
-    function saveUdh(e){
-      e.preventDefault();
-      const person=document.getElementById("uName").value.trim(), phone=document.getElementById("uPhone").value.trim();
-      const amount=parseFloat(document.getElementById("uAmt").value)||0, details=document.getElementById("uDet").value.trim();
-      const date=document.getElementById("uDate").value, dueDate=document.getElementById("uDueDate").value;
-
-      if(edUId){
-        const idx=udhs.findIndex(u=>u.id===edUId);
-        if(idx!==-1) udhs[idx]={...udhs[idx], person, phone, amount, details, date, dueDate, type:curUT};
-        edUId=null; document.getElementById("fUHdr").innerText="➕ نیا ادھار اندراج";
-        document.getElementById("btnCancelU").style.display="none";
-        toast("ادھار کھاتہ اپڈیٹ ہو گیا! ✅");
-      } else {
-        udhs.unshift({id:"u_"+Date.now(), person, phone, amount, details, date, dueDate, type:curUT, isSettled:false});
-        toast("ادھار کھاتے میں درج ہو گیا! 💾");
-      }
-      saveLocal(); document.getElementById("uName").value=""; document.getElementById("uPhone").value="";
-      document.getElementById("uAmt").value=""; document.getElementById("uDet").value="";
-      setUdhT('LENA'); renderUdh();
-    }
-
-    function cancelUdh(){
-      edUId=null; document.getElementById("fUHdr").innerText="➕ نیا ادھار اندراج";
-      document.getElementById("btnCancelU").style.display="none"; setUdhT('LENA');
-    }
-
-    function editUdh(id){
-      const u=udhs.find(x=>x.id===id); if(!u) return;
-      edUId=id; document.getElementById("uName").value=u.person; document.getElementById("uPhone").value=u.phone||'';
-      document.getElementById("uAmt").value=u.amount; document.getElementById("uDet").value=u.details||'';
-      document.getElementById("uDate").value=u.date||''; document.getElementById("uDueDate").value=u.dueDate||'';
-      setUdhT(u.type||'LENA'); document.getElementById("fUHdr").innerText="✏️ ادھار اندراج میں ترمیم";
-      document.getElementById("btnCancelU").style.display="inline-block";
-      window.scrollTo({top:100,behavior:'smooth'});
-    }
-
-    function toggleUdh(id){
-      const u=udhs.find(x=>x.id===id);
-      if(u){ u.isSettled=!u.isSettled; saveLocal(); renderUdh(); toast(u.isSettled?"بے باق (Clear) ہو گیا! ✅":"بقایا واجب الادا ہو گیا! ⏳"); }
-    }
-
-    function delUdh(id){
-      if(!confirm("کیا یہ ادھار خارج کرنا ہے؟")) return;
-      udhs=udhs.filter(u=>u.id!==id); saveLocal(); renderUdh(); toast("ادھار حذف ہو گیا! 🗑️");
-    }
-
-    function renderUdh(){
-      const q=(document.getElementById("qUdh").value||"").toLowerCase(), f=document.getElementById("fltUdh").value;
-      const list=document.getElementById("listUdh");
-      let lena=0, dena=0;
-      udhs.forEach(u=>{ if(!u.isSettled){ const a=Number(u.amount)||0; if(u.type==='LENA') lena+=a; else dena+=a; } });
-      document.getElementById("sULena").innerText="Rs "+lena.toLocaleString();
-      document.getElementById("sUDena").innerText="Rs "+dena.toLocaleString();
-      document.getElementById("sUNet").innerText="Rs "+(lena-dena).toLocaleString();
-      document.getElementById("sUTot").innerText=udhs.length;
-
-      const filtered=udhs.filter(u=>{
-        const mQ=u.person.toLowerCase().includes(q)||(u.phone&&u.phone.includes(q))||(u.details||"").toLowerCase().includes(q);
-        let mF=true;
-        if(f==="LENA") mF=(u.type==="LENA" && !u.isSettled);
-        else if(f==="DENA") mF=(u.type==="DENA" && !u.isSettled);
-        else if(f==="SET") mF=!!u.isSettled;
-        return mQ && mF;
-      });
-
-      if(!filtered.length){ list.innerHTML='<div style="text-align:center;padding:24px;color:#94a3b8;font-weight:700;">کوئی ادھار کھاتہ نہیں ملا</div>'; return; }
-
-      list.innerHTML=filtered.map(u=>{
-        const isL=u.type==="LENA", isS=!!u.isSettled;
-        return `<div class="item ${isL?'lena':'dena'}">
-          <div class="item-top">
-            <div><span class="item-name">${u.person}</span>${u.phone?`<br><span class="item-phone">📞 ${u.phone}</span>`:''}</div>
-            <div>
-              <span class="badge ${isL?'b-g':'b-r'}">${isL?'لینا ہے (وصولی)':'دینا ہے (ادائیگی)'}</span>
-              ${isS?'<span class="badge b-b">بے باق ✅</span>':''}
-            </div>
-          </div>
-          ${u.details?`<div style="font-size:12px;color:var(--mut);">📝 ${u.details}</div>`:''}
-          <div class="item-meta">
-            <span>رقم: <b style="font-size:13.5px;color:${isL?'var(--gd)':'var(--rd)'};">Rs ${(Number(u.amount)||0).toLocaleString()}</b></span>
-            ${u.dueDate?`<span>⏰ واپسی: <b>${u.dueDate}</b></span>`:''}
-            ${u.date?`<span style="color:var(--mut);">📅 ${u.date}</span>`:''}
-          </div>
-          <div class="item-acts">
-            <button class="btn btn-out btn-sm" onclick="openSlipU('${u.id}')">🧾 رسید دیکھیں</button>
-            <button class="btn btn-out btn-sm" onclick="toggleUdh('${u.id}')">${isS?'بقایا کریں ⏳':'بے باق کریں ✅'}</button>
-            <button class="btn btn-out btn-sm" onclick="editUdh('${u.id}')">✏️ ترمیم</button>
-            <button class="btn btn-r btn-sm" onclick="delUdh('${u.id}')">🗑️</button>
-          </div>
-        </div>`;
-      }).join("");
-    }
-
-    function openSlipU(id){
-      const u=udhs.find(x=>x.id===id); if(!u) return;
-      const isL=u.type==="LENA", isS=!!u.isSettled;
-      document.getElementById("sUName").innerText=u.person;
-      document.getElementById("sUPhone").innerText=u.phone||"غیر درج شدہ";
-      document.getElementById("sUDet").innerText=u.details||"عام ادھار";
-      document.getElementById("sUDate").innerText="تاریخ: "+(u.date||"آج");
-      document.getElementById("sUDue").innerText=u.dueDate||"کوئی نہیں";
-      document.getElementById("sUAmtVal").innerText="Rs "+(Number(u.amount)||0).toLocaleString();
-      document.getElementById("sUStat").innerText=isS?"✅ مکمل ادا شدہ (بے باق)":"⏳ واجب الادا (بقایا)";
-      const b=document.getElementById("sUTypeBadge");
-      b.innerText=isL?"لینا ہے (Receivable)":"دینا ہے (Payable)"; b.className="badge "+(isL?"b-g":"b-r");
-
-      document.getElementById("btnSlipUWA").onclick=()=>{
-        let p=(u.phone||"").replace(/[^0-9]/g,"");
-        if(p.startsWith("0")) p="92"+p.substring(1);
-        const msg=`🧾 *AZ Flow - ادھار کھاتہ باقاعدہ رسید*\n------------------------------\n👤 *شخص:* ${u.person}\n📊 *نوعیت:* ${isL?'وصولی رقم (لینا ہے)':'ادائیگی رقم (دینا ہے)'}\n${u.details?`📝 *مد / سبب:* ${u.details}\n`:''}💰 *رقم:* Rs. ${(Number(u.amount)||0).toLocaleString()}\n${u.dueDate?`⏰ *واپسی وعدہ:* ${u.dueDate}\n`:''}📌 *حالت:* ${isS?'✅ بے باق':'⏳ بقایا واجب الادا'}\n------------------------------\nشکریہ! رابطہ: 03298191689\n⚡ *Powered by Ansar AZ*`;
-        window.open(p?`https://wa.me/${p}?text=${encodeURIComponent(msg)}`:`https://wa.me/?text=${encodeURIComponent(msg)}`,"_blank");
-      };
-
-      document.getElementById("btnSlipUCpy").onclick=()=>{
-        const txt=`🧾 ادھار رسید: ${u.person} | رقم: Rs. ${(Number(u.amount)||0).toLocaleString()} | نوعیت: ${isL?'لینا ہے':'دینا ہے'} | حالت: ${isS?'بے باق':'بقایا'} • Powered by Ansar AZ`;
-        navigator.clipboard.writeText(txt).then(()=>toast("ادھار رسید تفصیل کاپی ہو گئی! 📋"));
-      };
-      openM('mUdhR');
-    }
-
-    // Backup & Restore
-    function expJSON(){
-      const data={app:"AZ Flow", branding:"Powered by Ansar AZ", expAt:new Date().toISOString(), customers:custs, udhaar:udhs};
-      const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
-      const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
-      a.download=`AZ_Flow_Backup_${new Date().toISOString().split("T")[0]}.json`;
-      a.click(); toast("بیک اپ ڈاؤنلوڈ ہو گیا! 📁");
-    }
-
-    function impJSON(e){
-      const f=e.target.files[0]; if(!f) return;
-      const r=new FileReader();
-      r.onload=(evt)=>{
-        try{
-          const j=JSON.parse(evt.target.result);
-          if(j.customers&&Array.isArray(j.customers)) custs=j.customers;
-          if(j.udhaar&&Array.isArray(j.udhaar)) udhs=j.udhaar;
-          saveLocal(); renderCust(); renderUdh(); toast("ڈیٹا بحال ہو گیا! 📥");
-        }catch(err){ alert("فائل درست نہیں ہے"); }
-      };
-      r.readAsText(f);
-    }
-
-    function waBackup(){
-      const txt=`📁 *AZ Flow - ڈیٹا خلاصہ*\n------------------------------\n• کل گاہک: ${custs.length}\n• کل ادھار: ${udhs.length}\n• تاریخ: ${new Date().toLocaleDateString()}\n\n⚡ *Powered by Ansar AZ*`;
-      window.open(`https://wa.me/?text=${encodeURIComponent(txt)}`,"_blank");
-    }
-
-    // Auth
-    function syncAuthUI(u){
-      const pill=document.getElementById("userPill");
-      const vOut=document.getElementById("vLoggedOut"), vIn=document.getElementById("vLoggedIn");
-      if(u){
-        pill.style.display="inline-block"; pill.innerText=u.displayName||u.email||"فعال";
-        vOut.style.display="none"; vIn.style.display="block";
-        document.getElementById("uNameTxt").innerText=u.displayName||"صارف";
-        document.getElementById("uMailTxt").innerText=u.email||"";
-        document.getElementById("authTxt").innerText="میرا اکاؤنٹ";
-      } else {
-        pill.style.display="none"; vOut.style.display="block"; vIn.style.display="none";
-        document.getElementById("authTxt").innerText="لاگ ان";
-      }
-    }
-
-    function gLogin(){
-      if(!fbAuth) return toast("کلاؤڈ فعال نہیں ہے");
-      const p=new firebase.auth.GoogleAuthProvider();
-      fbAuth.signInWithPopup(p).catch(()=>fbAuth.signInWithRedirect(p));
-    }
-
-    function emLogin(e){
-      e.preventDefault(); const m=document.getElementById("aMail").value.trim(), p=document.getElementById("aPass").value.trim();
-      if(!fbAuth) return;
-      fbAuth.signInWithEmailAndPassword(m,p).then(()=>{ closeM('mAuth'); toast("لاگ ان کامیاب! 🔓"); }).catch(err=>alert("ایر: "+err.message));
-    }
-
-    function emReg(){
-      const m=document.getElementById("aMail").value.trim(), p=document.getElementById("aPass").value.trim();
-      if(!m||p.length<6) return alert("درست ای میل اور کم از کم 6 ہندسوں کا پاس ورڈ درج کریں");
-      if(!fbAuth) return;
-      fbAuth.createUserWithEmailAndPassword(m,p).then(()=>{ closeM('mAuth'); toast("نیا اکاؤنٹ بن گیا! 🎉"); }).catch(err=>alert("ایر: "+err.message));
-    }
-
-    function logout(){
-      if(fbAuth) fbAuth.signOut().then(()=>{ cUser=null; syncAuthUI(null); closeM('mAuth'); toast("لاگ آؤٹ ہو گیا!"); });
-    }
-
-    // Modal & Toast
-    function openM(id){ const m=document.getElementById(id); if(m) m.classList.add("act"); }
-    function closeM(id){ const m=document.getElementById(id); if(m) m.classList.remove("act"); }
-    window.addEventListener("click", e=>{ if(e.target.classList.contains("modal-bg")) e.target.classList.remove("act"); });
-
-    function toast(m){
-      const t=document.getElementById("tst"); if(!t) return;
-      t.innerText=m; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),3000);
-    }
-  </script>
+<p class="credit">Powered by Ansar AZ</p>
 </body>
 </html>
