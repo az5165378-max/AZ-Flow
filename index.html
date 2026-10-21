@@ -4,692 +4,786 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#06152e">
-  <title>AZ Flow ⚡ - اسمارٹ کھاتہ اور کسٹمر مینیجر</title>
+  <title>AZ Flow - اسمارٹ کھاتہ اور کسٹمر مینیجر</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #0284c7;
-      --primary-hover: #0369a1;
+      --primary-dark: #0369a1;
       --primary-light: #38bdf8;
-      --primary-subtle: #e0f2fe;
-      --cyan: #00d9ff;
+      --accent: #f59e0b;
+      --profit: #10b981;
+      --expense: #ef4444;
+      --pending: #f59e0b;
+      --done: #059669;
       --bg-dark: #06152e;
+      --surface: #ffffff;
       --text: #0f172a;
       --muted: #64748b;
-      --profit: #059669;
-      --profit-light: #d1fae5;
-      --expense: #e11d48;
-      --pending: #d97706;
-      --pending-light: #fef3c7;
-      --whatsapp: #16a34a;
       --border: #cbd5e1;
       --border-light: #e2e8f0;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
+      --shadow-md: 0 4px 12px rgba(0,0,0,.1);
       --radius-sm: 8px;
       --radius-md: 12px;
       --radius-lg: 16px;
-      --radius-xl: 22px;
-      --shadow-sm: 0 2px 8px rgba(0,0,0,.06);
-      --shadow-md: 0 8px 24px rgba(0,0,0,.12);
+      --radius-xl: 20px;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    html, body {
-      width: 100%; min-height: 100%;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Nastaliq Urdu", Tahoma, Arial, sans-serif;
-      background: radial-gradient(circle at 15% 10%, rgba(14,165,233,.22), transparent 32%),
-                  radial-gradient(circle at 85% 85%, rgba(37,99,235,.20), transparent 35%),
-                  linear-gradient(135deg, #020617 0%, #06152e 50%, #0b2a55 100%);
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: #f1f5f9;
       color: var(--text);
-      display: flex; justify-content: center; align-items: flex-start;
-      padding: 12px 12px 95px;
+      min-height: 100vh;
+      direction: rtl;
+      padding-bottom: 84px;
     }
-
     /* Splash Screen */
     #splashScreen {
-      position: fixed; inset: 0; z-index: 99999;
-      background: radial-gradient(circle at 50% 30%, rgba(0,217,255,.25), transparent 35%),
-                  linear-gradient(145deg, #020617 0%, #06152e 50%, #0a254d 100%);
-      display: flex; align-items: center; justify-content: center; text-align: center;
-      transition: opacity .5s ease, visibility .5s ease;
+      position: fixed; inset: 0; background: linear-gradient(135deg, #020617 0%, #06152e 50%, #0f172a 100%);
+      color: #ffffff; z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; transition: opacity .5s ease, visibility .5s ease;
     }
-    #splashScreen.hide { opacity: 0; visibility: hidden; pointer-events: none; }
-    .splash-logo-wrap {
-      width: 155px; height: 155px; margin: 0 auto 18px; border-radius: 50%;
-      background: radial-gradient(circle at 40% 30%, #163e75, #031631 80%);
-      border: 3.5px solid var(--cyan);
-      box-shadow: 0 0 30px rgba(0,217,255,.5), inset 0 0 20px rgba(0,217,255,.25);
-      display: flex; align-items: center; justify-content: center;
+    .splash-logo {
+      width: 82px; height: 82px; background: linear-gradient(135deg, #0284c7, #38bdf8);
+      border-radius: 22px; display: flex; align-items: center; justify-content: center;
+      font-size: 38px; box-shadow: 0 12px 30px rgba(2,132,199,.4); margin-bottom: 20px;
+      animation: pulse 1.6s infinite ease-in-out;
     }
-    .splash-title { color: #ffffff; font-size: 38px; font-weight: 900; letter-spacing: 1px; }
-    .splash-title span { color: var(--primary-light); }
-    .splash-subtitle { color: #bfdbfe; font-size: 13.5px; margin-top: 4px; }
-    .splash-loading-bar-wrap { width: 200px; height: 6px; background: #103362; border-radius: 20px; margin: 22px auto 14px; overflow: hidden; }
-    .splash-loading-bar { width: 0; height: 100%; background: linear-gradient(90deg, #00d9ff, #38bdf8, #0284c7); border-radius: 20px; animation: splashProgress 1.6s linear forwards; }
-    @keyframes splashProgress { 0% { width: 0; } 100% { width: 100%; } }
-    .splash-powered-by { color: var(--cyan); font-size: 13.5px; font-weight: 800; margin-top: 20px; letter-spacing: .5px; }
+    .splash-title { font-size: 32px; font-weight: 900; letter-spacing: -0.5px; }
+    .splash-subtitle { font-family: 'Noto Nastaliq Urdu', serif; font-size: 16px; color: #94a3b8; margin-top: 6px; }
+    .splash-credit {
+      position: absolute; bottom: 32px; font-size: 12px; color: #64748b; font-weight: 700;
+      letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
 
-    /* App Container */
-    .app-container {
-      width: 100%; max-width: 520px; background: #ffffff;
-      padding: 16px; border-radius: var(--radius-xl);
-      box-shadow: 0 25px 60px rgba(0,0,0,.45);
-      position: relative;
+    /* Top App Bar */
+    .top-bar {
+      background: linear-gradient(135deg, #06152e 0%, #0c234a 100%);
+      color: #ffffff; padding: 14px 18px; position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 4px 20px rgba(6,21,46,.25); border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .top-bar-inner { max-width: 680px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .brand-group { display: flex; align-items: center; gap: 12px; }
+    .brand-icon {
+      width: 42px; height: 42px; background: linear-gradient(135deg, #0284c7, #38bdf8);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      font-size: 22px; box-shadow: 0 4px 12px rgba(2,132,199,.35);
+    }
+    .brand-text h1 { font-size: 18px; font-weight: 900; line-height: 1.2; }
+    .brand-text p { font-size: 10px; color: #93c5fd; font-weight: 700; }
+    .top-actions { display: flex; gap: 8px; }
+    .icon-btn {
+      width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.12); color: #ffffff; display: flex;
+      align-items: center; justify-content: center; font-size: 16px; cursor: pointer;
+      transition: background .2s;
+    }
+    .icon-btn:hover { background: rgba(255,255,255,.2); }
+
+    /* Container */
+    .app-container { max-width: 680px; margin: 0 auto; padding: 16px; }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff;
+      border-top: 1px solid var(--border-light); display: flex; justify-content: space-around;
+      padding: 8px 12px; z-index: 150; box-shadow: 0 -4px 16px rgba(0,0,0,.06);
+    }
+    .nav-item {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: var(--muted); font-size: 10.5px; font-weight: 700; cursor: pointer;
+      padding: 6px 12px; border-radius: 10px; transition: all .2s; border: none; background: transparent;
+    }
+    .nav-item.active { color: var(--primary); background: #e0f2fe; }
+    .nav-item span { font-size: 19px; margin-bottom: 2px; }
+
+    /* Cards */
+    .card {
+      background: var(--surface); border-radius: var(--radius-lg); padding: 16px;
+      box-shadow: var(--shadow-sm); border: 1px solid var(--border-light); margin-bottom: 16px;
+    }
+    .card-title {
+      font-size: 14.5px; font-weight: 800; color: var(--text); margin-bottom: 12px;
+      display: flex; align-items: center; justify-content: space-between;
     }
 
-    /* Header */
-    .app-header {
-      background: linear-gradient(135deg, #020617 0%, #06152e 55%, #0e2954 100%);
-      color: #ffffff; padding: 14px 16px; border-radius: var(--radius-lg);
-      display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;
-      border: 1px solid rgba(56,189,248,.28); box-shadow: var(--shadow-sm);
+    /* Metric Grids */
+    .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+    .metric-box {
+      background: #f8fafc; border-radius: var(--radius-md); padding: 12px 10px;
+      border: 1px solid var(--border-light); text-align: center;
     }
-    .header-text h1 { font-size: 20px; color: var(--primary-light); font-weight: 900; display: flex; align-items: center; gap: 6px; }
-    .header-text p { font-size: 11.5px; color: #cbd5e1; margin-top: 3px; }
-    .header-badge {
-      width: 42px; height: 42px; background: #04142d; border: 2px solid var(--primary-light);
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      color: var(--primary-light); font-weight: 900; font-size: 15px;
-      box-shadow: 0 0 12px rgba(56,189,248,.4);
-    }
+    .metric-box.primary { background: #e0f2fe; border-color: #bae6fd; }
+    .metric-box.profit { background: #ecfdf5; border-color: #a7f3d0; }
+    .metric-box.cost { background: #fff1f2; border-color: #fecdd3; }
+    .metric-label { font-size: 11px; font-weight: 700; color: var(--muted); margin-bottom: 4px; }
+    .metric-val { font-size: 16px; font-weight: 900; }
+    .metric-box.primary .metric-val { color: var(--primary-dark); }
+    .metric-box.profit .metric-val { color: var(--profit); }
+    .metric-box.cost .metric-val { color: var(--expense); }
 
-    /* KPI Cards */
-    .metrics-row { display: flex; gap: 10px; margin-bottom: 14px; }
-    .metric-card {
-      flex: 1; background: #f8fafc; border: 1px solid var(--border-light);
-      padding: 10px 12px; border-radius: var(--radius-md);
+    /* Presets Chips */
+    .chips-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 14px; }
+    .chip {
+      background: #f1f5f9; border: 1px solid var(--border); border-radius: 20px;
+      padding: 5px 11px; font-size: 11.5px; font-weight: 700; color: #334155;
+      cursor: pointer; transition: all .15s; display: flex; align-items: center; gap: 4px;
     }
-    .metric-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
-    .metric-card-title { font-size: 11px; color: var(--muted); font-weight: 700; }
-    .metric-card-val { font-size: 17px; font-weight: 900; }
-    .metric-card.revenue .metric-card-val { color: var(--primary); }
-    .metric-card.profit .metric-card-val { color: var(--profit); }
-
-    /* Views */
-    .screen-view { display: none; animation: fadeIn .2s ease forwards; }
-    .screen-view.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-    .section-title { font-size: 14.5px; font-weight: 900; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
-
-    /* Form */
-    .form-group { margin-bottom: 12px; }
-    .form-label { font-size: 11.5px; font-weight: 700; color: var(--text); display: block; margin-bottom: 4px; }
-    .input-control {
-      width: 100%; padding: 10px 12px; border: 1px solid var(--border);
-      border-radius: 10px; font-size: 12.5px; background: #ffffff; color: var(--text);
-      outline: none; transition: border-color .2s ease, box-shadow .2s ease; font-family: inherit;
-    }
-    .input-control:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(2,132,199,.14); }
-    .input-row { display: flex; gap: 8px; }
-    .input-row .form-group { flex: 1; }
-
-    /* Category tabs & chips */
-    .service-category-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 8px; scrollbar-width: none; }
-    .service-category-tabs::-webkit-scrollbar { display: none; }
-    .category-tab-btn {
-      padding: 5px 11px; border-radius: 9px; font-size: 11px; font-weight: 700;
-      border: 1px solid var(--border); background: #f1f5f9; color: #475569;
-      cursor: pointer; white-space: nowrap; font-family: inherit;
-    }
-    .category-tab-btn.active { background: var(--primary); color: #ffffff; border-color: var(--primary); }
-    .service-chips-wrap { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
-    .service-chip-item {
-      background: var(--primary-subtle); color: #0369a1; border: 1px solid #bae6fd;
-      border-radius: 14px; padding: 5px 10px; font-size: 11px; font-weight: 600;
-      cursor: pointer; transition: all .15s ease;
-    }
-    .service-chip-item:hover { background: var(--primary); color: #ffffff; border-color: var(--primary); }
-
-    /* Profit Card */
-    .profit-calc-card {
-      background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: var(--radius-md);
-      padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between;
-    }
+    .chip:hover, .chip:active { background: #e0f2fe; border-color: var(--primary); color: var(--primary-dark); }
 
     /* Buttons */
     .btn {
-      width: 100%; padding: 12px 14px; border: none; border-radius: 11px;
-      font-weight: 800; font-size: 13.5px; cursor: pointer; color: #ffffff;
-      background: var(--primary); box-shadow: 0 4px 14px rgba(2,132,199,.28);
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      font-family: inherit; transition: all .2s ease;
+      font-weight: 800; border-radius: var(--radius-md); padding: 11px 18px;
+      font-size: 13.5px; cursor: pointer; border: none; transition: all .2s; width: 100%;
     }
-    .btn:hover { background: var(--primary-hover); }
-    .btn:active { transform: scale(.98); }
-    .btn-success { background: var(--profit); box-shadow: 0 4px 14px rgba(5,150,105,.28); }
-    .btn-danger { background: var(--expense); box-shadow: 0 4px 14px rgba(225,29,72,.28); }
-    .btn-whatsapp { background: var(--whatsapp); box-shadow: 0 4px 14px rgba(22,163,74,.28); }
-    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); box-shadow: none; }
+    .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 4px 12px rgba(2,132,199,.25); }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-success { background: var(--profit); color: #fff; }
+    .btn-outline { background: transparent; border: 1.5px solid var(--border); color: var(--text); }
+    .btn-outline:hover { background: #f8fafc; }
+    .btn-danger { background: #ef4444; color: #fff; }
+    .btn-whatsapp { background: #25D366; color: #fff; box-shadow: 0 4px 12px rgba(37,211,102,.25); }
+    .btn-whatsapp:hover { background: #1eb855; }
 
-    /* Records & Cards */
-    .record-card {
-      background: #ffffff; border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg); padding: 13px 14px; margin-bottom: 12px;
-      box-shadow: var(--shadow-sm); transition: border-color .2s ease, box-shadow .2s ease;
+    /* Form Fields */
+    .form-group { margin-bottom: 12px; }
+    .form-label { display: block; font-size: 12px; font-weight: 800; color: #334155; margin-bottom: 5px; }
+    .form-input, .form-select, .form-textarea {
+      width: 100%; border: 1.5px solid var(--border); border-radius: var(--radius-md);
+      padding: 10px 14px; font-size: 13.5px; font-family: inherit; background: #fff;
+      color: var(--text); transition: border-color .2s;
     }
-    .record-card:hover { border-color: #cbd5e1; box-shadow: var(--shadow-md); }
-    .record-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-    .customer-avatar-name { display: flex; align-items: center; gap: 10px; }
-    .customer-avatar {
-      width: 36px; height: 36px; border-radius: 50%; background: var(--primary-subtle);
-      color: var(--primary); font-weight: 900; font-size: 15px; display: flex;
-      align-items: center; justify-content: center;
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(2,132,199,.15);
     }
-    .customer-info h4 { font-size: 14px; font-weight: 800; color: var(--text); }
-    .customer-info span { font-size: 11px; color: var(--muted); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-    /* High Visibility Solid Status Badges */
-    .status-pill {
-      padding: 6px 14px; border-radius: 20px; font-size: 11.5px; font-weight: 800;
-      letter-spacing: .2px; display: inline-flex; align-items: center; gap: 5px;
-      white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,.12);
+    /* Receipt & Item Cards */
+    .item-card {
+      background: var(--surface); border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-lg); padding: 16px; margin-bottom: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.04); position: relative; overflow: hidden;
     }
-    .status-pill.done {
-      background: #059669; color: #ffffff; border: 1.5px solid #047857; text-shadow: 0 1px 2px rgba(0,0,0,.2);
-    }
-    .status-pill.pending {
-      background: #d97706; color: #ffffff; border: 1.5px solid #b45309; text-shadow: 0 1px 2px rgba(0,0,0,.2);
-    }
+    .item-card.is-done { border-right: 5px solid var(--done); }
+    .item-card.is-pending { border-right: 5px solid var(--pending); }
 
-    .record-work-line {
-      font-size: 12.5px; color: #334155; margin: 8px 0; line-height: 1.4;
-      background: #f1f5f9; padding: 6px 10px; border-radius: 8px;
-    }
+    .item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+    .item-customer-name { font-size: 16px; font-weight: 900; color: #0f172a; margin-bottom: 2px; }
+    .item-work { font-size: 13px; color: var(--primary-dark); font-weight: 700; }
+    .item-date { font-size: 11px; color: var(--muted); }
 
-    /* 3-Way Financial Grid */
-    .record-financial-grid {
-      background: #f8fafc; border: 1px solid var(--border-light); border-radius: var(--radius-md);
-      padding: 9px 10px; display: grid; grid-template-columns: 1fr 1fr 1fr;
-      text-align: center; gap: 4px; margin: 8px 0;
+    /* Receipt Box inside item */
+    .receipt-box {
+      background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: var(--radius-md);
+      padding: 12px; margin: 10px 0;
     }
-    .fin-col { display: flex; flex-direction: column; gap: 3px; }
-    .fin-col:not(:last-child) { border-left: 1px solid #e2e8f0; }
-    .fin-col .fin-title { font-size: 10.5px; color: #64748b; font-weight: 700; }
-    .fin-col .fin-val { font-size: 12.5px; font-weight: 900; }
-    .fin-val.val-rev { color: var(--primary); }
-    .fin-val.val-cost { color: var(--expense); }
-    .fin-val.val-profit { color: var(--profit); font-size: 13.5px; }
+    .receipt-row { display: flex; justify-content: space-between; font-size: 12.5px; margin-bottom: 6px; }
+    .receipt-row.bold { font-weight: 800; font-size: 13.5px; border-top: 1px solid #e2e8f0; padding-top: 6px; margin-top: 6px; }
+    .receipt-row .val { font-weight: 800; }
 
-    .record-bottom-bar {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-light);
+    /* Status Badges - Bold & Prominent */
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
+      border-radius: 30px; font-size: 12.5px; font-weight: 900; margin: 8px 0;
     }
-    .record-actions-group { display: flex; align-items: center; gap: 6px; }
+    .badge-done { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+    .badge-pending { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
 
-    .btn-receipt-pill {
-      background: #eff6ff; border: 1px solid #93c5fd; color: #0284c7;
-      border-radius: 8px; padding: 5px 11px; font-size: 11.5px; font-weight: 800;
-      cursor: pointer; display: inline-flex; align-items: center; gap: 4px; font-family: inherit;
+    /* Action Buttons Row */
+    .item-actions {
+      display: flex; gap: 8px; margin-top: 12px; padding-top: 10px;
+      border-top: 1px solid var(--border-light);
     }
-    .btn-receipt-pill:hover { background: #dbeafe; transform: translateY(-1px); }
+    .item-actions button { flex: 1; padding: 8px 6px; font-size: 12px; border-radius: 8px; font-weight: 700; }
 
-    .btn-whatsapp-pill {
-      background: #dcfce7; border: 1px solid #86efac; color: #166534;
-      border-radius: 8px; padding: 5px 10px; font-size: 11.5px; font-weight: 800;
-      cursor: pointer; display: inline-flex; align-items: center; gap: 4px;
-      text-decoration: none; font-family: inherit;
+    /* Udhaar Specific */
+    .udhaar-badge {
+      display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px;
+      border-radius: 8px; font-size: 11.5px; font-weight: 800;
     }
-    .btn-whatsapp-pill:hover { background: #bbf7d0; transform: translateY(-1px); }
+    .udhaar-lena { background: #dcfce7; color: #166534; }
+    .udhaar-dena { background: #fee2e2; color: #991b1b; }
 
-    .icon-btn {
-      width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border);
-      background: #ffffff; cursor: pointer; display: inline-flex; align-items: center;
-      justify-content: center; font-size: 13.5px; transition: all .15s ease; color: var(--text);
+    /* Modals */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(15,23,42,.65); backdrop-filter: blur(4px);
+      z-index: 500; display: none; align-items: center; justify-content: center; padding: 16px;
     }
-    .icon-btn:hover { background: #f1f5f9; transform: scale(1.05); }
-
-    /* Modal */
-    .modal-backdrop {
-      position: fixed; inset: 0; background: rgba(0,0,0,.65);
-      backdrop-filter: blur(4px); z-index: 10000; display: none;
-      align-items: center; justify-content: center; padding: 16px;
+    .modal-box {
+      background: #ffffff; width: 100%; max-width: 500px; max-height: 90vh;
+      overflow-y: auto; border-radius: var(--radius-xl); padding: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,.25); position: relative;
     }
-    .modal-backdrop.open { display: flex; }
-    .invoice-modal {
-      background: #ffffff; width: 100%; max-width: 410px;
-      border-radius: var(--radius-xl); padding: 20px; box-shadow: var(--shadow-md);
-    }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .close-btn { background: none; border: none; font-size: 24px; color: var(--muted); cursor: pointer; }
 
     /* Toast */
-    #toastMessage {
-      position: fixed; top: 16px; left: 50%; transform: translateX(-50%) translateY(-60px);
-      background: #020617; color: #ffffff; padding: 10px 18px; border-radius: 30px;
-      font-size: 12.5px; font-weight: 700; box-shadow: 0 8px 24px rgba(0,0,0,.4);
-      border: 1px solid rgba(56,189,248,.3); z-index: 100000; opacity: 0;
-      transition: all .3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; gap: 8px;
+    #toast {
+      position: fixed; bottom: 95px; left: 50%; transform: translateX(-50%);
+      background: #0f172a; color: #fff; padding: 10px 20px; border-radius: 30px;
+      font-size: 12.5px; font-weight: 700; z-index: 9999; display: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,.3); white-space: nowrap;
     }
-    #toastMessage.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-
-    /* Bottom Nav */
-    .bottom-navbar {
-      position: fixed; bottom: 0; left: 0; width: 100%; background: #020617;
-      display: flex; justify-content: space-around; padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
-      border-top: 1px solid rgba(255,255,255,.1); z-index: 1000;
-    }
-    .bottom-nav-item {
-      background: none; border: none; color: #94a3b8; font-size: 11px; font-weight: 700;
-      cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px;
-      min-width: 70px; font-family: inherit;
-    }
-    .bottom-nav-item span { font-size: 19px; }
-    .bottom-nav-item.active { color: var(--primary-light); }
   </style>
 </head>
 <body>
 
-  <!-- Splash Screen -->
+  <!-- SPLASH SCREEN -->
   <div id="splashScreen">
-    <div style="padding: 24px;">
-      <div class="splash-logo-wrap">
-        <svg viewBox="0 0 200 200" style="width: 100%; height: 100%;">
-          <text x="65" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="70" font-weight="900" fill="#fff">A</text>
-          <text x="135" y="105" text-anchor="middle" font-family="Arial, sans-serif" font-size="70" font-weight="900" fill="#fff">Z</text>
-          <path d="M30 135 L80 105 L115 125 L165 75" fill="none" stroke="#00d9ff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
-          <text x="100" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#fff">اے زی فلو</text>
-        </svg>
-      </div>
-      <h1 class="splash-title">AZ Flow <span>⚡</span></h1>
-      <div class="splash-subtitle">اسمارٹ کھاتہ اور کسٹمر مینیجر</div>
-      <div class="splash-loading-bar-wrap"><div class="splash-loading-bar"></div></div>
-      <div style="color: #94a3b8; font-size: 12.5px;">آپ کے کاروبار میں آسانی...</div>
-      <div class="splash-powered-by">Powered by Ansar AZ</div>
-    </div>
+    <div class="splash-logo">⚡</div>
+    <div class="splash-title">AZ Flow</div>
+    <div class="splash-subtitle">دکانداری و ادھار کھاتہ مینیجر</div>
+    <div style="margin-top:14px; font-size:12px; color:#38bdf8; font-weight:700;">ورژن 16.0 • پرو ایڈیشن</div>
+    <div class="splash-credit">پاورڈ بائے انسر اے زیڈ • Powered by Ansar AZ</div>
   </div>
 
-  <!-- Main App Container -->
-  <div class="app-container">
-
-    <!-- Top Header -->
-    <header class="app-header">
-      <div class="header-text">
-        <h1>AZ Flow <span>⚡</span></h1>
-        <p>اسمارٹ کھاتہ اور کسٹمر مینیجر • Powered by Ansar AZ</p>
-      </div>
-      <div class="header-badge">AZ</div>
-    </header>
-
-    <!-- Quick Metric Cards -->
-    <div class="metrics-row">
-      <div class="metric-card revenue">
-        <div class="metric-card-header">
-          <span class="metric-card-title">کل وصولی (Total Revenue)</span>
-          <span>💰</span>
+  <!-- TOP APP BAR -->
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <div class="brand-group">
+        <div class="brand-icon">⚡</div>
+        <div class="brand-text">
+          <h1>AZ Flow</h1>
+          <p>دکانداری و ادھار کھاتہ مینیجر • Powered by Ansar AZ</p>
         </div>
-        <div class="metric-card-val" id="totalCollectedVal">Rs. 0</div>
       </div>
-      <div class="metric-card profit">
-        <div class="metric-card-header">
-          <span class="metric-card-title">کل خالص منافع (Profit)</span>
-          <span>📈</span>
-        </div>
-        <div class="metric-card-val" id="totalProfitVal">Rs. 0</div>
+      <div class="top-actions">
+        <button class="icon-btn" onclick="openNewCustomerModal()" title="نیا اندراج">+👥</button>
+        <button class="icon-btn" onclick="openNewUdhaarModal()" title="نیا ادھار">+📒</button>
       </div>
     </div>
+  </header>
 
-    <!-- SCREEN 1: HOME (FORM) -->
-    <div id="screenHome" class="screen-view active">
+  <!-- MAIN APP CONTAINER -->
+  <main class="app-container">
 
-      <!-- WhatsApp Community Group Banner -->
-      <a href="https://chat.whatsapp.com/ESePIIyZUJKAtvm8WJE6Yf?s=cl&p=a&mlu=4&ilr=4&iam=2" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:flex; align-items:center; justify-content:space-between; background:#dcfce7; border:1px solid #86efac; border-radius:var(--radius-md); padding:10px 14px; margin-bottom:14px; box-shadow:0 2px 6px rgba(22,163,74,.12); transition:transform .15s ease;">
-        <div style="display:flex; align-items:center; gap:8px;">
-          <span style="font-size:18px;">📢</span>
+    <!-- SCREEN 1: HOME (ہوم ڈیش بورڈ) -->
+    <section id="screenHome" class="screen-content">
+
+      <!-- Official WhatsApp Group Banner -->
+      <a href="https://chat.whatsapp.com/ESePIIyZUJKAtvm8WJE6Yf?s=cl&p=a&mlu=4&ilr=4&iam=2" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:flex; align-items:center; justify-content:space-between; background:#dcfce7; border:1px solid #86efac; border-radius:var(--radius-md); padding:10px 14px; margin-bottom:10px; box-shadow:0 2px 6px rgba(22,163,74,.12); transition:transform .15s ease;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:24px;">💬</span>
           <div>
-            <div style="font-size:12.5px; font-weight:900; color:#166534;">آفیشل WhatsApp گروپ جوائن کریں</div>
-            <div style="font-size:10.5px; color:#15803d; font-weight:600;">نئے ممبرز اور اپڈیٹس کے لیے کلک کریں</div>
+            <div style="font-weight:900; font-size:13px; color:#166534;">AZ Flow آفیشل واٹس ایپ گروپ</div>
+            <div style="font-size:11px; color:#15803d;">تمام اپڈیٹس، مفت رہنمائی اور ممبرز کمیونٹی میں شامل ہوں</div>
           </div>
         </div>
-        <div style="background:#16a34a; color:#ffffff; font-size:11px; font-weight:800; padding:5px 10px; border-radius:8px;">
-          جوائن کریں ➔
-        </div>
+        <span style="background:#25D366; color:#fff; font-size:11px; font-weight:900; padding:5px 10px; border-radius:20px; white-space:nowrap;">شامل ہوں ➔</span>
       </a>
 
-      <div class="section-title">
-        <span id="formHeaderTitle">➕ نیا گاہک درج کریں (New Customer)</span>
-        <button id="cancelEditingBtn" onclick="resetEntryForm()" style="display:none; background:none; border:none; color:var(--expense); font-size:11.5px; font-weight:800; cursor:pointer;">کینسل کریں ✖</button>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">گاہک کا نام (Customer Name) *:</label>
-        <input type="text" id="inputName" class="input-control" placeholder="مثلاً: محمد عثمان">
-      </div>
-
-      <div class="input-row">
-        <div class="form-group">
-          <label class="form-label">موبائل نمبر 1 *:</label>
-          <input type="tel" id="inputPhone1" class="input-control" placeholder="03001234567">
+      <!-- Quick Action Buttons Card -->
+      <div class="card" style="background:linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color:#fff; border:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <div>
+            <h2 style="font-size:17px; font-weight:900;">خوش آمدید!</h2>
+            <p style="font-size:11.5px; color:#bae6fd;">آج کا کاروبار اور ادھار کھاتہ سنبھالیں</p>
+          </div>
+          <span style="font-size:30px;">💼</span>
         </div>
-        <div class="form-group">
-          <label class="form-label">موبائل نمبر 2:</label>
-          <input type="tel" id="inputPhone2" class="input-control" placeholder="دوسرا نمبر">
-        </div>
-        <div class="form-group">
-          <label class="form-label">موبائل نمبر 3:</label>
-          <input type="tel" id="inputPhone3" class="input-control" placeholder="اختیاری">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+          <button class="btn" style="background:#fff; color:#0369a1; font-size:12px; padding:9px;" onclick="openNewCustomerModal()">
+            <span>➕</span> نیا کسٹمر / کام
+          </button>
+          <button class="btn" style="background:#22c55e; color:#fff; font-size:12px; padding:9px;" onclick="openNewUdhaarModal()">
+            <span>📒</span> نیا ادھار درج کریں
+          </button>
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label">کام کی تفصیل (Service / Description):</label>
-        <input type="text" id="inputWork" class="input-control" placeholder="کام منتخب کریں یا خود لکھیں">
-      </div>
-
-      <!-- Quick Services -->
-      <div class="form-group">
-        <label class="form-label">تیز ترین سروسز کا انتخاب (Quick Services):</label>
-        <div class="service-category-tabs">
-          <button type="button" class="category-tab-btn active" onclick="activatePresetCategory('nadra', this)">نادرا و سرٹیفکیٹس</button>
-          <button type="button" class="category-tab-btn" onclick="activatePresetCategory('online', this)">آن لائن ای-خدمات</button>
-          <button type="button" class="category-tab-btn" onclick="activatePresetCategory('legal', this)">قانونی و نکاح نامہ</button>
-          <button type="button" class="category-tab-btn" onclick="activatePresetCategory('shop', this)">دکان و پرنٹنگ</button>
+      <!-- Quick Stats Card -->
+      <div class="card">
+        <div class="card-title">
+          <span>📊 آج کا خلاصہ (دکانداری)</span>
+          <span style="font-size:11.5px; color:var(--muted);" id="todayDateLabel"></span>
+        </div>
+        <div class="metric-grid">
+          <div class="metric-box primary">
+            <div class="metric-label">کل وصولی</div>
+            <div class="metric-val" id="metricTotalRevenue">Rs. 0</div>
+          </div>
+          <div class="metric-box cost">
+            <div class="metric-label">لاگت فیس</div>
+            <div class="metric-val" id="metricTotalCost">Rs. 0</div>
+          </div>
+          <div class="metric-box profit">
+            <div class="metric-label">خالص بچت</div>
+            <div class="metric-val" id="metricTotalProfit">Rs. 0</div>
+          </div>
         </div>
 
-        <div id="chips_nadra" class="service-chips-wrap">
-          <div class="service-chip-item" onclick="insertServicePreset('سی آر سی (CRC / ب فارم رجسٹریشن)')">+ سی آر سی (B-Form)</div>
-          <div class="service-chip-item" onclick="insertServicePreset('ایف آر سی (FRC نادرا فیملی سرٹیفکیٹ)')">+ ایف آر سی (FRC)</div>
-          <div class="service-chip-item" onclick="insertServicePreset('شناختی کارڈ تجدید و اسمارٹ کارڈ')">+ شناختی کارڈ تجدید</div>
-          <div class="service-chip-item" onclick="insertServicePreset('ڈومیسائل سرٹیفکیٹ')">+ ڈومیسائل سرٹیفکیٹ</div>
-          <div class="service-chip-item" onclick="insertServicePreset('گمشدہ شناختی کارڈ ری پرنٹ')">+ شناختی کارڈ ری پرنٹ</div>
-        </div>
-
-        <div id="chips_online" class="service-chips-wrap" style="display:none;">
-          <div class="service-chip-item" onclick="insertServicePreset('آن لائن پاسپورٹ فیس و ٹوکن چالان')">+ آن لائن پاسپورٹ</div>
-          <div class="service-chip-item" onclick="insertServicePreset('پولیس کریکٹر سرٹیفکیٹ تصدیق')">+ پولیس کریکٹر تصدیق</div>
-          <div class="service-chip-item" onclick="insertServicePreset('ڈرائیونگ لائسنس لرنر / تجدید')">+ ڈرائیونگ لائسنس</div>
-          <div class="service-chip-item" onclick="insertServicePreset('انکم ٹیکس ریٹرن فائلنگ (FBR Filer)')">+ ٹیکس ریٹرن فائلنگ</div>
-          <div class="service-chip-item" onclick="insertServicePreset('آن لائن جاب / داخلہ فارم')">+ جاب / داخلہ فارم</div>
-        </div>
-
-        <div id="chips_legal" class="service-chips-wrap" style="display:none;">
-          <div class="service-chip-item" onclick="insertServicePreset('نکاح نامہ کمپیوٹرائزڈ تصدیق')">+ نکاح نامہ</div>
-          <div class="service-chip-item" onclick="insertServicePreset('تاریخ پیدائش سرٹیفکیٹ (Birth Certificate)')">+ تاریخ پیدائش</div>
-          <div class="service-chip-item" onclick="insertServicePreset('فوتیدگی سرٹیفکیٹ (Death Certificate)')">+ فوتیدگی سرٹیفکیٹ</div>
-          <div class="service-chip-item" onclick="insertServicePreset('ای اسٹامپ پیپر و بیان حلفی')">+ ای اسٹامپ / حلف نامہ</div>
-          <div class="service-chip-item" onclick="insertServicePreset('طلاق موثر سرٹیفکیٹ')">+ طلاق سرٹیفکیٹ</div>
-        </div>
-
-        <div id="chips_shop" class="service-chips-wrap" style="display:none;">
-          <div class="service-chip-item" onclick="insertServicePreset('فوری فوٹو شوٹ و ویزا سائز تصاویر')">+ فوٹو شوٹ و پرنٹنگ</div>
-          <div class="service-chip-item" onclick="insertServicePreset('فلیکس، بینر و کارڈ ڈیزائننگ')">+ فلیکس و ڈیزائننگ</div>
-          <div class="service-chip-item" onclick="insertServicePreset('کلر پرنٹنگ و لیمینیشن')">+ پرنٹنگ و فوٹو کاپی</div>
-          <div class="service-chip-item" onclick="insertServicePreset('کھاتہ ادھار بل')">+ کھاتہ ادھار بل</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px;">
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:10px; text-align:center;">
+            <div style="font-size:11px; color:#64748b; font-weight:700;">مکمل شدہ کام</div>
+            <div style="font-size:18px; font-weight:900; color:#10b981;" id="metricCompletedCount">0</div>
+          </div>
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:10px; text-align:center;">
+            <div style="font-size:11px; color:#64748b; font-weight:700;">زیرِ تکمیل (جاری ہے)</div>
+            <div style="font-size:18px; font-weight:900; color:#f59e0b;" id="metricPendingCount">0</div>
+          </div>
         </div>
       </div>
 
-      <div class="input-row">
-        <div class="form-group">
-          <label class="form-label">وصولی رقم (Bill Amount Rs.) *:</label>
-          <input type="number" id="inputAmount" class="input-control" placeholder="0" min="0" oninput="updateLiveProfitPreview()">
+      <!-- Udhaar Summary Widget on Home -->
+      <div class="card">
+        <div class="card-title">
+          <span>📒 ادھار کھاتہ کی سمری</span>
+          <button class="btn btn-outline" style="width:auto; padding:3px 10px; font-size:11px;" onclick="switchTab('udhaar')">تفصیل دیکھیں ➔</button>
         </div>
-        <div class="form-group">
-          <label class="form-label">فیس / لاگت (Cost / Fee Rs.):</label>
-          <input type="number" id="inputFee" class="input-control" placeholder="0" min="0" oninput="updateLiveProfitPreview()">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:12px; padding:12px;">
+            <div style="font-size:11px; font-weight:800; color:#065f46;">⬇️ وصول کرنا ہے (لینا ہے)</div>
+            <div style="font-size:18px; font-weight:900; color:#059669; margin-top:4px;" id="homeUdhaarReceivable">Rs. 0</div>
+          </div>
+          <div style="background:#fff1f2; border:1px solid #fecdd3; border-radius:12px; padding:12px;">
+            <div style="font-size:11px; font-weight:800; color:#9f1239;">⬆️ ادا کرنا ہے (دینا ہے)</div>
+            <div style="font-size:18px; font-weight:900; color:#e11d48; margin-top:4px;" id="homeUdhaarPayable">Rs. 0</div>
+          </div>
         </div>
       </div>
 
-      <div class="profit-calc-card">
-        <div>
-          <div style="font-size:11.5px; color:var(--profit); font-weight:700;">حساب شدہ خالص منافع (Calculated Net Profit):</div>
-          <div style="font-size:10.5px; color:#64748b;" id="profitMarginPercentLabel">مارجن: 0%</div>
-        </div>
-        <div style="font-size:17px; color:var(--profit); font-weight:900;" id="profitPreviewBadge">Rs. 0</div>
+      <!-- Recent Customer Entries Header -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin:16px 4px 10px;">
+        <span style="font-weight:900; font-size:14px; color:#1e293b;">تازہ ترین کام و کسٹمرز</span>
+        <button class="btn btn-outline" style="width:auto; padding:4px 10px; font-size:11px;" onclick="switchTab('customers')">تمام دیکھیں</button>
+      </div>
+      <div id="homeRecentCustomerList"></div>
+
+    </section>
+
+    <!-- SCREEN 2: CUSTOMERS / DUKANDARI (دکانداری کا کھاتہ) -->
+    <section id="screenCustomers" class="screen-content" style="display:none;">
+      <div class="card-title" style="margin-bottom:12px;">
+        <span>👥 کسٹمر ریکارڈ و ڈیجیٹل رسیدیں</span>
+        <button class="btn btn-primary" style="width:auto; padding:6px 14px; font-size:12px;" onclick="openNewCustomerModal()">+ نیا کسٹمر</button>
       </div>
 
-      <div class="form-group">
-        <label class="form-label">کام کی حالت (Work Status):</label>
-        <select id="inputStatus" class="input-control">
-          <option value="مکمل ہو گیا">✅ کام مکمل ہو گیا (Completed)</option>
-          <option value="جاری ہے">⏳ کام جاری ہے (In Progress)</option>
+      <!-- Search & Filters -->
+      <div style="display:flex; gap:8px; margin-bottom:12px;">
+        <input type="text" id="customerSearchInput" class="form-input" placeholder="🔍 نام، فون نمبر یا کام سرچ کریں..." oninput="renderRecordsList()">
+        <select id="customerFilterStatus" class="form-select" style="width:130px;" onchange="renderRecordsList()">
+          <option value="all">تمام حالتیں</option>
+          <option value="pending">⏳ جاری ہے</option>
+          <option value="done">✅ مکمل شدہ</option>
         </select>
       </div>
 
-      <button class="btn" id="saveRecordBtn" onclick="submitCustomerForm()">
-        <span>💾</span> ریکارڈ محفوظ کریں (Save Record)
-      </button>
-    </div>
+      <!-- Records List -->
+      <div id="recordsContainer"></div>
+    </section>
 
-    <!-- SCREEN 2: RECORDS -->
-    <div id="screenRecords" class="screen-view">
-      <div class="section-title">
-        <span>👥 تمام گاہکوں کا کھاتہ و ریکارڈ</span>
-        <span style="font-size:11.5px; color:var(--muted);" id="recordsTotalBadge">کل: 0</span>
+    <!-- SCREEN 3: UDHAAR KHATA (ادھار کھاتہ بک) -->
+    <section id="screenUdhaar" class="screen-content" style="display:none;">
+      <div class="card-title" style="margin-bottom:12px;">
+        <span>📒 ادھار کھاتہ بک (Credit Ledger)</span>
+        <button class="btn btn-success" style="width:auto; padding:6px 14px; font-size:12px;" onclick="openNewUdhaarModal()">+ نیا ادھار</button>
+      </div>
+
+      <!-- Udhaar Net Balance Box -->
+      <div class="card" style="background:#0f172a; color:#fff; border:none;">
+        <div style="font-size:12px; color:#94a3b8; font-weight:700;">نیٹ بقایا جات کا میزان</div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:6px;">
+          <div>
+            <div style="font-size:24px; font-weight:900;" id="udhaarNetBalance">Rs. 0</div>
+            <div style="font-size:11px; color:#38bdf8;" id="udhaarNetSubtext">خالص بقایا</div>
+          </div>
+          <span style="font-size:28px;">⚖️</span>
+        </div>
+      </div>
+
+      <!-- Type Filter Tabs -->
+      <div style="display:flex; background:#e2e8f0; border-radius:10px; padding:4px; margin-bottom:12px;">
+        <button id="udhaarTabAll" class="btn" style="flex:1; padding:7px; font-size:12px; background:#fff; color:#0f172a;" onclick="setUdhaarFilter('all')">تمام</button>
+        <button id="udhaarTabLena" class="btn" style="flex:1; padding:7px; font-size:12px; background:transparent; color:#475569;" onclick="setUdhaarFilter('lena')">⬇️ لینا ہے</button>
+        <button id="udhaarTabDena" class="btn" style="flex:1; padding:7px; font-size:12px; background:transparent; color:#475569;" onclick="setUdhaarFilter('dena')">⬆️ دینا ہے</button>
+      </div>
+
+      <!-- Udhaar Search -->
+      <input type="text" id="udhaarSearchInput" class="form-input" placeholder="🔍 نام، فون یا تفصیل سے تلاش کریں..." oninput="renderUdhaarList()" style="margin-bottom:12px;">
+
+      <!-- Udhaar List -->
+      <div id="udhaarContainer"></div>
+    </section>
+
+    <!-- SCREEN 4: ANALYTICS (تجزیہ و رپورٹس) -->
+    <section id="screenAnalytics" class="screen-content" style="display:none;">
+      <div class="card-title">
+        <span>📊 کاروباری کارکردگی و بچت تجزیہ</span>
+      </div>
+
+      <div class="card">
+        <h3 style="font-size:13px; font-weight:800; color:var(--muted); margin-bottom:10px;">مالیاتی تفاصیل (Lifetime)</h3>
+        <div class="receipt-box">
+          <div class="receipt-row">
+            <span>کل وصول شدہ فیس:</span>
+            <span class="val" id="analyticsTotalRev" style="color:var(--primary);">Rs. 0</span>
+          </div>
+          <div class="receipt-row">
+            <span>کل لاگت فیس / سرکاری اخراجات:</span>
+            <span class="val" id="analyticsTotalCost" style="color:var(--expense);">Rs. 0</span>
+          </div>
+          <div class="receipt-row bold">
+            <span>کل خالص بچت (منافع):</span>
+            <span class="val" id="analyticsTotalProfit" style="color:var(--profit);">Rs. 0</span>
+          </div>
+          <div class="receipt-row" style="font-size:11px; color:#64748b; margin-top:4px;">
+            <span>اوسط منافع مارجن:</span>
+            <span class="val" id="analyticsMarginPercent">0%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="font-size:13px; font-weight:800; color:var(--muted); margin-bottom:10px;">ادھار کھاتہ جائزہ</h3>
+        <div class="receipt-box">
+          <div class="receipt-row">
+            <span>کل لینا ہے (بقایا وصولیاں):</span>
+            <span class="val" id="analyticsTotalReceivable" style="color:var(--profit);">Rs. 0</span>
+          </div>
+          <div class="receipt-row">
+            <span>کل دینا ہے (واجب الادا ادھار):</span>
+            <span class="val" id="analyticsTotalPayable" style="color:var(--expense);">Rs. 0</span>
+          </div>
+          <div class="receipt-row bold">
+            <span>صاف بقایا فرق:</span>
+            <span class="val" id="analyticsUdhaarNet">Rs. 0</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 5: SETTINGS (سیٹنگز و بیک اپ) -->
+    <section id="screenSettings" class="screen-content" style="display:none;">
+      <div class="card-title">
+        <span>⚙️ ایپ ترتیبات و بیک اپ</span>
+      </div>
+
+      <!-- Backup Card -->
+      <div class="card">
+        <h3 style="font-size:14px; font-weight:800; margin-bottom:6px;">💾 ڈیٹا کا بیک اپ اور حفاظت</h3>
+        <p style="font-size:11.5px; color:var(--muted); margin-bottom:10px;">آپ کا تمام ڈیٹا (دکانداری اور ادھار کھاتہ) محفوظ ہے۔</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+          <button class="btn btn-outline" onclick="exportDataJson()">📥 JSON ڈاؤنلوڈ</button>
+          <button class="btn btn-outline" onclick="exportDataCsv()">📊 CSV ایکسل فائل</button>
+        </div>
+        <div style="margin-top:10px;">
+          <label class="btn btn-outline" style="cursor:pointer; display:block; text-align:center;">
+            <span>📤 بیک اپ فائل لوڈ کریں</span>
+            <input type="file" id="importJsonInput" accept=".json" style="display:none;" onchange="importDataJson(event)">
+          </label>
+        </div>
+      </div>
+
+      <!-- Official WhatsApp Group Link Card -->
+      <div class="card" style="border:1.5px solid #25D366; background:#f0fdf4;">
+        <h3 style="font-size:14px; font-weight:800; color:#166534; margin-bottom:4px;">💬 AZ Flow آفیشل واٹس ایپ گروپ</h3>
+        <p style="font-size:11.5px; color:#15803d; margin-bottom:12px;">نئی اپڈیٹس، تکنیکی مدد اور مشوروں کے لیے ہمارا واٹس ایپ گروپ جوائن کریں:</p>
+        <a href="https://chat.whatsapp.com/ESePIIyZUJKAtvm8WJE6Yf?s=cl&p=a&mlu=4&ilr=4&iam=2" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+          <span>👥 واٹس ایپ گروپ میں شامل ہوں</span>
+        </a>
+      </div>
+
+      <!-- Developer Info & Branding -->
+      <div class="card" style="text-align:center;">
+        <div style="width:50px; height:50px; background:linear-gradient(135deg, #0284c7, #38bdf8); border-radius:14px; display:inline-flex; align-items:center; justify-content:center; font-size:26px; color:#fff; margin-bottom:8px;">⚡</div>
+        <h3 style="font-size:16px; font-weight:900;">AZ Flow</h3>
+        <p style="font-size:13px; font-weight:800; color:var(--primary); margin:4px 0 10px;">پاورڈ بائے انسر اے زیڈ (Powered by Ansar AZ)</p>
+        <p style="font-size:12px; color:var(--muted); line-height:1.6;">
+          <b>رابطہ نمبر:</b> 03298191689<br>
+          نادرا سروسز، آن لائن پورٹلز اور جدید دکانداری نظام
+        </p>
+        <div style="margin-top:14px; padding-top:10px; border-top:1px solid #e2e8f0; font-size:11px; color:#94a3b8;">
+          <b>AZ Flow ⚡</b> ورژن 16.0 (دکانداری + ادھار کھاتہ بک)<br>
+          تمام حقوق محفوظ ہیں © 2026
+        </div>
+      </div>
+
+      <!-- Reset Option -->
+      <div class="card" style="border:1px solid #fee2e2;">
+        <h3 style="font-size:13px; font-weight:800; color:#991b1b; margin-bottom:6px;">⚠️ ڈیٹا ری سیٹ</h3>
+        <button class="btn btn-danger" onclick="wipeAllData()">تمام ڈیٹا ڈیلیٹ کریں</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: ADD / EDIT CUSTOMER -->
+  <div id="modalCustomer" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 style="color:var(--bg-dark); font-size:16px; font-weight:900;" id="modalCustomerTitle">نیا کسٹمر اندراج</h3>
+        <button class="close-btn" onclick="closeCustomerModal()">&times;</button>
       </div>
 
       <div class="form-group">
-        <input type="text" id="searchFilterBox" class="input-control" placeholder="🔍 نام، کام یا موبائل نمبر سے تلاش کریں..." oninput="renderRecordsList()">
+        <label class="form-label">گاہک کا پورا نام *</label>
+        <input type="text" id="inputName" class="form-input" placeholder="مثال: محمد علی شاہ">
       </div>
 
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-        <div style="display:flex; gap:6px;">
-          <button class="category-tab-btn active" id="tabFilterAll" onclick="setRecordFilter('all', this)">سب (All)</button>
-          <button class="category-tab-btn" id="tabFilterDone" onclick="setRecordFilter('done', this)">✅ مکمل</button>
-          <button class="category-tab-btn" id="tabFilterPending" onclick="setRecordFilter('pending', this)">⏳ جاری ہے</button>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">موبائل نمبر 1 *</label>
+          <input type="tel" id="inputPhone1" class="form-input" placeholder="03001234567">
         </div>
-        <button class="category-tab-btn" onclick="exportToCsvFile()">📊 Excel شیٹ</button>
-      </div>
-
-      <div id="customerRecordsContainer" style="max-height: 480px; overflow-y: auto; padding-left: 2px;"></div>
-    </div>
-
-    <!-- SCREEN 3: ANALYTICS -->
-    <div id="screenAnalytics" class="screen-view">
-      <div class="section-title">📊 مالیاتی تجزیہ و کاروباری رپورٹس</div>
-
-      <div style="background: linear-gradient(135deg, #020617, #06152e); color:#ffffff; border-radius:var(--radius-lg); padding:14px; margin-bottom:12px; border:1px solid rgba(56,189,248,.3);">
-        <div style="font-size:12px; color:#94a3b8; font-weight:700;">کل خالص منافع (Net Profit)</div>
-        <div style="font-size:26px; font-weight:900; color:#34d399; margin:4px 0 8px;" id="anaTotalProfit">Rs. 0</div>
-        <div style="font-size:12px; color:#cbd5e1;" id="anaMarginRate">منافع کی شرح (Margin Rate): 0%</div>
-      </div>
-
-      <div style="background:#f8fafc; border:1px solid var(--border-light); border-radius:var(--radius-lg); padding:14px; margin-bottom:12px;">
-        <div style="font-weight:800; font-size:13px; margin-bottom:8px;">📈 مالیاتی موازنہ گراف</div>
-        <div style="display:flex; align-items:flex-end; justify-content:space-around; height:120px; padding:10px 0 6px; border-bottom:1px solid var(--border); margin-bottom:10px;">
-          <div style="display:flex; flex-direction:column; align-items:center; gap:5px;">
-            <div id="chartRevenueBar" style="width:46px; border-radius:8px 8px 0 0; background:var(--primary); height:10px; min-height:8px;"></div>
-            <div style="font-size:10.5px; font-weight:700;">آمدنی</div>
-          </div>
-          <div style="display:flex; flex-direction:column; align-items:center; gap:5px;">
-            <div id="chartCostBar" style="width:46px; border-radius:8px 8px 0 0; background:var(--expense); height:10px; min-height:8px;"></div>
-            <div style="font-size:10.5px; font-weight:700;">لاگت</div>
-          </div>
-          <div style="display:flex; flex-direction:column; align-items:center; gap:5px;">
-            <div id="chartProfitBar" style="width:46px; border-radius:8px 8px 0 0; background:var(--profit); height:10px; min-height:8px;"></div>
-            <div style="font-size:10.5px; font-weight:700;">منافع</div>
-          </div>
-        </div>
-        <div style="display:flex; justify-content:space-between; font-size:11.5px; font-weight:800;">
-          <span style="color:var(--primary);" id="anaRevAmount">Rs. 0</span>
-          <span style="color:var(--expense);" id="anaCostAmount">Rs. 0</span>
-          <span style="color:var(--profit);" id="anaProfitAmount">Rs. 0</span>
+        <div class="form-group">
+          <label class="form-label">موبائل نمبر 2 (اختیاری)</label>
+          <input type="tel" id="inputPhone2" class="form-input" placeholder="03121234567">
         </div>
       </div>
 
-      <div style="background:#f8fafc; border:1px solid var(--border-light); border-radius:var(--radius-lg); padding:14px;">
-        <div style="font-weight:800; font-size:13px; margin-bottom:8px;">🛠️ کاموں کی تکمیل کی شرح</div>
-        <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px;">
-          <span>مکمل کام: <b id="anaDoneCountVal" style="color:var(--profit);">0</b></span>
-          <span>زیرِ تکمیل کام: <b id="anaPendingCountVal" style="color:var(--pending);">0</b></span>
+      <!-- Quick Service Presets -->
+      <div class="form-group">
+        <label class="form-label">کام / سروس منتخب کریں (یا نیچے خود لکھیں):</label>
+        <div class="chips-row">
+          <span class="chip" onclick="insertServicePreset('سی آر سی (CRC / B-Form)')">📜 سی آر سی</span>
+          <span class="chip" onclick="insertServicePreset('ایف آر سی (FRC)')">👨‍👩‍👧‍👦 ایف آر سی</span>
+          <span class="chip" onclick="insertServicePreset('نکاح نامہ اندراج')">💍 نکاح نامہ</span>
+          <span class="chip" onclick="insertServicePreset('فوتیدگی سرٹیفکیٹ')">🕊️ فوتیدگی نامہ</span>
+          <span class="chip" onclick="insertServicePreset('تاریخ پیدائش سرٹیفکیٹ')">👶 تاریخ پیدائش</span>
+          <span class="chip" onclick="insertServicePreset('اسمارٹ شناختی کارڈ')">🪪 اسمارٹ کارڈ</span>
+          <span class="chip" onclick="insertServicePreset('آن لائن ٹوکن سروس')">🎫 آن لائن ٹوکن</span>
+          <span class="chip" onclick="insertServicePreset('پاسپورٹ سائز تصاویر')">📸 تصاویر</span>
+          <span class="chip" onclick="insertServicePreset('فلیکس بینر / ڈیزائننگ')">🎨 بینر ڈیزائن</span>
+          <span class="chip" onclick="insertServicePreset('اسٹامپ پیپر / بیان حلفی')">📑 اسٹامپ پیپر</span>
         </div>
-        <div style="width:100%; height:8px; background:#e2e8f0; border-radius:10px; overflow:hidden;">
-          <div id="anaProgressBar" style="width:0; height:100%; background:var(--profit); border-radius:10px; transition:width .5s ease;"></div>
+        <input type="text" id="inputWork" class="form-input" placeholder="کام کی نوعیت درج کریں">
+      </div>
+
+      <!-- Financials: Total Fee vs Cost Fee -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">کل وصولی فیس (Total Fee) *</label>
+          <input type="number" id="inputAmount" class="form-input" placeholder="0" oninput="updateLiveProfitPreview()">
         </div>
-      </div>
-    </div>
-
-    <!-- SCREEN 4: SETTINGS -->
-    <div id="screenSettings" class="screen-view">
-      <div class="section-title">⚙️ ایپ کی سیٹنگز و بیک اپ</div>
-
-      <div style="background:#eff6ff; border:1px solid #93c5fd; border-radius:var(--radius-lg); padding:14px; margin-bottom:12px;">
-        <h3 style="color:#0369a1; font-size:13.5px; margin-bottom:5px;">🔐 مستقل ڈیٹا بیس اور بیک اپ</h3>
-        <p style="font-size:11.5px; color:var(--muted); margin-bottom:10px;">آپ کا ڈیٹا مستقل محفوظ ہے۔ حفاظت کے لیے فائل ڈاؤن لوڈ کریں۔</p>
-        <button class="btn btn-success" onclick="downloadBackupFile()" style="margin-bottom:8px;">
-          <span>📤</span> ڈیٹا بیک اپ ڈاؤن لوڈ کریں (JSON)
-        </button>
-        <label class="btn btn-outline" style="cursor:pointer; width:100%;">
-          <span>📥</span> بیک اپ فائل سے Restore کریں
-          <input type="file" id="fileRestoreInput" accept=".json,application/json" style="display:none" onchange="restoreBackupFile(event)">
-        </label>
-      </div>
-
-      <!-- WhatsApp Official Group Card -->
-      <div style="background:#f0fdf4; border:1px solid #86efac; border-radius:var(--radius-lg); padding:14px; margin-bottom:12px;">
-        <h3 style="color:#15803d; font-size:13.5px; margin-bottom:5px;">🌐 آفیشل WhatsApp گروپ (Join Community)</h3>
-        <p style="font-size:11.5px; color:var(--muted); margin-bottom:10px;">نئے ممبرز اور تمام کاروباری بھائیوں کے لیے رہنمائی، کسٹمر سروسز اور نئی اپڈیٹس کے لیے ہمارا آفیشل واٹس ایپ گروپ جوائن کریں۔</p>
-        <a href="https://chat.whatsapp.com/ESePIIyZUJKAtvm8WJE6Yf?s=cl&p=a&mlu=4&ilr=4&iam=2" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
-          <span>👥</span> آفیشل واٹس ایپ گروپ جوائن کریں
-        </a>
-      </div>
-
-      <div style="background:#ecfdf5; border:1px solid #86efac; border-radius:var(--radius-lg); padding:14px; margin-bottom:12px;">
-        <h3 style="color:#166534; font-size:13.5px; margin-bottom:5px;">📞 ایڈمن سے رابطہ (Support)</h3>
-        <p style="font-size:11.5px; color:var(--muted); margin-bottom:10px;">ایڈمن Ansar AZ سے براہ راست WhatsApp پر رابطہ کریں۔</p>
-        <a href="https://wa.me/923298191689?text=السلام%20علیکم%20Ansar%20AZ!%20AZ%20Flow%20ایپ" target="_blank" class="btn btn-whatsapp">
-          <span>💬</span> WhatsApp رابطہ (03298191689)
-        </a>
-      </div>
-
-      <div style="background:#f8fafc; border:1px solid var(--border-light); border-radius:var(--radius-lg); padding:14px; margin-bottom:12px;">
-        <h3 style="font-size:13.5px; margin-bottom:5px;">🌟 ڈیمو کسٹمرز لوڈ کریں</h3>
-        <p style="font-size:11.5px; color:var(--muted); margin-bottom:10px;">سی آر سی، ایف آر سی، نکاح نامہ وغیرہ کے نمونہ ریکارڈز شامل کریں۔</p>
-        <button class="btn" onclick="populateDemoRecords()"><span>🔄</span> ڈیمو ریکارڈز لوڈ کریں</button>
-      </div>
-
-      <div style="background:#f8fafc; border:1px solid var(--border-light); border-radius:var(--radius-lg); padding:14px; margin-bottom:12px;">
-        <h3 style="font-size:13.5px; margin-bottom:4px;">📱 ایپ تفصیلات</h3>
-        <p style="font-size:11.5px; color:var(--muted); line-height:1.6;">
-          <b>AZ Flow ⚡</b> ورژن 15.0 (پروفیشنل)<br>
-          ڈویلپر و ایڈمن: <b>Ansar AZ</b><br>
-          مستقل لوکل اسٹوریج فعال ہے (100% آف لائن فعال)
-        </p>
-        <div style="background:#eff6ff; border:1.5px dashed var(--primary-light); border-radius:8px; padding:8px; text-align:center; font-weight:800; color:var(--primary); font-size:12.5px; margin-top:8px;">
-          ⚡ Powered by Ansar AZ
+        <div class="form-group">
+          <label class="form-label">لاگت فیس / سرکاری خرچ (Cost) *</label>
+          <input type="number" id="inputFee" class="form-input" placeholder="0" oninput="updateLiveProfitPreview()">
         </div>
       </div>
 
-      <div style="border:1px solid #fca5a5; border-radius:var(--radius-lg); padding:14px; background:#fff1f2;">
-        <h3 style="color:var(--expense); font-size:13.5px; margin-bottom:5px;">⚠️ ڈیٹا ڈیلیٹ کنٹرول</h3>
-        <button class="btn btn-danger" onclick="wipeAllData()"><span>🗑️</span> تمام ڈیٹا ڈیلیٹ کریں</button>
-      </div>
-
-      <div style="text-align:center; font-weight:800; font-size:13px; color:var(--primary); margin:18px 0 25px;">
-        Powered by Ansar AZ
-      </div>
-    </div>
-
-  </div>
-
-  <!-- RECEIPT MODAL -->
-  <div id="invoiceModal" class="modal-backdrop">
-    <div class="invoice-modal">
-      <div id="printArea">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-          <div>
-            <h2 style="color:var(--primary); font-size:18px; font-weight:900;">AZ Flow ⚡</h2>
-            <div style="font-size:11px; color:var(--muted);">اسمارٹ کسٹمر رسید / انوائس سِلپ</div>
-          </div>
-          <button onclick="dismissReceiptModal()" style="background:none; border:none; font-size:22px; cursor:pointer; color:var(--muted);">✖</button>
+      <!-- Live Profit Preview -->
+      <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:10px; padding:10px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-size:11px; font-weight:700; color:#065f46;">خالص بچت / منافع (خودکار):</div>
+          <div style="font-size:15px; font-weight:900; color:#059669;" id="profitPreviewBadge">Rs. 0</div>
         </div>
-        <hr style="border:none; border-top:1px dashed var(--border); margin-bottom:10px;">
-        <div id="receiptContentDetails" style="font-size:12.5px; line-height:1.7;"></div>
+        <span style="font-size:11px; color:#047857; font-weight:800;" id="profitMarginPercentLabel">مارجن: 0%</span>
       </div>
-      <div style="display:flex; gap:8px; margin-top:14px;">
-        <button class="btn btn-whatsapp" id="btnShareWhatsAppReceipt" style="flex:2;">
-          <span>💬</span> WhatsApp پر بھیجیں
-        </button>
-        <button class="btn btn-outline" onclick="window.print()" style="flex:1;">
-          <span>🖨️</span> پرنٹ
-        </button>
+
+      <div class="form-group">
+        <label class="form-label">کام کی حالت (Status) *</label>
+        <select id="inputStatus" class="form-select">
+          <option value="جاری ہے">⏳ جاری ہے (Pending)</option>
+          <option value="مکمل ہو گیا">✅ مکمل ہو گیا (Completed)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">موبائل نمبر 3 / شناختی کارڈ (اختیاری)</label>
+        <input type="text" id="inputPhone3" class="form-input" placeholder="اضافی معلومات...">
+      </div>
+
+      <div style="display:flex; gap:8px; margin-top:16px;">
+        <button class="btn btn-primary" onclick="submitCustomerForm()">محفوظ کریں</button>
+        <button class="btn btn-outline" onclick="closeCustomerModal()">منسوخ</button>
       </div>
     </div>
   </div>
 
-  <!-- Toast -->
-  <div id="toastMessage">
-    <span id="toastIcon">✅</span>
-    <span id="toastText">پیغام محفوظ ہو گیا!</span>
+  <!-- MODAL: ADD / EDIT UDHAAR (ادھار کھاتہ) -->
+  <div id="modalUdhaar" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 style="color:var(--bg-dark); font-size:16px; font-weight:900;" id="modalUdhaarTitle">نیا ادھار کھاتہ درج کریں</h3>
+        <button class="close-btn" onclick="closeUdhaarModal()">&times;</button>
+      </div>
+
+      <!-- Type Toggle: Lena vs Dena -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px;">
+        <button id="btnTypeLena" type="button" class="btn" style="background:#10b981; color:#fff;" onclick="selectUdhaarType('lena')">
+          <span>⬇️ لینا ہے</span> (Receivable)
+        </button>
+        <button id="btnTypeDena" type="button" class="btn" style="background:#f1f5f9; color:#475569;" onclick="selectUdhaarType('dena')">
+          <span>⬆️ دینا ہے</span> (Payable)
+        </button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">شخص یا پارٹی کا نام *</label>
+        <input type="text" id="inputUdhaarPerson" class="form-input" placeholder="نام درج کریں...">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">رقم (روپے) *</label>
+          <input type="number" id="inputUdhaarAmount" class="form-input" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">موبائل نمبر</label>
+          <input type="tel" id="inputUdhaarPhone" class="form-input" placeholder="03001234567">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">مد / مدات / تفصیل</label>
+        <input type="text" id="inputUdhaarDetails" class="form-input" placeholder="مثال: شناختی کارڈ ٹوکن، سامان یا رقم">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">واپسی کا وعدہ / تاریخ (اختیاری)</label>
+        <input type="date" id="inputUdhaarDueDate" class="form-input">
+      </div>
+
+      <div style="display:flex; gap:8px; margin-top:16px;">
+        <button class="btn btn-success" onclick="submitUdhaarForm()">ادھار کھاتہ محفوظ کریں</button>
+        <button class="btn btn-outline" onclick="closeUdhaarModal()">منسوخ</button>
+      </div>
+    </div>
   </div>
 
-  <!-- Bottom Navigation -->
-  <nav class="bottom-navbar">
-    <button class="bottom-nav-item active" onclick="switchActiveScreen('Home', this)">
+  <!-- BOTTOM NAVIGATION BAR -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" id="tabBtnHome" onclick="switchTab('home')">
       <span>🏠</span> ہوم
     </button>
-    <button class="bottom-nav-item" onclick="switchActiveScreen('Records', this)">
-      <span>👥</span> تمام ریکارڈ
+    <button class="nav-item" id="tabBtnCustomers" onclick="switchTab('customers')">
+      <span>👥</span> دکانداری
     </button>
-    <button class="bottom-nav-item" onclick="switchActiveScreen('Analytics', this)">
+    <button class="nav-item" id="tabBtnUdhaar" onclick="switchTab('udhaar')">
+      <span>📒</span> ادھار کھاتہ
+    </button>
+    <button class="nav-item" id="tabBtnAnalytics" onclick="switchTab('analytics')">
       <span>📊</span> تجزیہ
     </button>
-    <button class="bottom-nav-item" onclick="switchActiveScreen('Settings', this)">
+    <button class="nav-item" id="tabBtnSettings" onclick="switchTab('settings')">
       <span>⚙️</span> سیٹنگز
     </button>
   </nav>
 
-  <script>
-    const MASTER_STORAGE_KEY = "az_flow_permanent_master_records";
-    let customerRecords = [];
-    let activeEditingId = null;
-    let currentFilterStatus = 'all';
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast"></div>
 
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // Storage Keys
+    const MASTER_STORAGE_KEY = "az_flow_records_v16";
+    const UDHAAR_STORAGE_KEY = "az_flow_udhaar_v16";
+
+    // In-memory data states
+    let customerRecords = [];
+    let udhaarRecords = [];
+    let activeEditingId = null;
+    let activeUdhaarEditId = null;
+    let activeUdhaarType = "lena";
+    let currentUdhaarFilter = "all";
+
+    // Toast function
+    function showToast(msg, icon = "✅") {
+      const toast = document.getElementById("toast");
+      toast.innerHTML = `<span>${icon}</span> ${msg}`;
+      toast.style.display = "block";
+      setTimeout(() => { toast.style.display = "none"; }, 2800);
+    }
+
+    // Switch Tabs
+    function switchTab(tab) {
+      const screens = ["Home", "Customers", "Udhaar", "Analytics", "Settings"];
+      screens.forEach(s => {
+        const el = document.getElementById("screen" + s);
+        if (el) el.style.display = (s.toLowerCase() === tab) ? "block" : "none";
+        const btn = document.getElementById("tabBtn" + s);
+        if (btn) btn.classList.toggle("active", s.toLowerCase() === tab);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (tab === "analytics") refreshAnalyticsData();
+      if (tab === "udhaar") renderUdhaarList();
+      if (tab === "customers") renderRecordsList();
+    }
+
+    // Load Data
     function loadStorageData() {
       try {
-        const raw = localStorage.getItem(MASTER_STORAGE_KEY);
-        customerRecords = raw ? JSON.parse(raw) : [];
-        if (!Array.isArray(customerRecords)) customerRecords = [];
-      } catch (err) {
-        customerRecords = [];
-      }
-    }
+        const storedCustomers = localStorage.getItem(MASTER_STORAGE_KEY);
+        customerRecords = storedCustomers ? JSON.parse(storedCustomers) : [];
+      } catch (e) { customerRecords = []; }
 
-    function commitStorageData() {
       try {
-        localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(customerRecords));
-        return true;
-      } catch (err) {
-        showToast("ڈیٹا محفوظ کرنے میں مسئلہ آیا!", "⚠️");
-        return false;
+        const storedUdhaar = localStorage.getItem(UDHAAR_STORAGE_KEY);
+        udhaarRecords = storedUdhaar ? JSON.parse(storedUdhaar) : [];
+      } catch (e) { udhaarRecords = []; }
+
+      if (customerRecords.length === 0 && udhaarRecords.length === 0) {
+        loadSampleData();
       }
     }
 
-    function showToast(message, icon = "✅") {
-      const toast = document.getElementById("toastMessage");
-      document.getElementById("toastIcon").innerText = icon;
-      document.getElementById("toastText").innerText = message;
-      toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 2500);
+    // Commit Data
+    function commitStorageData() {
+      localStorage.setItem(MASTER_STORAGE_KEY, JSON.stringify(customerRecords));
+      localStorage.setItem(UDHAAR_STORAGE_KEY, JSON.stringify(udhaarRecords));
     }
 
-    function switchActiveScreen(screenName, btnEl) {
-      document.querySelectorAll(".screen-view").forEach(v => v.classList.remove("active"));
-      document.querySelectorAll(".bottom-nav-item").forEach(b => b.classList.remove("active"));
-      document.getElementById("screen" + screenName).classList.add("active");
-      if (btnEl) btnEl.classList.add("active");
-      if (screenName === "Records") renderRecordsList();
-      if (screenName === "Analytics") computeAndRenderAnalytics();
-      refreshDashboardMetrics();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Dashboard metrics
+    function refreshDashboardMetrics() {
+      const today = new Date().toLocaleDateString("en-GB");
+      const todayLabel = document.getElementById("todayDateLabel");
+      if (todayLabel) todayLabel.innerText = today;
+
+      let totalRevenue = 0;
+      let totalCost = 0;
+      let totalProfit = 0;
+      let doneCount = 0;
+      let pendingCount = 0;
+
+      customerRecords.forEach(r => {
+        totalRevenue += (r.amount || 0);
+        totalCost += (r.fee || 0);
+        totalProfit += (r.profit || 0);
+        if (r.status === "مکمل ہو گیا") doneCount++;
+        else pendingCount++;
+      });
+
+      document.getElementById("metricTotalRevenue").innerText = "Rs. " + totalRevenue.toLocaleString();
+      document.getElementById("metricTotalCost").innerText = "Rs. " + totalCost.toLocaleString();
+      document.getElementById("metricTotalProfit").innerText = "Rs. " + totalProfit.toLocaleString();
+      document.getElementById("metricCompletedCount").innerText = doneCount;
+      document.getElementById("metricPendingCount").innerText = pendingCount;
+
+      // Udhaar Totals
+      let receivable = 0;
+      let payable = 0;
+      udhaarRecords.forEach(u => {
+        if (!u.settled) {
+          if (u.type === "lena") receivable += (u.amount || 0);
+          else payable += (u.amount || 0);
+        }
+      });
+      document.getElementById("homeUdhaarReceivable").innerText = "Rs. " + receivable.toLocaleString();
+      document.getElementById("homeUdhaarPayable").innerText = "Rs. " + payable.toLocaleString();
+
+      renderHomeRecentCustomers();
     }
 
-    function activatePresetCategory(catKey, tabBtn) {
-      document.querySelectorAll(".category-tab-btn").forEach(t => t.classList.remove("active"));
-      tabBtn.classList.add("active");
-      document.getElementById("chips_nadra").style.display = (catKey === 'nadra') ? 'flex' : 'none';
-      document.getElementById("chips_online").style.display = (catKey === 'online') ? 'flex' : 'none';
-      document.getElementById("chips_legal").style.display = (catKey === 'legal') ? 'flex' : 'none';
-      document.getElementById("chips_shop").style.display = (catKey === 'shop') ? 'flex' : 'none';
-    }
-
+    // Customer Presets & Modal Handling
     function insertServicePreset(name) {
       const el = document.getElementById("inputWork");
       const cur = el.value.trim();
-      el.value = cur ? cur + " ، " + name : name;
-      showToast(`شامل کیا گیا: ${name}`, "➕");
+      el.value = cur ? (cur + ", " + name) : name;
+      showToast("شامل کیا گیا: " + name);
     }
 
     function updateLiveProfitPreview() {
       const amt = parseFloat(document.getElementById("inputAmount").value) || 0;
       const fee = parseFloat(document.getElementById("inputFee").value) || 0;
       const profit = amt - fee;
-      const margin = amt > 0 ? ((profit / amt) * 100).toFixed(1) : 0;
+      const margin = amt > 0 ? ((profit / amt) * 100).toFixed(1) : "0";
       document.getElementById("profitPreviewBadge").innerText = "Rs. " + profit.toLocaleString();
-      document.getElementById("profitMarginPercentLabel").innerText = `مارجن: ${margin}%`;
+      document.getElementById("profitMarginPercentLabel").innerText = "مارجن: " + margin + "%";
     }
 
     function submitCustomerForm() {
@@ -702,37 +796,48 @@
       const fee = parseFloat(document.getElementById("inputFee").value) || 0;
       const status = document.getElementById("inputStatus").value;
 
-      if (!name) { showToast("گاہک کا نام درج کریں!", "⚠️"); return; }
-      if (amount <= 0) { showToast("درست وصولی رقم درج کریں!", "⚠️"); return; }
+      if (!name) {
+        showToast("براہ کرم گاہک کا نام درج کریں!", "⚠️");
+        return;
+      }
+      if (amount <= 0) {
+        showToast("براہ کرم وصولی کی درست رقم درج کریں!", "⚠️");
+        return;
+      }
 
       const profit = amount - fee;
+      const todayStr = new Date().toLocaleDateString("en-GB");
 
-      if (activeEditingId !== null) {
-        customerRecords = customerRecords.map(item => {
-          if (item.id === activeEditingId) {
-            return { ...item, name, phone1, phone2, phone3, work, amount, fee, profit, status, updatedAt: new Date().toISOString() };
-          }
-          return item;
-        });
-        showToast("ریکارڈ اپڈیٹ ہو گیا!", "✏️");
+      if (activeEditingId) {
+        const idx = customerRecords.findIndex(r => r.id === activeEditingId);
+        if (idx !== -1) {
+          customerRecords[idx] = {
+            ...customerRecords[idx],
+            name, phone1, phone2, phone3, work, amount, fee, profit, status,
+            updatedAt: Date.now()
+          };
+          showToast("کسٹمر ریکارڈ اپڈیٹ ہو گیا!");
+        }
       } else {
         const newRecord = {
-          id: Date.now() + Math.floor(Math.random() * 1000),
+          id: Date.now(),
           name, phone1, phone2, phone3, work, amount, fee, profit, status,
-          date: new Date().toLocaleDateString("ur-PK"),
+          date: todayStr,
           createdAt: Date.now()
         };
         customerRecords.unshift(newRecord);
-        showToast("نیا کسٹمر محفوظ ہو گیا!", "💾");
+        showToast("نیا کسٹمر کامیابی سے شامل ہو گیا!");
       }
 
-      resetEntryForm();
       commitStorageData();
+      closeCustomerModal();
       refreshDashboardMetrics();
-      switchActiveScreen("Records", document.querySelectorAll(".bottom-nav-item")[1]);
+      renderRecordsList();
     }
 
-    function resetEntryForm() {
+    function openNewCustomerModal() {
+      activeEditingId = null;
+      document.getElementById("modalCustomerTitle").innerText = "نیا کسٹمر اندراج";
       document.getElementById("inputName").value = "";
       document.getElementById("inputPhone1").value = "";
       document.getElementById("inputPhone2").value = "";
@@ -740,318 +845,601 @@
       document.getElementById("inputWork").value = "";
       document.getElementById("inputAmount").value = "";
       document.getElementById("inputFee").value = "";
-      document.getElementById("inputStatus").value = "مکمل ہو گیا";
-      document.getElementById("profitPreviewBadge").innerText = "Rs. 0";
-      document.getElementById("profitMarginPercentLabel").innerText = "مارجن: 0%";
-      activeEditingId = null;
-      document.getElementById("formHeaderTitle").innerText = "➕ نیا گاہک درج کریں (New Customer)";
-      document.getElementById("saveRecordBtn").innerHTML = `<span>💾</span> ریکارڈ محفوظ کریں (Save Record)`;
-      document.getElementById("cancelEditingBtn").style.display = "none";
-    }
-
-    function startEditingRecord(id) {
-      const t = customerRecords.find(r => r.id === id);
-      if (!t) return;
-      document.getElementById("inputName").value = t.name || "";
-      document.getElementById("inputPhone1").value = t.phone1 || "";
-      document.getElementById("inputPhone2").value = t.phone2 || "";
-      document.getElementById("inputPhone3").value = t.phone3 || "";
-      document.getElementById("inputWork").value = t.work || "";
-      document.getElementById("inputAmount").value = t.amount || 0;
-      document.getElementById("inputFee").value = t.fee || 0;
-      document.getElementById("inputStatus").value = t.status || "مکمل ہو گیا";
+      document.getElementById("inputStatus").value = "جاری ہے";
       updateLiveProfitPreview();
+      document.getElementById("modalCustomer").style.display = "flex";
+    }
+
+    function openEditCustomerModal(id) {
+      const item = customerRecords.find(r => r.id === id);
+      if (!item) return;
       activeEditingId = id;
-      document.getElementById("formHeaderTitle").innerText = "✏️ ریکارڈ میں ترمیم کریں (Edit Customer)";
-      document.getElementById("saveRecordBtn").innerHTML = `<span>💾</span> تبدیلی محفوظ کریں (Update)`;
-      document.getElementById("cancelEditingBtn").style.display = "inline";
-      switchActiveScreen("Home", document.querySelectorAll(".bottom-nav-item")[0]);
+      document.getElementById("modalCustomerTitle").innerText = "کسٹمر ریکارڈ میں ترمیم";
+      document.getElementById("inputName").value = item.name || "";
+      document.getElementById("inputPhone1").value = item.phone1 || "";
+      document.getElementById("inputPhone2").value = item.phone2 || "";
+      document.getElementById("inputPhone3").value = item.phone3 || "";
+      document.getElementById("inputWork").value = item.work || "";
+      document.getElementById("inputAmount").value = item.amount || "";
+      document.getElementById("inputFee").value = item.fee || "";
+      document.getElementById("inputStatus").value = item.status || "جاری ہے";
+      updateLiveProfitPreview();
+      document.getElementById("modalCustomer").style.display = "flex";
     }
 
-    function removeCustomerRecord(id) {
-      if (!confirm("کیا آپ واقعی یہ ریکارڈ ڈیلیٹ کرنا چاہتے ہیں؟")) return;
-      customerRecords = customerRecords.filter(r => r.id !== id);
-      if (activeEditingId === id) resetEntryForm();
-      commitStorageData();
-      renderRecordsList();
-      refreshDashboardMetrics();
-      showToast("ریکارڈ ڈیلیٹ کر دیا گیا", "🗑️");
+    function closeCustomerModal() {
+      document.getElementById("modalCustomer").style.display = "none";
+      activeEditingId = null;
     }
 
-    function setRecordFilter(key, btn) {
-      currentFilterStatus = key;
-      document.querySelectorAll("#tabFilterAll, #tabFilterDone, #tabFilterPending").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      renderRecordsList();
+    function toggleCustomerStatus(id) {
+      const idx = customerRecords.findIndex(r => r.id === id);
+      if (idx !== -1) {
+        const cur = customerRecords[idx].status;
+        customerRecords[idx].status = (cur === "مکمل ہو گیا") ? "جاری ہے" : "مکمل ہو گیا";
+        commitStorageData();
+        refreshDashboardMetrics();
+        renderRecordsList();
+        showToast("اسٹیٹس تبدیل ہو گیا: " + customerRecords[idx].status);
+      }
     }
 
+    function deleteCustomer(id) {
+      if (confirm("کیا آپ واقعی یہ ریکارڈ ڈیلیٹ کرنا چاہتے ہیں؟")) {
+        customerRecords = customerRecords.filter(r => r.id !== id);
+        commitStorageData();
+        refreshDashboardMetrics();
+        renderRecordsList();
+        showToast("ریکارڈ ڈیلیٹ کر دیا گیا!", "🗑️");
+      }
+    }
+
+    // Render Recent on Home
+    function renderHomeRecentCustomers() {
+      const container = document.getElementById("homeRecentCustomerList");
+      if (!container) return;
+      const recent = customerRecords.slice(0, 4);
+      if (recent.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:20px; color:#94a3b8; font-size:12px;">کوئی کسٹمر ڈیٹا موجود نہیں</div>`;
+        return;
+      }
+      container.innerHTML = recent.map(r => generateCustomerCardHtml(r)).join("");
+    }
+
+    // Render Full List in ScreenCustomers
     function renderRecordsList() {
-      const container = document.getElementById("customerRecordsContainer");
-      const query = (document.getElementById("searchFilterBox").value || "").trim().toLowerCase();
-      container.innerHTML = "";
+      const container = document.getElementById("recordsContainer");
+      if (!container) return;
 
-      const filtered = customerRecords.filter(item => {
-        const matches = (item.name || "").toLowerCase().includes(query) ||
-                        (item.work || "").toLowerCase().includes(query) ||
-                        (item.phone1 || "").includes(query) ||
-                        (item.phone2 || "").includes(query) ||
-                        (item.phone3 || "").includes(query);
-        if (!matches) return false;
-        if (currentFilterStatus === 'done') return item.status === "مکمل ہو گیا";
-        if (currentFilterStatus === 'pending') return item.status === "جاری ہے";
+      const q = (document.getElementById("customerSearchInput")?.value || "").toLowerCase().trim();
+      const filter = document.getElementById("customerFilterStatus")?.value || "all";
+
+      let filtered = customerRecords.filter(r => {
+        const matchesQuery = !q ||
+          (r.name && r.name.toLowerCase().includes(q)) ||
+          (r.phone1 && r.phone1.includes(q)) ||
+          (r.work && r.work.toLowerCase().includes(q));
+
+        if (!matchesQuery) return false;
+        if (filter === "done") return r.status === "مکمل ہو گیا";
+        if (filter === "pending") return r.status !== "مکمل ہو گیا";
         return true;
       });
 
-      document.getElementById("recordsTotalBadge").innerText = "کل: " + filtered.length;
-
       if (filtered.length === 0) {
-        container.innerHTML = `<div style="text-align:center; padding:35px 10px; color:var(--muted); font-size:12.5px;"><div style="font-size:32px; margin-bottom:8px;">📂</div>کوئی مماثل کسٹمر ریکارڈ موجود نہیں ہے</div>`;
+        container.innerHTML = `
+          <div style="text-align:center; padding:40px 20px; background:#fff; border-radius:16px; border:1px solid #e2e8f0;">
+            <div style="font-size:36px; margin-bottom:8px;">🔍</div>
+            <div style="font-weight:800; font-size:14px; color:#334155;">کوئی ریکارڈ نہیں ملا</div>
+            <div style="font-size:11.5px; color:#94a3b8; margin-top:4px;">نیا کسٹمر شامل کرنے کے لیے اوپر بٹن دبائیں۔</div>
+          </div>`;
         return;
       }
 
-      filtered.forEach(item => {
-        const isDone = item.status === "مکمل ہو گیا";
-        const initial = (item.name || "A").trim().charAt(0);
-        const phones = [item.phone1, item.phone2, item.phone3].filter(Boolean).join(" • ");
+      container.innerHTML = filtered.map(r => generateCustomerCardHtml(r)).join("");
+    }
 
-        const card = document.createElement("div");
-        card.className = "record-card";
-        card.innerHTML = `
-          <div class="record-card-top">
-            <div class="customer-avatar-name">
-              <div class="customer-avatar">${escapeHtml(initial)}</div>
-              <div class="customer-info">
-                <h4>${escapeHtml(item.name)}</h4>
-                ${phones ? `<span>📞 ${escapeHtml(phones)}</span>` : ''}
+    // High Quality Customer Card with Full Financials & Status Prominence
+    function generateCustomerCardHtml(item) {
+      const isDone = item.status === "مکمل ہو گیا";
+      const totalAmount = item.amount || 0;
+      const costFee = item.fee || 0;
+      const profit = item.profit !== undefined ? item.profit : (totalAmount - costFee);
+
+      return `
+        <div class="item-card ${isDone ? 'is-done' : 'is-pending'}">
+          <div class="item-header">
+            <div>
+              <div class="item-customer-name">${item.name}</div>
+              <div class="item-work">${item.work || 'عام سروس'}</div>
+            </div>
+            <div style="text-align:left;">
+              <div class="item-date">📅 ${item.date || ''}</div>
+              ${item.phone1 ? `<div style="font-size:11.5px; color:#0284c7; font-weight:700;">📞 ${item.phone1}</div>` : ''}
+            </div>
+          </div>
+
+          <!-- Prominent High-Contrast Status Badge -->
+          <div>
+            <span class="status-badge ${isDone ? 'badge-done' : 'badge-pending'}">
+              ${isDone ? '✅ کام مکمل ہو گیا ہے' : '⏳ کام پر کام جاری ہے'}
+            </span>
+          </div>
+
+          <!-- Professional Digital Receipt Breakdown -->
+          <div class="receipt-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; border-bottom:1px dashed #cbd5e1; padding-bottom:4px;">
+              <span style="font-size:11px; font-weight:800; color:#475569;">🧾 ڈیجیٹل رسید و کھاتہ حساب</span>
+              <span style="font-size:10px; color:#64748b;">AZ Flow</span>
+            </div>
+            <div class="receipt-row">
+              <span style="color:#334155;">کل وصولی فیس (Total Fee):</span>
+              <span class="val" style="color:#0284c7;">Rs. ${totalAmount.toLocaleString()}</span>
+            </div>
+            <div class="receipt-row">
+              <span style="color:#334155;">لاگت فیس / سرکاری خرچ (Cost):</span>
+              <span class="val" style="color:#e11d48;">Rs. ${costFee.toLocaleString()}</span>
+            </div>
+            <div class="receipt-row bold">
+              <span style="color:#0f172a;">باقی رقم / خالص بچت (Profit):</span>
+              <span class="val" style="color:#059669; font-size:14px;">Rs. ${profit.toLocaleString()}</span>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="item-actions">
+            <button class="btn btn-outline" style="border-color:${isDone ? '#f59e0b' : '#10b981'}; color:${isDone ? '#d97706' : '#059669'};" onclick="toggleCustomerStatus(${item.id})">
+              ${isDone ? '↩️ زیرِ التواء کریں' : '✔️ کام مکمل کریں'}
+            </button>
+            <button class="btn btn-whatsapp" style="padding:6px 10px;" onclick="sendCustomerWhatsAppReceipt(${item.id})">
+              <span>💬</span> رسید بھیجیں
+            </button>
+            <button class="btn btn-outline" onclick="openEditCustomerModal(${item.id})">✏️ ترمیم</button>
+            <button class="btn btn-outline" style="color:#ef4444; border-color:#fca5a5;" onclick="deleteCustomer(${item.id})">🗑️</button>
+          </div>
+        </div>
+      `;
+    }
+
+    // UDHAAR KHATA (ادھار کھاتہ بک) LOGIC
+    function setUdhaarFilter(f) {
+      currentUdhaarFilter = f;
+      document.getElementById("udhaarTabAll").style.background = (f === "all") ? "#fff" : "transparent";
+      document.getElementById("udhaarTabLena").style.background = (f === "lena") ? "#fff" : "transparent";
+      document.getElementById("udhaarTabDena").style.background = (f === "dena") ? "#fff" : "transparent";
+      renderUdhaarList();
+    }
+
+    function selectUdhaarType(type) {
+      activeUdhaarType = type;
+      const btnLena = document.getElementById("btnTypeLena");
+      const btnDena = document.getElementById("btnTypeDena");
+      if (type === "lena") {
+        btnLena.style.background = "#10b981";
+        btnLena.style.color = "#fff";
+        btnDena.style.background = "#f1f5f9";
+        btnDena.style.color = "#475569";
+      } else {
+        btnDena.style.background = "#ef4444";
+        btnDena.style.color = "#fff";
+        btnLena.style.background = "#f1f5f9";
+        btnLena.style.color = "#475569";
+      }
+    }
+
+    function openNewUdhaarModal() {
+      activeUdhaarEditId = null;
+      document.getElementById("modalUdhaarTitle").innerText = "نیا ادھار کھاتہ درج کریں";
+      document.getElementById("inputUdhaarPerson").value = "";
+      document.getElementById("inputUdhaarAmount").value = "";
+      document.getElementById("inputUdhaarPhone").value = "";
+      document.getElementById("inputUdhaarDetails").value = "";
+      document.getElementById("inputUdhaarDueDate").value = "";
+      selectUdhaarType("lena");
+      document.getElementById("modalUdhaar").style.display = "flex";
+    }
+
+    function closeUdhaarModal() {
+      document.getElementById("modalUdhaar").style.display = "none";
+      activeUdhaarEditId = null;
+    }
+
+    function submitUdhaarForm() {
+      const personName = document.getElementById("inputUdhaarPerson").value.trim();
+      const amount = parseFloat(document.getElementById("inputUdhaarAmount").value) || 0;
+      const phone = document.getElementById("inputUdhaarPhone").value.trim();
+      const details = document.getElementById("inputUdhaarDetails").value.trim();
+      const dueDate = document.getElementById("inputUdhaarDueDate").value;
+
+      if (!personName) {
+        showToast("براہ کرم شخص کا نام درج کریں!", "⚠️");
+        return;
+      }
+      if (amount <= 0) {
+        showToast("براہ کرم ادھار کی درست رقم درج کریں!", "⚠️");
+        return;
+      }
+
+      const todayStr = new Date().toLocaleDateString("en-GB");
+
+      if (activeUdhaarEditId) {
+        const idx = udhaarRecords.findIndex(u => u.id === activeUdhaarEditId);
+        if (idx !== -1) {
+          udhaarRecords[idx] = {
+            ...udhaarRecords[idx],
+            personName, amount, phone, details, dueDate,
+            type: activeUdhaarType,
+            updatedAt: Date.now()
+          };
+          showToast("ادھار کھاتہ اپڈیٹ ہو گیا!");
+        }
+      } else {
+        const item = {
+          id: Date.now(),
+          personName, amount, phone, details, dueDate,
+          type: activeUdhaarType,
+          date: todayStr,
+          settled: false,
+          createdAt: Date.now()
+        };
+        udhaarRecords.unshift(item);
+        showToast("نیا ادھار کامیابی سے درج ہو گیا!");
+      }
+
+      commitStorageData();
+      closeUdhaarModal();
+      refreshDashboardMetrics();
+      renderUdhaarList();
+    }
+
+    function toggleUdhaarSettled(id) {
+      const idx = udhaarRecords.findIndex(u => u.id === id);
+      if (idx !== -1) {
+        udhaarRecords[idx].settled = !udhaarRecords[idx].settled;
+        commitStorageData();
+        refreshDashboardMetrics();
+        renderUdhaarList();
+        showToast(udhaarRecords[idx].settled ? "ادائیگی مکمل نشان زد ہو گئی!" : "کھاتہ دوبارہ فعال ہو گیا");
+      }
+    }
+
+    function deleteUdhaar(id) {
+      if (confirm("کیا آپ واقعی یہ ادھار کھاتہ ڈیلیٹ کرنا چاہتے ہیں؟")) {
+        udhaarRecords = udhaarRecords.filter(u => u.id !== id);
+        commitStorageData();
+        refreshDashboardMetrics();
+        renderUdhaarList();
+        showToast("ادھار ریکارڈ حذف ہو گیا", "🗑️");
+      }
+    }
+
+    function renderUdhaarList() {
+      const container = document.getElementById("udhaarContainer");
+      if (!container) return;
+
+      const q = (document.getElementById("udhaarSearchInput")?.value || "").toLowerCase().trim();
+
+      let receivable = 0;
+      let payable = 0;
+
+      let filtered = udhaarRecords.filter(u => {
+        if (!u.settled) {
+          if (u.type === "lena") receivable += (u.amount || 0);
+          else payable += (u.amount || 0);
+        }
+
+        const matchesQuery = !q ||
+          (u.personName && u.personName.toLowerCase().includes(q)) ||
+          (u.phone && u.phone.includes(q)) ||
+          (u.details && u.details.toLowerCase().includes(q));
+
+        if (!matchesQuery) return false;
+        if (currentUdhaarFilter === "lena") return u.type === "lena";
+        if (currentUdhaarFilter === "dena") return u.type === "dena";
+        return true;
+      });
+
+      // Update Net
+      const net = receivable - payable;
+      const netEl = document.getElementById("udhaarNetBalance");
+      const netSub = document.getElementById("udhaarNetSubtext");
+      if (netEl) {
+        netEl.innerText = "Rs. " + Math.abs(net).toLocaleString();
+        if (net >= 0) {
+          netEl.style.color = "#4ade80";
+          if (netSub) netSub.innerText = "آپ کو کل Rs. " + net.toLocaleString() + " لینے ہیں (بچت میں اضافہ)";
+        } else {
+          netEl.style.color = "#f87171";
+          if (netSub) netSub.innerText = "آپ کو کل Rs. " + Math.abs(net).toLocaleString() + " ادا کرنے ہیں";
+        }
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="text-align:center; padding:40px 20px; background:#fff; border-radius:16px; border:1px solid #e2e8f0;">
+            <div style="font-size:36px; margin-bottom:8px;">📒</div>
+            <div style="font-weight:800; font-size:14px; color:#334155; margin-bottom:4px;">کوئی ادھار کھاتہ نہیں ملا</div>
+            <div style="font-size:11.5px; color:#94a3b8;">نیا ادھار درج کرنے کے لیے اوپر بٹن دبائیں۔</div>
+          </div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(u => {
+        const isLena = u.type === "lena";
+        const isSettled = u.settled;
+
+        return `
+          <div class="item-card" style="border-right: 5px solid ${isSettled ? '#94a3b8' : (isLena ? '#10b981' : '#ef4444')}; opacity:${isSettled ? '0.65' : '1'};">
+            <div class="item-header">
+              <div>
+                <div class="item-customer-name">${u.personName}</div>
+                <div style="font-size:12px; color:#64748b; font-weight:700;">${u.details || 'تفصیل موجود نہیں'}</div>
+              </div>
+              <div style="text-align:left;">
+                <div style="font-size:18px; font-weight:900; color:${isLena ? '#059669' : '#dc2626'};">
+                  Rs. ${(u.amount || 0).toLocaleString()}
+                </div>
+                <span class="udhaar-badge ${isLena ? 'udhaar-lena' : 'udhaar-dena'}">
+                  ${isLena ? '⬇️ وصول کرنا ہے (لینا ہے)' : '⬆️ ادا کرنا ہے (دینا ہے)'}
+                </span>
               </div>
             </div>
-            <span class="status-pill ${isDone ? 'done' : 'pending'}">${isDone ? '✅ کام مکمل ہو گیا' : '⏳ کام جاری ہے'}</span>
-          </div>
 
-          <div class="record-work-line">
-            🛠️ <b>${escapeHtml(item.work || "کام مقرر نہیں")}</b>
-          </div>
+            <div style="font-size:11.5px; color:#475569; margin:6px 0; display:flex; gap:14px; flex-wrap:wrap;">
+              <span>📅 درج تاریخ: ${u.date || ''}</span>
+              ${u.dueDate ? `<span style="color:#d97706; font-weight:700;">⏳ وعدہ: ${u.dueDate}</span>` : ''}
+              ${u.phone ? `<span>📞 ${u.phone}</span>` : ''}
+            </div>
 
-          <div class="record-financial-grid">
-            <div class="fin-col">
-              <span class="fin-title">کل وصولی فیس</span>
-              <span class="fin-val val-rev">Rs. ${Number(item.amount || 0).toLocaleString()}</span>
-            </div>
-            <div class="fin-col">
-              <span class="fin-title">لاگت فیس (خرچ)</span>
-              <span class="fin-val val-cost">Rs. ${Number(item.fee || 0).toLocaleString()}</span>
-            </div>
-            <div class="fin-col">
-              <span class="fin-title">باقی خالص منافع</span>
-              <span class="fin-val val-profit">Rs. ${Number(item.profit || 0).toLocaleString()}</span>
-            </div>
-          </div>
+            ${isSettled ? `
+              <div style="background:#f1f5f9; color:#475569; font-size:11.5px; font-weight:800; padding:4px 10px; border-radius:6px; display:inline-block; margin:4px 0;">
+                ✔️ ادائیگی مکمل ہو چکی ہے
+              </div>
+            ` : ''}
 
-          <div class="record-bottom-bar">
-            <span style="font-size:11.5px; color:var(--muted); font-weight:700;">📅 ${escapeHtml(item.date || "")}</span>
-            <div class="record-actions-group">
-              ${item.phone1 ? `<a href="tel:${item.phone1}" class="icon-btn" title="کال کریں" style="text-decoration:none;">📞</a>` : ''}
-              ${item.phone1 ? `<a href="https://wa.me/92${item.phone1.replace(/[^0-9]/g,'').replace(/^0/,'')}?text=محترم%20${encodeURIComponent(item.name)}%20صاحب!%20آپ%20کا%20کام:%20${encodeURIComponent(item.work)}%20کا%20کل%20بل%20Rs.%20${item.amount}%20ہے۔%20شکریہ!" target="_blank" class="btn-whatsapp-pill">💬 WhatsApp</a>` : ''}
-              <button class="btn-receipt-pill" onclick="openInvoiceSlip(${item.id})">📄 رسید دیکھیں</button>
-              <button class="icon-btn" onclick="startEditingRecord(${item.id})" title="ترمیم">✏️</button>
-              <button class="icon-btn" onclick="removeCustomerRecord(${item.id})" title="ڈیلیٹ" style="color:var(--expense);">🗑️</button>
+            <div class="item-actions">
+              <button class="btn btn-outline" style="border-color:${isSettled ? '#94a3b8' : '#10b981'}; color:${isSettled ? '#475569' : '#059669'};" onclick="toggleUdhaarSettled(${u.id})">
+                ${isSettled ? '↩️ دوبارہ ادھار کریں' : '✔️ وصول / ادا ہو گیا'}
+              </button>
+              ${isLena && !isSettled ? `
+                <button class="btn btn-whatsapp" style="padding:6px 10px;" onclick="sendUdhaarReminder(${u.id})">
+                  <span>💬</span> یاد دہانی میسج
+                </button>
+              ` : ''}
+              <button class="btn btn-outline" style="color:#ef4444; border-color:#fca5a5; flex:none; width:44px;" onclick="deleteUdhaar(${u.id})">🗑️</button>
             </div>
           </div>
         `;
-        container.appendChild(card);
-      });
+      }).join("");
     }
 
-    function openInvoiceSlip(recordId) {
-      const item = customerRecords.find(x => x.id === recordId);
+    // WhatsApp Reminder for Udhaar
+    function sendUdhaarReminder(id) {
+      const item = udhaarRecords.find(u => u.id === id);
       if (!item) return;
 
+      const msg = `السلام علیکم محترم *${item.personName}* صاحب!\nامید ہے آپ خیریت سے ہوں گے۔\n\n📌 *AZ Flow کھاتہ بک کی جانب سے یاد دہانی:*\n${item.details ? `مد / تفصیل: *${item.details}*\n` : ''}واجب الادا بقایا رقم: *Rs. ${(item.amount || 0).toLocaleString()}*\n${item.dueDate ? `واپسی کا وعدہ: *${item.dueDate}*\n` : ''}\nبرائے مہربانی سہولت کے مطابق ادائیگی فرما دیجیے گا۔ شکریہ!\n\n✨ *پاورڈ بائے انسر اے زیڈ (Powered by Ansar AZ)*`;
+
+      const cleanPhone = (item.phone || "").replace(/[^0-9]/g, "");
+      let formattedPhone = cleanPhone;
+      if (cleanPhone.startsWith("03")) formattedPhone = "92" + cleanPhone.substring(1);
+
+      const url = formattedPhone
+        ? `https://api.whatsapp.com/send?phone=${formattedPhone}&text=${encodeURIComponent(msg)}`
+        : `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
+
+      window.open(url, "_blank");
+    }
+
+    // Customer WhatsApp Receipt
+    function sendCustomerWhatsAppReceipt(id) {
+      const item = customerRecords.find(r => r.id === id);
+      if (!item) return;
+
+      const totalAmount = item.amount || 0;
+      const costFee = item.fee || 0;
+      const profit = item.profit !== undefined ? item.profit : (totalAmount - costFee);
       const isDone = item.status === "مکمل ہو گیا";
-      const statusText = isDone ? "✅ کام مکمل ہو گیا" : "⏳ کام جاری ہے";
-      const div = document.getElementById("receiptContentDetails");
 
-      div.innerHTML = `
-        <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:12px;">
-          <span><b>رسید نمبر:</b> #${item.id.toString().slice(-6)}</span>
-          <span><b>تاریخ:</b> ${escapeHtml(item.date || "")}</span>
-        </div>
-        <div style="margin-bottom:4px; font-size:14px;"><b>گاہک کا نام:</b> ${escapeHtml(item.name)}</div>
-        ${item.phone1 ? `<div style="margin-bottom:4px; color:var(--muted);"><b>موبائل نمبر:</b> ${escapeHtml(item.phone1)}</div>` : ''}
-        <div style="margin-bottom:10px; background:#f1f5f9; padding:7px 10px; border-radius:8px;">
-          <b>🛠️ کام کی تفصیل:</b> ${escapeHtml(item.work || "سروس چارجز")}
-        </div>
+      const msg = `🧾 *AZ Flow - کسٹمر ڈیجیٹل رسید*\n------------------------------\n👤 *گاہک:* ${item.name}\n🛠️ *کام:* ${item.work || 'سروس'}\n📅 *تاریخ:* ${item.date || ''}\n\n💰 *کل وصولی فیس:* Rs. ${totalAmount.toLocaleString()}\n💳 *لاگت فیس / سرکاری خرچ:* Rs. ${costFee.toLocaleString()}\n💵 *باقی رقم / خالص بچت:* Rs. ${profit.toLocaleString()}\n\n📌 *حالت:* ${isDone ? '✅ کام مکمل ہو گیا ہے' : '⏳ کام پر کام جاری ہے'}\n------------------------------\nہم پر اعتماد کرنے کا شکریہ!\n✨ *پاورڈ بائے انسر اے زیڈ (Powered by Ansar AZ)*`;
 
-        <div style="background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:12px; padding:12px 14px; margin:10px 0;">
-          <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px;">
-            <span style="font-weight:700; color:#334155;">1. کل وصولی فیس (Total Received):</span>
-            <b style="color:var(--primary); font-size:15px; font-weight:900;">Rs. ${Number(item.amount || 0).toLocaleString()}</b>
-          </div>
-          <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px;">
-            <span style="font-weight:700; color:#334155;">2. سرکاری فیس / لاگت (Cost Fee):</span>
-            <b style="color:var(--expense); font-size:15px; font-weight:900;">Rs. ${Number(item.fee || 0).toLocaleString()}</b>
-          </div>
-          <hr style="border:none; border-top:1.5px dashed #cbd5e1; margin:10px 0;">
-          <div style="display:flex; justify-content:space-between; font-size:14px; align-items:center;">
-            <span style="font-weight:900; color:#0f172a;">3. باقی رقم / خالص بچت (Net Remaining):</span>
-            <b style="color:var(--profit); font-size:17px; font-weight:900;">Rs. ${Number(item.profit || 0).toLocaleString()}</b>
-          </div>
-        </div>
+      const cleanPhone = (item.phone1 || "").replace(/[^0-9]/g, "");
+      let formattedPhone = cleanPhone;
+      if (cleanPhone.startsWith("03")) formattedPhone = "92" + cleanPhone.substring(1);
 
-        <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px; margin-top:10px; background:#f8fafc; border:1px solid #e2e8f0; padding:8px 12px; border-radius:10px;">
-          <span style="font-weight:700; color:#475569;">کام کی حالت:</span>
-          <span class="status-pill ${isDone ? 'done' : 'pending'}" style="padding:4px 10px; font-size:11px;">
-            ${statusText}
-          </span>
-        </div>
+      const url = formattedPhone
+        ? `https://api.whatsapp.com/send?phone=${formattedPhone}&text=${encodeURIComponent(msg)}`
+        : `https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`;
 
-        <div style="text-align:center; font-size:11.5px; font-weight:700; color:var(--muted); margin-top:12px;">
-          شکریہ! رابطہ: 03298191689 • ⚡ Powered by Ansar AZ<br>
-          <a href="https://chat.whatsapp.com/ESePIIyZUJKAtvm8WJE6Yf?s=cl&p=a&mlu=4&ilr=4&iam=2" target="_blank" style="color:#16a34a; text-decoration:none; display:inline-block; margin-top:4px;">
-            🌐 آفیشل WhatsApp گروپ جوائن کریں ➔
-          </a>
-        </div>
-      `;
+      window.open(url, "_blank");
+    }
 
-      document.getElementById("btnShareWhatsAppReceipt").onclick = function() {
-        const text = `📄 *AZ Flow - کسٹمر رسید / انوائس سِلپ* ⚡\n------------------------------------\n👤 *گاہک کا نام:* ${item.name}\n${item.phone1 ? `📞 *موبائل نمبر:* ${item.phone1}\n` : ''}🛠️ *کام کی تفصیل:* ${item.work || "سروس چارجز"}\n------------------------------------\n💰 *کل وصولی فیس (Total Fee):* Rs. ${Number(item.amount || 0).toLocaleString()}\n🏷️ *لاگت فیس / سرکاری خرچہ (Cost Fee):* Rs. ${Number(item.fee || 0).toLocaleString()}\n💵 *باقی رقم / خالص بچت (Net Remaining):* Rs. ${Number(item.profit || 0).toLocaleString()}\n------------------------------------\n📌 *کام کی حالت:* ${statusText}\n📅 *تاریخ:* ${item.date || ''}\n------------------------------------\n🌐 *آفیشل واٹس ایپ گروپ جوائن کریں:*\nhttps://chat.whatsapp.com/ESePIIyZUJKAtvm8WJE6Yf\n------------------------------------\nشکریہ! برائے رابطہ: Ansar AZ (03298191689)\n⚡ Powered by Ansar AZ`;
-        const phone = (item.phone1 || "").replace(/[^0-9]/g, "").replace(/^0/, "92");
-        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, "_blank");
+    // Analytics Data Calculation
+    function refreshAnalyticsData() {
+      let totalRev = 0;
+      let totalCost = 0;
+      let totalProfit = 0;
+
+      customerRecords.forEach(r => {
+        totalRev += (r.amount || 0);
+        totalCost += (r.fee || 0);
+        totalProfit += (r.profit || 0);
+      });
+
+      const margin = totalRev > 0 ? ((totalProfit / totalRev) * 100).toFixed(1) : "0";
+
+      document.getElementById("analyticsTotalRev").innerText = "Rs. " + totalRev.toLocaleString();
+      document.getElementById("analyticsTotalCost").innerText = "Rs. " + totalCost.toLocaleString();
+      document.getElementById("analyticsTotalProfit").innerText = "Rs. " + totalProfit.toLocaleString();
+      document.getElementById("analyticsMarginPercent").innerText = margin + "%";
+
+      let rec = 0;
+      let pay = 0;
+      udhaarRecords.forEach(u => {
+        if (!u.settled) {
+          if (u.type === "lena") rec += (u.amount || 0);
+          else pay += (u.amount || 0);
+        }
+      });
+
+      document.getElementById("analyticsTotalReceivable").innerText = "Rs. " + rec.toLocaleString();
+      document.getElementById("analyticsTotalPayable").innerText = "Rs. " + pay.toLocaleString();
+      const net = rec - pay;
+      const netEl = document.getElementById("analyticsUdhaarNet");
+      netEl.innerText = (net >= 0 ? "+ Rs. " : "- Rs. ") + Math.abs(net).toLocaleString();
+      netEl.style.color = net >= 0 ? "#10b981" : "#ef4444";
+    }
+
+    // Export Data as JSON
+    function exportDataJson() {
+      const data = {
+        app: "AZ Flow",
+        version: "16.0",
+        poweredBy: "Ansar AZ",
+        exportDate: new Date().toISOString(),
+        customers: customerRecords,
+        udhaar: udhaarRecords
       };
-
-      document.getElementById("invoiceModal").classList.add("open");
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `AZ_Flow_Backup_${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast("بیک اپ ڈاؤنلوڈ ہو گیا!");
     }
 
-    function dismissReceiptModal() {
-      document.getElementById("invoiceModal").classList.remove("open");
-    }
-
-    function refreshDashboardMetrics() {
-      let revenue = 0, profit = 0;
+    // Export Data as CSV
+    function exportDataCsv() {
+      let csv = "\uFEFFشناختی نمبر,گاہک کا نام,فون نمبر,کام,کل رقم,لاگت فیس,خالص بچت,حالت,تاریخ\n";
       customerRecords.forEach(r => {
-        revenue += Number(r.amount) || 0;
-        profit += Number(r.profit) || 0;
-      });
-      document.getElementById("totalCollectedVal").innerText = "Rs. " + revenue.toLocaleString();
-      document.getElementById("totalProfitVal").innerText = "Rs. " + profit.toLocaleString();
-    }
-
-    function computeAndRenderAnalytics() {
-      let revenue = 0, profit = 0, cost = 0, done = 0, pending = 0;
-      customerRecords.forEach(r => {
-        revenue += Number(r.amount) || 0;
-        cost += Number(r.fee) || 0;
-        profit += Number(r.profit) || 0;
-        if (r.status === "مکمل ہو گیا") done++; else pending++;
-      });
-      document.getElementById("anaTotalProfit").innerText = "Rs. " + profit.toLocaleString();
-      const margin = revenue > 0 ? ((profit / revenue) * 100).toFixed(1) : 0;
-      document.getElementById("anaMarginRate").innerText = `منافع کی شرح: ${margin}%`;
-      document.getElementById("anaRevAmount").innerText = "Rs. " + revenue.toLocaleString();
-      document.getElementById("anaCostAmount").innerText = "Rs. " + cost.toLocaleString();
-      document.getElementById("anaProfitAmount").innerText = "Rs. " + profit.toLocaleString();
-      document.getElementById("anaDoneCountVal").innerText = done;
-      document.getElementById("anaPendingCountVal").innerText = pending;
-
-      const total = done + pending;
-      document.getElementById("anaProgressBar").style.width = (total > 0 ? (done / total) * 100 : 0) + "%";
-
-      const maxVal = Math.max(revenue, 1);
-      document.getElementById("chartRevenueBar").style.height = Math.max((revenue / maxVal) * 95, 8) + "px";
-      document.getElementById("chartCostBar").style.height = Math.max((cost / maxVal) * 95, 8) + "px";
-      document.getElementById("chartProfitBar").style.height = Math.max((Math.max(profit, 0) / maxVal) * 95, 8) + "px";
-    }
-
-    function exportToCsvFile() {
-      if (customerRecords.length === 0) { showToast("ایکسپورٹ کے لیے ڈیٹا نہیں ہے!", "⚠️"); return; }
-      let csv = "\uFEFFنام,موبائل 1,موبائل 2,کام کی تفصیل,وصولی رقم,لاگت,منافع,حالت,تاریخ\n";
-      customerRecords.forEach(r => {
-        csv += `"${(r.name || "").replace(/"/g, '""')}","${r.phone1 || ""}","${r.phone2 || ""}","${(r.work || "").replace(/"/g, '""')}",${r.amount || 0},${r.fee || 0},${r.profit || 0},"${r.status || ""}","${r.date || ""}"\n`;
+        csv += `"${r.id}","${r.name || ''}","${r.phone1 || ''}","${r.work || ''}","${r.amount || 0}","${r.fee || 0}","${r.profit || 0}","${r.status || ''}","${r.date || ''}"\n`;
       });
       const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "AZ_Flow_Khata_" + new Date().toISOString().slice(0, 10) + ".csv";
-      document.body.appendChild(a);
+      a.href = url;
+      a.download = `AZ_Flow_Customers_${new Date().toISOString().slice(0,10)}.csv`;
       a.click();
-      a.remove();
-      showToast("Excel CSV فائل ڈاؤن لوڈ ہو گئی!", "📊");
+      URL.revokeObjectURL(url);
+      showToast("کسٹمر رپورٹ ڈاؤنلوڈ ہو گئی!");
     }
 
-    function populateDemoRecords() {
-      customerRecords = [
-        { id: 101, name: "محمد عثمان", phone1: "03001234567", work: "سی آر سی (CRC / ب فارم رجسٹریشن)", amount: 3500, fee: 1000, profit: 2500, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") },
-        { id: 102, name: "بلال احمد ڈوگر", phone1: "03125556677", work: "بینر اور فلیکس ڈیزائننگ", amount: 5000, fee: 1800, profit: 3200, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") },
-        { id: 103, name: "چوہدری طارق محمود", phone1: "03334445566", work: "شناختی کارڈ تجدید اور فوٹو شوٹ", amount: 2200, fee: 600, profit: 1600, status: "جاری ہے", date: new Date().toLocaleDateString("ur-PK") },
-        { id: 104, name: "رانا سرفراز خان", phone1: "03058889900", work: "نکاح نامہ کمپیوٹرائزڈ تصدیق", amount: 3000, fee: 900, profit: 2100, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") },
-        { id: 105, name: "حاجی عبد الرشید", phone1: "03451122334", work: "فوتیدگی سرٹیفکیٹ (Death Certificate)", amount: 2500, fee: 700, profit: 1800, status: "جاری ہے", date: new Date().toLocaleDateString("ur-PK") },
-        { id: 106, name: "ملک شعیب اختر", phone1: "03214455667", work: "آن لائن پاسپورٹ فیس و ٹوکن چالان", amount: 4500, fee: 1500, profit: 3000, status: "مکمل ہو گیا", date: new Date().toLocaleDateString("ur-PK") }
-      ];
-      commitStorageData();
-      refreshDashboardMetrics();
-      renderRecordsList();
-      showToast("ڈیمو ریکارڈز لوڈ ہو گئے!", "🌟");
-      switchActiveScreen("Records", document.querySelectorAll(".bottom-nav-item")[1]);
-    }
-
-    function downloadBackupFile() {
-      if (customerRecords.length === 0) { showToast("بیک اپ کے لیے ڈیٹا نہیں ہے!", "⚠️"); return; }
-      const payload = { app: "AZ Flow", version: "15.0", poweredBy: "Ansar AZ", backupDate: new Date().toISOString(), records: customerRecords };
-      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "AZ_Flow_Backup_" + new Date().toISOString().slice(0, 10) + ".json";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      showToast("بیک اپ فائل ڈاؤن لوڈ ہو گئی!", "📤");
-    }
-
-    function restoreBackupFile(event) {
-      const file = event.target.files[0];
+    // Import Data JSON
+    function importDataJson(e) {
+      const file = e.target.files[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = function(e) {
+      reader.onload = function(event) {
         try {
-          const parsed = JSON.parse(e.target.result);
-          const list = Array.isArray(parsed) ? parsed : (parsed.records || []);
-          if (!Array.isArray(list)) throw new Error("Format error");
-          if (confirm("کیا آپ واقعی ریکارڈز بحال کرنا چاہتے ہیں؟")) {
-            customerRecords = list;
-            commitStorageData();
-            refreshDashboardMetrics();
-            renderRecordsList();
-            showToast(`${list.length} ریکارڈز ری سٹور ہو گئے!`, "📥");
-            switchActiveScreen("Records", document.querySelectorAll(".bottom-nav-item")[1]);
-          }
+          const parsed = JSON.parse(event.target.result);
+          if (parsed.customers && Array.isArray(parsed.customers)) customerRecords = parsed.customers;
+          if (parsed.udhaar && Array.isArray(parsed.udhaar)) udhaarRecords = parsed.udhaar;
+          commitStorageData();
+          refreshDashboardMetrics();
+          renderRecordsList();
+          renderUdhaarList();
+          showToast("ڈیٹا کامیابی سے ریسٹور ہو گیا!");
         } catch (err) {
-          showToast("فائل پڑھنے میں خرابی پیش آئی!", "❌");
+          showToast("فائل پڑھنے میں غلطی پیش آئی!", "❌");
         }
-        event.target.value = "";
       };
       reader.readAsText(file);
     }
 
+    // Default Sample Data
+    function loadSampleData() {
+      const today = new Date().toLocaleDateString("en-GB");
+      customerRecords = [
+        {
+          id: Date.now() + 1,
+          name: "محمد اسلم قریشی",
+          phone1: "03001234567",
+          work: "سی آر سی (CRC / B-Form)",
+          amount: 1500,
+          fee: 500,
+          profit: 1000,
+          status: "مکمل ہو گیا",
+          date: today
+        },
+        {
+          id: Date.now() + 2,
+          name: "طارق محمود چوہدری",
+          phone1: "03219876543",
+          work: "اسمارٹ شناختی کارڈ، ایف آر سی (FRC)",
+          amount: 3200,
+          fee: 1500,
+          profit: 1700,
+          status: "جاری ہے",
+          date: today
+        },
+        {
+          id: Date.now() + 3,
+          name: "عبدالرحمٰن صدیقی",
+          phone1: "03124567890",
+          work: "نکاح نامہ رجسٹریشن",
+          amount: 2500,
+          fee: 800,
+          profit: 1700,
+          status: "جاری ہے",
+          date: today
+        }
+      ];
+
+      udhaarRecords = [
+        {
+          id: Date.now() + 10,
+          personName: "کاشف کمپیوٹر شاپ",
+          phone: "03015554321",
+          details: "پرنٹر انک اور کارڈ پیپرز",
+          amount: 4500,
+          type: "dena",
+          dueDate: "2026-10-30",
+          settled: false,
+          date: today
+        },
+        {
+          id: Date.now() + 11,
+          personName: "ملک عرفان صاحب",
+          phone: "03457788990",
+          details: "پاسپورٹ ٹوکن فیس ادھار",
+          amount: 3000,
+          type: "lena",
+          dueDate: "2026-10-25",
+          settled: false,
+          date: today
+        }
+      ];
+
+      commitStorageData();
+    }
+
     function wipeAllData() {
-      if (confirm("⚠️ خطرہ!\n\nکیا آپ تمام کسٹمرز کا کھاتہ ہمیشہ کے لیے ڈیلیٹ کرنا چاہتے ہیں؟")) {
+      if (confirm("کیا آپ واقعی تمام دکانداری اور ادھار ڈیٹا ڈیلیٹ کرنا چاہتے ہیں؟")) {
         customerRecords = [];
-        commitStorageData();
-        refreshDashboardMetrics();
+        udhaarRecords = [];
+        localStorage.removeItem(MASTER_STORAGE_KEY);
+        localStorage.removeItem(UDHAAR_STORAGE_KEY);
         renderRecordsList();
-        showToast("تمام ڈیٹا صاف کر دیا گیا!", "🗑️");
+        renderUdhaarList();
+        refreshDashboardMetrics();
+        showToast("تمام ڈیٹا ڈیلیٹ کر دیا گیا!", "🗑️");
       }
     }
 
-    function escapeHtml(str) {
-      return String(str ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-    }
-
-    loadStorageData();
-    refreshDashboardMetrics();
-    window.addEventListener("load", function() {
+    // App Initialization
+    window.addEventListener("DOMContentLoaded", () => {
+      loadStorageData();
+      refreshDashboardMetrics();
+      renderRecordsList();
       setTimeout(() => {
-        const s = document.getElementById("splashScreen");
-        if (s) s.classList.add("hide");
-      }, 1600);
+        const splash = document.getElementById("splashScreen");
+        if (splash) {
+          splash.style.opacity = "0";
+          setTimeout(() => splash.style.display = "none", 500);
+        }
+      }, 900);
     });
   </script>
 </body>
