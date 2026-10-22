@@ -954,12 +954,17 @@
       try {
         let storedCustomers = safeReadStorage(MASTER_STORAGE_KEY);
         let storedUdhaar = safeReadStorage(UDHAAR_STORAGE_KEY);
-
-        if (storedCustomers === null) {
-          storedCustomers = safeReadStorage("az_flow_permanent_master_records");
-          if (storedCustomers === null) storedCustomers = safeReadStorage("az_flow_records_v14");
+        // Only migrate legacy records once, when this app has never been initialized.
+        // After a user has used the app or cleared all records, missing keys mean empty data,
+        // not permission to resurrect old/demo records from legacy storage.
+        const alreadyInitialized = safeReadStorage("az_flow_initialized_v16") === "1";
+        if (!alreadyInitialized) {
+          if (storedCustomers === null) {
+            storedCustomers = safeReadStorage("az_flow_permanent_master_records");
+            if (storedCustomers === null) storedCustomers = safeReadStorage("az_flow_records_v14");
+          }
+          if (storedUdhaar === null) storedUdhaar = safeReadStorage("az_flow_udhaar_v14");
         }
-        if (storedUdhaar === null) storedUdhaar = safeReadStorage("az_flow_udhaar_v14");
 
         const parsedCustomers = storedCustomers ? JSON.parse(storedCustomers) : [];
         const parsedUdhaar = storedUdhaar ? JSON.parse(storedUdhaar) : [];
@@ -1714,73 +1719,7 @@
       reader.readAsText(file);
     }
 
-    // Default Sample Data
-    function loadSampleData() {
-      const today = new Date().toLocaleDateString("en-GB");
-      customerRecords = [
-        {
-          id: Date.now() + 1,
-          name: "محمد اسلم قریشی",
-          phone1: "03001234567",
-          work: "سی آر سی (CRC / B-Form)",
-          amount: 1500,
-          fee: 500,
-          profit: 1000,
-          status: "مکمل ہو گیا",
-          date: today
-        },
-        {
-          id: Date.now() + 2,
-          name: "طارق محمود چوہدری",
-          phone1: "03219876543",
-          work: "اسمارٹ شناختی کارڈ، ایف آر سی (FRC)",
-          amount: 3200,
-          fee: 1500,
-          profit: 1700,
-          status: "جاری ہے",
-          date: today
-        },
-        {
-          id: Date.now() + 3,
-          name: "عبدالرحمٰن صدیقی",
-          phone1: "03124567890",
-          work: "نکاح نامہ رجسٹریشن",
-          amount: 2500,
-          fee: 800,
-          profit: 1700,
-          status: "جاری ہے",
-          date: today
-        }
-      ];
-
-      udhaarRecords = [
-        {
-          id: Date.now() + 10,
-          personName: "کاشف کمپیوٹر شاپ",
-          phone: "03015554321",
-          details: "پرنٹر انک اور کارڈ پیپرز",
-          amount: 4500,
-          type: "dena",
-          dueDate: "2026-10-30",
-          settled: false,
-          date: today
-        },
-        {
-          id: Date.now() + 11,
-          personName: "ملک عرفان صاحب",
-          phone: "03457788990",
-          details: "پاسپورٹ ٹوکن فیس ادھار",
-          amount: 3000,
-          type: "lena",
-          dueDate: "2026-10-25",
-          settled: false,
-          date: today
-        }
-      ];
-
-      commitStorageData();
-    }
-
+    // Demo/sample record generation removed: only records added by the user are shown.
     function wipeAllData() {
       if (!confirm("کیا آپ واقعی تمام کسٹمر اور ادھار ریکارڈ مستقل طور پر ڈیلیٹ کرنا چاہتے ہیں؟ یہ عمل واپس نہیں ہو سکے گا۔ پہلے بیک اپ ضرور لے لیں۔")) return;
 
