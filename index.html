@@ -638,7 +638,7 @@
           نادرا سروسز، آن لائن پورٹلز اور جدید دکانداری نظام
         </p>
         <div style="margin-top:14px; padding-top:10px; border-top:1px solid #e2e8f0; font-size:11px; color:#94a3b8;">
-          <b>AZ Flow ⚡</b> ورژن 18.0 (دکانداری + ادھار کھاتہ بک)<br>
+          <b>AZ Flow ⚡</b> ورژن 20.0 (دکانداری + ادھار کھاتہ بک)<br>
           تمام حقوق محفوظ ہیں © 2026
         </div>
       </div>
@@ -1782,17 +1782,36 @@
     }
 
     function wipeAllData() {
-      if (confirm("کیا آپ واقعی تمام دکانداری اور ادھار ڈیٹا ڈیلیٹ کرنا چاہتے ہیں؟")) {
-        customerRecords = [];
-        udhaarRecords = [];
-        localStorage.removeItem(MASTER_STORAGE_KEY);
-        localStorage.removeItem(UDHAAR_STORAGE_KEY);
-        safeWriteStorage("az_flow_initialized_v16", "1");
-        renderRecordsList();
-        renderUdhaarList();
-        refreshDashboardMetrics();
-        showToast("تمام ڈیٹا ڈیلیٹ کر دیا گیا!", "🗑️");
+      if (!confirm("کیا آپ واقعی تمام کسٹمر اور ادھار ریکارڈ مستقل طور پر ڈیلیٹ کرنا چاہتے ہیں؟ یہ عمل واپس نہیں ہو سکے گا۔ پہلے بیک اپ ضرور لے لیں۔")) return;
+
+      // Keep the current storage keys present with empty arrays. Removing them
+      // would trigger the legacy migration on the next launch and restore old/demo records.
+      const previousCustomers = customerRecords;
+      const previousUdhaar = udhaarRecords;
+      customerRecords = [];
+      udhaarRecords = [];
+      const saved = commitStorageData();
+      if (!saved) {
+        customerRecords = previousCustomers;
+        udhaarRecords = previousUdhaar;
+        showToast("ڈیٹا محفوظ طور پر صاف نہیں ہو سکا؛ دوبارہ کوشش کریں۔", "❌");
+        return;
       }
+
+      // Mark migration as completed and remove legacy copies so they cannot be re-imported.
+      safeWriteStorage("az_flow_initialized_v16", "1");
+      try {
+        localStorage.removeItem("az_flow_permanent_master_records");
+        localStorage.removeItem("az_flow_records_v14");
+        localStorage.removeItem("az_flow_udhaar_v14");
+      } catch (_) {}
+
+      renderRecordsList();
+      renderHomeRecentCustomers();
+      renderUdhaarList();
+      refreshDashboardMetrics();
+      refreshAnalyticsData();
+      showToast("تمام کسٹمر اور ادھار ریکارڈ مستقل طور پر صاف کر دیے گئے۔", "🗑️");
     }
 
     // App Initialization
