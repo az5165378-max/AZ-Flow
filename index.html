@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#06152e">
-  <title>AZ Flow 0.1 - اسمارٹ کھاتہ اور کسٹمر مینیجر</title>
+  <title>AZ Flow 0.1 - آل اِن ون مینجمنٹ ایپ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -486,6 +486,119 @@
     @media(max-width:360px){.top-actions{gap:5px}.icon-btn{width:35px;height:35px}.brand-group{gap:8px}.brand-text h1{font-size:16px}.metric-val{font-size:12px}.btn{padding:9px 10px}.modal-box{padding:14px;border-radius:19px}}
     @media(prefers-reduced-motion:reduce){.card,.item-card,.guide-item,.modal-box,.backup-warning-card{transition:none}}
 
+
+    /* AZ Flow 0.1 — dedicated household and personal expense modules */
+    .module-launch-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:12px 0 18px}
+    .module-launch{border:1px solid #dbe7f4;border-radius:19px;padding:15px 12px;text-align:center;background:linear-gradient(145deg,#fff,#f2f8ff);box-shadow:0 7px 18px rgba(15,45,80,.08);cursor:pointer;transition:transform .18s,box-shadow .18s;min-height:112px}
+    .module-launch:active{transform:scale(.98)}
+    .module-launch .module-emoji{display:flex;width:46px;height:46px;border-radius:15px;margin:0 auto 8px;align-items:center;justify-content:center;font-size:25px;background:linear-gradient(145deg,#dbeafe,#fff);box-shadow:inset 0 2px 3px #fff,0 5px 10px #1e3a8a16}
+    .module-launch b{display:block;font-size:13px;color:#15314f}.module-launch small{display:block;margin-top:4px;font-size:10px;color:#64748b;line-height:1.5}
+    .expense-section{scroll-margin-top:14px;border:1px solid #dbe7f4;border-radius:22px;padding:14px;margin:14px 0;background:linear-gradient(160deg,#fff,#f8fbff);box-shadow:0 10px 24px rgba(15,45,80,.06)}
+    .expense-section.household{border-top:4px solid #0d9488}.expense-section.personal{border-top:4px solid #8b5cf6}
+    .expense-section .expense-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}.expense-section .expense-icon{width:44px;height:44px;flex:0 0 44px;display:grid;place-items:center;border-radius:15px;font-size:24px;background:#e0f2fe;box-shadow:inset 0 2px 3px #fff,0 5px 12px #0f172a12}
+    .expense-section h3{font-size:15px;font-weight:900;margin:0;color:#102a43}.expense-section .subline{font-size:11px;color:#64748b;margin-top:4px;line-height:1.6}
+    .expense-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0}.expense-summary>div{padding:12px;border-radius:14px;background:#f1f5f9;border:1px solid #e2e8f0}.expense-summary small{display:block;color:#64748b;font-size:10px}.expense-summary strong{display:block;margin-top:5px;font-size:16px;color:#0f172a;overflow-wrap:anywhere}
+    .expense-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.expense-form-grid .wide{grid-column:1/-1}.expense-record{padding:12px;border:1px solid #e2e8f0;border-radius:14px;background:#fff;margin-top:8px}.expense-record .receipt-row{gap:10px}.expense-record .expense-meta{font-size:10px;color:#64748b;margin-top:6px}
+    .module-anchor-title{font-size:13px;font-weight:900;margin:0 0 10px;color:#334155}
+    @media(max-width:380px){.expense-form-grid{grid-template-columns:1fr}.expense-form-grid .wide{grid-column:auto}.module-launch{padding:12px 8px}}
+
+
+/* ===== AZ FLOW 5D PREMIUM VISUAL UPGRADE ===== */
+:root{
+ --primary:#087fc4;--primary-dark:#075985;--primary-light:#67d5ff;
+ --bg-dark:#06152e;--surface:#ffffff;--text:#10213b;--muted:#64748b;
+ --border-light:rgba(148,163,184,.20);
+ --shadow-sm:0 7px 18px rgba(15,35,70,.08);
+ --shadow-md:0 14px 30px rgba(15,35,70,.13);
+ --radius-lg:20px;--radius-xl:25px;
+}
+html{scroll-behavior:smooth}
+body{
+ background:
+ radial-gradient(ellipse at 8% 5%,rgba(56,189,248,.17),transparent 33%),
+ radial-gradient(ellipse at 95% 28%,rgba(99,102,241,.10),transparent 30%),
+ linear-gradient(145deg,#eef6ff 0%,#f7f9ff 48%,#eaf2fb 100%);
+ background-attachment:fixed;
+}
+.top-bar{
+ background:linear-gradient(135deg,#031027 0%,#082b55 48%,#075985 100%);
+ box-shadow:0 12px 30px rgba(2,20,48,.30),inset 0 -1px rgba(255,255,255,.16);
+ border-bottom:1px solid rgba(125,211,252,.28);
+}
+.brand-icon{
+ background:linear-gradient(145deg,#e0f2fe 0%,#38bdf8 38%,#075985 100%);
+ border:1px solid rgba(255,255,255,.65);
+ box-shadow:0 8px 18px rgba(14,165,233,.38),inset 0 2px 5px rgba(255,255,255,.8),inset 0 -5px 9px rgba(3,37,65,.25);
+ transform:translateZ(0);
+}
+.app-container{padding-top:20px;padding-bottom:26px}
+.card,.module-tile,.quick-module,.stat-box,.summary-box,.record-card,.expense-card{
+ border:1px solid rgba(255,255,255,.88)!important;
+ border-radius:22px!important;
+ background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(239,247,255,.94))!important;
+ box-shadow:0 13px 26px rgba(24,57,99,.09),0 3px 7px rgba(24,57,99,.05),inset 0 1px 0 #fff,inset 0 -1px 0 rgba(148,163,184,.12)!important;
+}
+.card{position:relative;overflow:hidden;transition:transform .22s ease,box-shadow .22s ease}
+.card:before{
+ content:"";position:absolute;inset:0 0 auto;height:4px;
+ background:linear-gradient(90deg,#38bdf8,#6366f1,#a78bfa,#fbbf24);
+ opacity:.85
+}
+.card:active,.module-tile:active,.quick-module:active{transform:translateY(2px) scale(.985)}
+.card-title{color:#0b3158}
+button,.btn,.icon-btn,.nav-item{
+ transition:transform .2s ease,box-shadow .2s ease,filter .2s ease,background .2s ease!important
+}
+.btn-primary,.btn-success,.btn-danger,.btn-warning{
+ border:1px solid rgba(255,255,255,.42)!important;
+ box-shadow:0 7px 15px rgba(2,132,199,.20),inset 0 1px 0 rgba(255,255,255,.38)!important;
+}
+.btn-primary{background:linear-gradient(135deg,#0284c7,#075985)!important}
+button:active,.btn:active{transform:translateY(2px) scale(.98);filter:brightness(.97)}
+input,select,textarea{
+ border:1px solid #cbdced!important;border-radius:14px!important;
+ background:linear-gradient(180deg,#fff,#f5f9ff)!important;
+ box-shadow:inset 0 2px 5px rgba(20,50,90,.045),0 2px 5px rgba(20,50,90,.035)!important;
+ transition:border-color .2s,box-shadow .2s!important
+}
+input:focus,select:focus,textarea:focus{
+ outline:none!important;border-color:#38bdf8!important;
+ box-shadow:0 0 0 3px rgba(56,189,248,.16),inset 0 2px 5px rgba(20,50,90,.04)!important
+}
+.bottom-nav{
+ background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(232,243,255,.98))!important;
+ border-top:1px solid rgba(255,255,255,.95)!important;
+ box-shadow:0 -10px 28px rgba(15,35,70,.13),inset 0 1px 0 #fff!important;
+ backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)
+}
+.nav-item{border-radius:15px!important}
+.nav-item.active{
+ color:#0369a1!important;background:linear-gradient(145deg,#e0f2fe,#bfdbfe)!important;
+ box-shadow:0 5px 12px rgba(2,132,199,.16),inset 0 1px 0 #fff!important
+}
+.module-tile,.quick-module{
+ position:relative;overflow:hidden;transform:translateZ(0);
+ box-shadow:0 12px 24px rgba(30,64,110,.13),inset 0 1px 0 rgba(255,255,255,.9)!important
+}
+.module-tile:after,.quick-module:after{
+ content:"";position:absolute;width:100px;height:100px;border-radius:50%;
+ top:-48px;left:-36px;background:rgba(255,255,255,.24);filter:blur(1px);pointer-events:none
+}
+.summary-card,.stat-card{
+ border-radius:21px!important;box-shadow:0 12px 24px rgba(15,35,70,.13),inset 0 1px 0 rgba(255,255,255,.35)!important
+}
+h1,h2,h3,.card-title{letter-spacing:.1px}
+@keyframes azFloat5d{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+.brand-icon{animation:azFloat5d 4s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){
+ *,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}
+}
+@media(max-width:380px){
+ .app-container{padding-left:11px;padding-right:11px}
+ .card{padding:13px}
+ .nav-item{min-width:49px;padding:6px 5px}
+}
+
 </style>
 </head>
 <body>
@@ -747,7 +860,39 @@
 
     <!-- BUSINESS MODULES: PURCHASE / STOCK / PARTNERSHIP -->
     <section id="screenBusiness" class="screen-content" style="display:none;">
-      <div class="card-title"><span>🏪 کاروبار، خریداری اور اسٹاک</span><button class="btn btn-primary" style="width:auto;padding:7px 12px" onclick="addBusinessTxn('purchase')">+ خریداری</button></div>
+      <div class="card-title"><span>🏪 کاروباری نظام اور الگ کھاتے</span></div>
+      <div class="module-launch-grid" aria-label="کاروباری نظام کے شارٹ کٹس">
+        <button class="module-launch" onclick="document.getElementById('householdExpenseSection').scrollIntoView({behavior:'smooth',block:'start'})"><span class="module-emoji">🏠</span><b>گھریلو خرچہ</b><small>ماہانہ بجٹ، راشن اور گھر کی خریداری</small></button>
+        <button class="module-launch" onclick="document.getElementById('personalExpenseSection').scrollIntoView({behavior:'smooth',block:'start'})"><span class="module-emoji">👤</span><b>ذاتی خرچہ</b><small>روزانہ کے اپنے اخراجات</small></button>
+        <button class="module-launch" onclick="document.getElementById('stockBusinessSection').scrollIntoView({behavior:'smooth',block:'start'})"><span class="module-emoji">🛒</span><b>دکان داری</b><small>سامان خرید و فروخت اور اسٹاک</small></button>
+        <button class="module-launch" onclick="document.getElementById('partnershipSection').scrollIntoView({behavior:'smooth',block:'start'})"><span class="module-emoji">🤝</span><b>پارٹنرشپ</b><small>پارٹنرز، سرمایہ اور منافع</small></button>
+      </div>
+      <section id="householdExpenseSection" class="expense-section household">
+        <div class="expense-head"><div class="expense-icon">🏠</div><div><h3>گھریلو خرچے کا الگ نظام</h3><div class="subline">ماہانہ بجٹ مقرر کریں اور گھر کے ہر سامان یا خرچ کا اندراج رکھیں۔</div></div></div>
+        <div class="expense-form-grid">
+          <div class="wide"><label class="form-label" for="householdBudget">گھر کا ماہانہ بجٹ (روپے)</label><input id="householdBudget" class="form-input" type="number" min="0" step="1" placeholder="مثلاً 40000" onchange="saveHouseholdBudget()"></div>
+          <div><label class="form-label" for="householdItem">سامان / خرچے کی تفصیل</label><input id="householdItem" class="form-input" maxlength="100" placeholder="مثلاً آٹا، بجلی، دودھ"></div>
+          <div><label class="form-label" for="householdCategory">قسم</label><select id="householdCategory" class="form-select"><option>راشن</option><option>بجلی / گیس / پانی</option><option>کرایہ</option><option>تعلیم</option><option>صحت</option><option>گھر کا سامان</option><option>دیگر</option></select></div>
+          <div><label class="form-label" for="householdAmount">خرچ شدہ رقم (روپے)</label><input id="householdAmount" class="form-input" type="number" min="0.01" step="0.01" placeholder="مثلاً 2500"></div>
+          <div><label class="form-label" for="householdDate">تاریخ</label><input id="householdDate" class="form-input" type="date"></div>
+          <div class="wide"><button class="btn btn-primary" onclick="addExpenseRecord('household')">➕ گھریلو خرچہ محفوظ کریں</button></div>
+        </div>
+        <div class="expense-summary"><div><small>اس ماہ کا بجٹ</small><strong id="householdBudgetView">Rs. 0</strong></div><div><small>اس ماہ کا کل خرچہ</small><strong id="householdMonthTotal">Rs. 0</strong></div><div><small>بجٹ میں باقی</small><strong id="householdRemaining">Rs. 0</strong></div><div><small>درج اندراجات</small><strong id="householdCount">0</strong></div></div>
+        <h4 class="module-anchor-title">📋 گھریلو خرچوں کی تفصیل</h4><div id="householdExpenseList"></div>
+      </section>
+      <section id="personalExpenseSection" class="expense-section personal">
+        <div class="expense-head"><div class="expense-icon" style="background:#ede9fe">👤</div><div><h3>ذاتی / روزانہ خرچہ</h3><div class="subline">اپنے روزمرہ کے اخراجات کو گھر اور کاروبار کے حساب سے الگ رکھیں۔</div></div></div>
+        <div class="expense-form-grid">
+          <div class="wide"><label class="form-label" for="personalExpenseDetail">خرچے کی تفصیل</label><input id="personalExpenseDetail" class="form-input" maxlength="100" placeholder="مثلاً سفر، چائے، ذاتی خریداری"></div>
+          <div><label class="form-label" for="personalExpenseCategory">قسم</label><select id="personalExpenseCategory" class="form-select"><option>کھانا پینا</option><option>سفر</option><option>ذاتی خریداری</option><option>موبائل / انٹرنیٹ</option><option>صحت</option><option>دیگر</option></select></div>
+          <div><label class="form-label" for="personalExpenseAmount">رقم (روپے)</label><input id="personalExpenseAmount" class="form-input" type="number" min="0.01" step="0.01" placeholder="مثلاً 300"></div>
+          <div><label class="form-label" for="personalExpenseDate">تاریخ</label><input id="personalExpenseDate" class="form-input" type="date"></div>
+          <div class="wide"><button class="btn btn-primary" onclick="addExpenseRecord('personal')">➕ ذاتی خرچہ محفوظ کریں</button></div>
+        </div>
+        <div class="expense-summary"><div><small>اس ماہ کا ذاتی خرچہ</small><strong id="personalMonthTotal">Rs. 0</strong></div><div><small>آج کا خرچہ</small><strong id="personalTodayTotal">Rs. 0</strong></div><div><small>کل اندراجات</small><strong id="personalCount">0</strong></div><div><small>اوسط یومیہ (اس ماہ)</small><strong id="personalDailyAverage">Rs. 0</strong></div></div>
+        <h4 class="module-anchor-title">📋 ذاتی خرچوں کی تفصیل</h4><div id="personalExpenseList"></div>
+      </section>
+      <div id="stockBusinessSection" class="card-title"><span>🛒 دکان داری — خریداری، فروخت اور اسٹاک</span><button class="btn btn-primary" style="width:auto;padding:7px 12px" onclick="addBusinessTxn('purchase')">+ خریداری</button></div>
       <div class="card">
         <div class="receipt-row"><span>موجودہ اسٹاک کی اقسام</span><span class="val" id="stockKinds">0</span></div>
         <div class="receipt-row"><span>خریداری کی کل لاگت</span><span class="val" id="purchaseTotal">Rs. 0</span></div>
@@ -757,7 +902,7 @@
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px"><button class="btn btn-outline" onclick="addBusinessTxn('purchase')">📦 سامان خریدیں</button><button class="btn btn-success" onclick="addBusinessTxn('sale')">🛒 سامان فروخت کریں</button></div>
       </div>
       <div class="card-title"><span>📦 اسٹاک کی تفصیل</span></div><div id="stockList"></div>
-      <div class="card-title" style="margin-top:18px"><span>🤝 پارٹنرشپ مینجمنٹ</span><div style="display:flex;gap:6px"><button class="btn btn-outline" style="width:auto;padding:7px 9px" onclick="exportPartnerStatement()">📄 مکمل اسٹیٹمنٹ PDF</button><button class="btn btn-primary" style="width:auto;padding:7px 12px" onclick="addPartner()">+ پارٹنر</button></div></div>
+      <div id="partnershipSection" class="card-title" style="margin-top:18px"><span>🤝 پارٹنرشپ مینجمنٹ</span><div style="display:flex;gap:6px"><button class="btn btn-outline" style="width:auto;padding:7px 9px" onclick="exportPartnerStatement()">📄 مکمل اسٹیٹمنٹ PDF</button><button class="btn btn-primary" style="width:auto;padding:7px 12px" onclick="addPartner()">+ پارٹنر</button></div></div>
       <div class="card">
         <div class="receipt-row"><span>پارٹنرز کی تعداد</span><span class="val" id="partnerCount">0</span></div>
         <div class="receipt-row"><span>کل سرمایہ</span><span class="val" id="partnerCapital">Rs. 0</span></div>
@@ -791,7 +936,7 @@
       <!-- Backup Card -->
       <div class="card">
         <h3 style="font-size:14px; font-weight:800; margin-bottom:6px;">💾 ڈیٹا کا بیک اپ اور حفاظت</h3>
-        <p style="font-size:11.5px; color:var(--muted); margin-bottom:10px;">آپ کا تمام ڈیٹا (دکانداری اور ادھار کھاتہ) محفوظ ہے۔</p>
+        <p style="font-size:11.5px; color:var(--muted); margin-bottom:10px;">بیک اپ میں کسٹمر، ادھار، دکانداری، پارٹنرشپ، گھریلو خرچے، ذاتی خرچے اور ماہانہ بجٹ شامل ہیں۔</p>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
           <button class="btn btn-outline" onclick="exportDataJson()">📥 JSON ڈاؤنلوڈ</button>
           <button class="btn btn-outline" onclick="exportDataCsv()">📊 CSV ایکسل فائل</button>
@@ -820,10 +965,10 @@
         <p style="font-size:13px; font-weight:800; color:var(--primary); margin:4px 0 10px;">Powered by Ansar AZ</p>
         <p style="font-size:12px; color:var(--muted); line-height:1.6;">
           <b>رابطہ نمبر:</b> 03298191689<br>
-          نادرا سروسز، آن لائن پورٹلز اور جدید دکانداری نظام
+          ہر قسم کے کاروبار، خدمات، آن لائن کام اور ذاتی حساب کتاب کے لیے ایک مکمل مینجمنٹ سسٹم
         </p>
         <div style="margin-top:14px; padding-top:10px; border-top:1px solid #e2e8f0; font-size:11px; color:#94a3b8;">
-          <b>AZ Flow ⚡</b> ورژن 0.1 (دکانداری + ادھار کھاتہ بک)<br>
+          <b>AZ Flow ⚡</b> ورژن 0.1 — آل اِن ون مینجمنٹ سسٹم<br>
           تمام حقوق محفوظ ہیں © 2026
         </div>
       </div>
@@ -841,12 +986,12 @@
   <div id="modalCustomer" class="modal-overlay">
     <div class="modal-box">
       <div class="modal-header">
-        <h3 style="color:var(--bg-dark); font-size:16px; font-weight:900;" id="modalCustomerTitle">نیا کسٹمر اندراج</h3>
+        <h3 style="color:var(--bg-dark); font-size:16px; font-weight:900;" id="modalCustomerTitle">نیا کسٹمر / کلائنٹ اندراج</h3>
         <button class="close-btn" onclick="closeCustomerModal()">&times;</button>
       </div>
 
       <div class="form-group">
-        <label class="form-label">گاہک کا پورا نام *</label>
+        <label class="form-label">کسٹمر / کلائنٹ / پارٹی کا پورا نام *</label>
         <input type="text" id="inputName" class="form-input" placeholder="مثال: محمد علی شاہ">
       </div>
 
@@ -863,18 +1008,28 @@
 
       <!-- Quick Service Presets -->
       <div class="form-group">
-        <label class="form-label">کام / سروس منتخب کریں (یا نیچے خود لکھیں):</label>
+        <label class="form-label">کام کی کیٹیگری منتخب کریں یا اپنی مرضی کا کام لکھیں:</label>
         <div class="chips-row">
-          <span class="chip" onclick="insertServicePreset('سی آر سی (CRC / B-Form)')">📜 سی آر سی</span>
-          <span class="chip" onclick="insertServicePreset('ایف آر سی (FRC)')">👨‍👩‍👧‍👦 ایف آر سی</span>
-          <span class="chip" onclick="insertServicePreset('نکاح نامہ اندراج')">💍 نکاح نامہ</span>
-          <span class="chip" onclick="insertServicePreset('فوتیدگی سرٹیفکیٹ')">🕊️ فوتیدگی نامہ</span>
-          <span class="chip" onclick="insertServicePreset('تاریخ پیدائش سرٹیفکیٹ')">👶 تاریخ پیدائش</span>
-          <span class="chip" onclick="insertServicePreset('اسمارٹ شناختی کارڈ')">🪪 اسمارٹ کارڈ</span>
-          <span class="chip" onclick="insertServicePreset('آن لائن ٹوکن سروس')">🎫 آن لائن ٹوکن</span>
-          <span class="chip" onclick="insertServicePreset('پاسپورٹ سائز تصاویر')">📸 تصاویر</span>
-          <span class="chip" onclick="insertServicePreset('فلیکس بینر / ڈیزائننگ')">🎨 بینر ڈیزائن</span>
-          <span class="chip" onclick="insertServicePreset('اسٹامپ پیپر / بیان حلفی')">📑 اسٹامپ پیپر</span>
+          <span class="chip" onclick="insertServicePreset('ریٹیل / جنرل اسٹور')">🏪 ریٹیل / جنرل اسٹور</span>
+          <span class="chip" onclick="insertServicePreset('ہول سیل / ڈسٹری بیوشن')">📦 ہول سیل</span>
+          <span class="chip" onclick="insertServicePreset('خریداری / پروکیورمنٹ')">🛒 خریداری</span>
+          <span class="chip" onclick="insertServicePreset('فروخت / سیلز آرڈر')">💳 فروخت / آرڈر</span>
+          <span class="chip" onclick="insertServicePreset('آن لائن سروس / ڈیجیٹل کام')">🌐 آن لائن سروس</span>
+          <span class="chip" onclick="insertServicePreset('فری لانسنگ / ریموٹ ورک')">💻 فری لانسنگ</span>
+          <span class="chip" onclick="insertServicePreset('گرافک ڈیزائن / لوگو')">🎨 ڈیزائننگ</span>
+          <span class="chip" onclick="insertServicePreset('ویڈیو ایڈیٹنگ / فوٹوگرافی')">🎬 ویڈیو / فوٹو</span>
+          <span class="chip" onclick="insertServicePreset('پرنٹنگ / فوٹو کاپی / اسکیننگ')">🖨️ پرنٹنگ</span>
+          <span class="chip" onclick="insertServicePreset('کمپیوٹر / موبائل مرمت')">🔧 مرمت</span>
+          <span class="chip" onclick="insertServicePreset('تعلیم / ٹیوشن / ٹریننگ')">📚 تعلیم</span>
+          <span class="chip" onclick="insertServicePreset('ٹرانسپورٹ / ڈیلیوری')">🚚 ٹرانسپورٹ</span>
+          <span class="chip" onclick="insertServicePreset('کھانا / ہوٹل / کیٹرنگ')">🍽️ فوڈ سروس</span>
+          <span class="chip" onclick="insertServicePreset('تعمیرات / ٹھیکیداری')">🏗️ تعمیرات</span>
+          <span class="chip" onclick="insertServicePreset('زراعت / لائیو اسٹاک')">🌾 زراعت</span>
+          <span class="chip" onclick="insertServicePreset('رئیل اسٹیٹ / کرایہ داری')">🏠 پراپرٹی</span>
+          <span class="chip" onclick="insertServicePreset('ذاتی / گھریلو کام')">👤 ذاتی کام</span>
+          <span class="chip" onclick="insertServicePreset('دفتر / انتظامی کام')">🏢 دفتری کام</span>
+          <span class="chip" onclick="insertServicePreset('دستاویزات / فارم / درخواست')">📄 دستاویزات</span>
+          <span class="chip" onclick="insertServicePreset('دیگر / کسٹم کام')">➕ دیگر کام</span>
         </div>
         <input type="text" id="inputWork" class="form-input" placeholder="کام کی نوعیت درج کریں">
       </div>
@@ -882,11 +1037,11 @@
       <!-- Financials: Total Fee vs Cost Fee -->
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">کل وصولی فیس (Total Fee) *</label>
+          <label class="form-label">کل رقم / وصولی (Total Amount) *</label>
           <input type="number" id="inputAmount" class="form-input" placeholder="0" oninput="updateLiveProfitPreview(); updatePaymentFields()">
         </div>
         <div class="form-group">
-          <label class="form-label">لاگت فیس / سرکاری خرچ (Cost) *</label>
+          <label class="form-label">لاگت / خرچ (Cost) *</label>
           <input type="number" id="inputFee" class="form-input" placeholder="0" oninput="updateLiveProfitPreview()">
         </div>
       </div>
@@ -937,7 +1092,7 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label">موبائل نمبر 3 / شناختی کارڈ (اختیاری)</label>
+        <label class="form-label">اضافی رابطہ / حوالہ نمبر (اختیاری)</label>
         <input type="text" id="inputPhone3" class="form-input" placeholder="اضافی معلومات...">
       </div>
 
@@ -984,7 +1139,7 @@
 
       <div class="form-group">
         <label class="form-label">مد / مدات / تفصیل</label>
-        <input type="text" id="inputUdhaarDetails" class="form-input" placeholder="مثال: شناختی کارڈ ٹوکن، سامان یا رقم">
+        <input type="text" id="inputUdhaarDetails" class="form-input" placeholder="مثال: سامان، سروس، آرڈر، کام یا رقم">
       </div>
 
       <div class="form-group">
@@ -1096,8 +1251,14 @@
     let businessTransactions = [];
     let businessPartners = [];
     let partnerJobs = [];
-    function loadBusinessData(){ try{ businessTransactions=JSON.parse(localStorage.getItem(BUSINESS_KEY)||"[]"); if(!Array.isArray(businessTransactions))businessTransactions=[]; businessPartners=JSON.parse(localStorage.getItem(PARTNERS_KEY)||"[]"); if(!Array.isArray(businessPartners))businessPartners=[]; partnerJobs=JSON.parse(localStorage.getItem(PARTNER_JOBS_KEY)||"[]"); if(!Array.isArray(partnerJobs))partnerJobs=[]; }catch(e){businessTransactions=[];businessPartners=[];partnerJobs=[];} }
-    function saveBusinessData(){ safeWriteStorage(BUSINESS_KEY,JSON.stringify(businessTransactions)); safeWriteStorage(PARTNERS_KEY,JSON.stringify(businessPartners)); safeWriteStorage(PARTNER_JOBS_KEY,JSON.stringify(partnerJobs)); }
+    const HOUSEHOLD_EXPENSES_KEY = "az_flow_household_expenses_v1";
+    const PERSONAL_EXPENSES_KEY = "az_flow_personal_expenses_v1";
+    const HOUSEHOLD_BUDGET_KEY = "az_flow_household_monthly_budget_v1";
+    let householdExpenses = [];
+    let personalExpenses = [];
+    let householdMonthlyBudget = 0;
+    function loadBusinessData(){ try{ businessTransactions=JSON.parse(localStorage.getItem(BUSINESS_KEY)||"[]"); if(!Array.isArray(businessTransactions))businessTransactions=[]; businessPartners=JSON.parse(localStorage.getItem(PARTNERS_KEY)||"[]"); if(!Array.isArray(businessPartners))businessPartners=[]; partnerJobs=JSON.parse(localStorage.getItem(PARTNER_JOBS_KEY)||"[]"); if(!Array.isArray(partnerJobs))partnerJobs=[]; householdExpenses=JSON.parse(localStorage.getItem(HOUSEHOLD_EXPENSES_KEY)||"[]"); if(!Array.isArray(householdExpenses))householdExpenses=[]; personalExpenses=JSON.parse(localStorage.getItem(PERSONAL_EXPENSES_KEY)||"[]"); if(!Array.isArray(personalExpenses))personalExpenses=[]; householdMonthlyBudget=Number(localStorage.getItem(HOUSEHOLD_BUDGET_KEY)||0)||0; }catch(e){businessTransactions=[];businessPartners=[];partnerJobs=[];householdExpenses=[];personalExpenses=[];householdMonthlyBudget=0;} }
+    function saveBusinessData(){ safeWriteStorage(BUSINESS_KEY,JSON.stringify(businessTransactions)); safeWriteStorage(PARTNERS_KEY,JSON.stringify(businessPartners)); safeWriteStorage(PARTNER_JOBS_KEY,JSON.stringify(partnerJobs)); safeWriteStorage(HOUSEHOLD_EXPENSES_KEY,JSON.stringify(householdExpenses)); safeWriteStorage(PERSONAL_EXPENSES_KEY,JSON.stringify(personalExpenses)); safeWriteStorage(HOUSEHOLD_BUDGET_KEY,String(householdMonthlyBudget)); }
     function money(n){return "Rs. "+Number(n||0).toLocaleString();}
 
     // Safe storage + rendering helpers
@@ -1319,7 +1480,7 @@
 
     function openNewCustomerModal() {
       activeEditingId = null;
-      document.getElementById("modalCustomerTitle").innerText = "نیا کسٹمر اندراج";
+      document.getElementById("modalCustomerTitle").innerText = "نیا کسٹمر / کلائنٹ اندراج";
       document.getElementById("inputName").value = "";
       document.getElementById("inputPhone1").value = "";
       document.getElementById("inputPhone2").value = "";
@@ -1833,7 +1994,133 @@
       const content = document.getElementById("receiptContent").innerHTML;
       const w = window.open("", "_blank");
       if(!w){ showToast("پرنٹ ونڈو بلاک ہوگئی؛ براؤزر میں پاپ اپ کی اجازت دیں", "⚠️"); return; }
-      w.document.write(`<!DOCTYPE html><html lang="ur" dir="rtl"><head><meta charset="UTF-8"><title>AZ Flow Receipt</title><style>body{font-family:Arial,sans-serif;padding:20px;color:#172033} .receipt-box{max-width:600px;margin:auto}.receipt-row{display:flex;justify-content:space-between;border-bottom:1px solid #ddd;padding:8px 0}.val{font-weight:bold}.credit{text-align:center;margin-top:20px;font-size:12px}</style></head><body>${content}<script>window.onload=()=>window.print()<\/script></body></html>`);
+      w.document.write(`<!DOCTYPE html><html lang="ur" dir="rtl"><head><meta charset="UTF-8"><title>AZ Flow Receipt</title><style>body{font-family:Arial,sans-serif;padding:20px;color:#172033} .receipt-box{max-width:600px;margin:auto}.receipt-row{display:flex;justify-content:space-between;border-bottom:1px solid #ddd;padding:8px 0}.val{font-weight:bold}.credit{text-align:center;margin-top:20px;font-size:12px}
+/* ===== AZ FLOW MOBILE-FIRST PROFESSIONAL APP EXPERIENCE ===== */
+:root{
+  --primary:#087fc4;--primary-dark:#075985;--primary-light:#7dd3fc;
+  --app-bg:#f3f7fc;--ink:#10233f;--muted:#718198;
+  --card-radius:23px;
+}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+body{
+  background:
+    radial-gradient(ellipse at 90% 0%,rgba(56,189,248,.15),transparent 34%),
+    radial-gradient(ellipse at 0% 34%,rgba(99,102,241,.08),transparent 30%),
+    linear-gradient(160deg,#f5f9ff 0%,#edf4fc 52%,#f8fbff 100%);
+  color:var(--ink);overscroll-behavior-y:contain;
+  -webkit-font-smoothing:antialiased;
+}
+.top-bar{
+  position:sticky;top:0;z-index:1000;
+  padding:12px 14px;
+  background:linear-gradient(130deg,#06152e 0%,#0b315b 56%,#087eae 100%);
+  box-shadow:0 9px 28px rgba(3,25,54,.24);
+  border-bottom:1px solid rgba(255,255,255,.18);
+}
+.top-bar-inner{max-width:760px;min-height:48px;gap:12px}
+.brand-icon{
+  border-radius:16px!important;
+  box-shadow:0 8px 20px rgba(14,165,233,.34),inset 0 2px 5px rgba(255,255,255,.7),inset 0 -5px 9px rgba(3,37,65,.25)!important;
+}
+.brand-text h1{font-weight:900;letter-spacing:-.35px}
+.brand-text p{color:#c7e8ff!important}
+.app-container{
+  width:100%;max-width:760px;margin:0 auto;
+  padding:16px 13px calc(112px + env(safe-area-inset-bottom));
+}
+.screen-content{animation:azScreenIn .24s ease both}
+@keyframes azScreenIn{from{opacity:.45;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.card,.record-card,.expense-card,.module-tile,.quick-module,.guide-item{
+  border:1px solid rgba(255,255,255,.94)!important;
+  border-radius:var(--card-radius)!important;
+  background:linear-gradient(145deg,rgba(255,255,255,.99),rgba(241,247,255,.96))!important;
+  box-shadow:0 12px 28px rgba(25,55,95,.085),0 3px 8px rgba(25,55,95,.045),inset 0 1px 0 #fff!important;
+}
+.card{padding:16px;overflow:hidden}
+.card-title{font-weight:900;color:#12365d}
+.metric-grid{gap:9px!important}
+.metric-box{
+  border-radius:18px!important;padding:13px 10px!important;
+  box-shadow:0 8px 18px rgba(25,55,95,.075),inset 0 1px 0 rgba(255,255,255,.75)!important;
+}
+.metric-val{font-variant-numeric:tabular-nums;letter-spacing:-.35px}
+button,.btn,.icon-btn,.nav-item,.chip{
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  transition:transform .18s ease,box-shadow .18s ease,filter .18s ease!important;
+}
+.btn,.btn-primary,.btn-success,.btn-danger,.btn-warning,.btn-outline{
+  min-height:40px;border-radius:13px!important;font-weight:800!important;
+}
+.btn-primary{
+  background:linear-gradient(135deg,#078ed0,#075985)!important;
+  border:1px solid rgba(255,255,255,.45)!important;
+  box-shadow:0 7px 16px rgba(2,132,199,.22),inset 0 1px rgba(255,255,255,.35)!important;
+}
+button:active,.btn:active,.chip:active,.nav-item:active{transform:scale(.97)}
+input,select,textarea{
+  min-height:44px;border-radius:14px!important;
+  border:1px solid #d3e0ef!important;
+  background:linear-gradient(180deg,#fff,#f7faff)!important;
+  box-shadow:inset 0 2px 5px rgba(20,50,90,.035)!important;
+  font-size:14px!important;
+}
+input:focus,select:focus,textarea:focus{
+  outline:0!important;border-color:#38aee8!important;
+  box-shadow:0 0 0 3px rgba(56,189,248,.15)!important;
+}
+.chips-row{gap:8px!important}
+.chip{
+  border:1px solid #d8e8f7!important;border-radius:999px!important;
+  background:linear-gradient(145deg,#fff,#edf6ff)!important;
+  box-shadow:0 4px 10px rgba(25,55,95,.06)!important;
+  padding:8px 12px!important;font-weight:700;
+}
+.bottom-nav{
+  position:fixed;z-index:1100;left:0;right:0;bottom:0;
+  display:flex;gap:4px;padding:8px 7px calc(8px + env(safe-area-inset-bottom))!important;
+  background:rgba(255,255,255,.94)!important;
+  border-top:1px solid rgba(207,222,239,.9)!important;
+  box-shadow:0 -10px 30px rgba(15,35,70,.12)!important;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+}
+.nav-item{
+  flex:1;min-width:0;min-height:57px;padding:7px 2px 5px!important;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;border:1px solid transparent!important;border-radius:16px!important;
+  color:#718198!important;font-size:10px!important;font-weight:800!important;
+  white-space:nowrap;
+}
+.nav-item span{font-size:20px!important;line-height:1.15;margin:0!important}
+.nav-item.active{
+  color:#0369a1!important;
+  background:linear-gradient(145deg,#e5f5ff,#cce8ff)!important;
+  border-color:#b9e1fb!important;
+  box-shadow:0 5px 14px rgba(2,132,199,.14),inset 0 1px #fff!important;
+  transform:translateY(-3px);
+}
+.guide-item{overflow:hidden;margin-bottom:9px}
+.guide-item summary{padding:13px!important}
+.modal-content,.modal-box{border-radius:25px!important;box-shadow:0 22px 60px rgba(2,20,48,.28)!important}
+table{border-radius:14px;overflow:hidden}
+@media(max-width:390px){
+ .app-container{padding:12px 10px calc(108px + env(safe-area-inset-bottom))}
+ .card{padding:13px}
+ .top-bar{padding:10px 11px}
+ .nav-item{font-size:9px!important;min-height:54px}
+ .nav-item span{font-size:18px!important}
+ .metric-val{font-size:16px!important}
+}
+@media(min-width:600px){
+ .app-container{padding:22px 18px 120px}
+ .card{padding:20px}
+ .bottom-nav{max-width:760px;left:50%;right:auto;width:100%;transform:translateX(-50%);border-radius:20px 20px 0 0}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+
+</style></head><body>${content}<script>window.onload=()=>window.print()<\/script></body></html>`);
       w.document.close();
     }
 
@@ -1912,7 +2199,35 @@
     function distributePartnerProfit(){if(!businessPartners.length){showToast('پہلے پارٹنر شامل کریں۔','⚠️');return;}const sum=businessPartners.reduce((a,p)=>a+p.share,0);if(Math.abs(sum-100)>0.01){showToast('منافع تقسیم کرنے سے پہلے پارٹنرز کے حصے مجموعی طور پر 100% کریں۔','⚠️');return;}const amount=Number(prompt('تقسیم کے لیے خالص منافع درج کریں (روپے):','0'));if(!Number.isFinite(amount)||amount<0)return;businessPartners.forEach(p=>p.profit=(p.profit||0)+amount*p.share/100);saveBusinessData();renderBusinessModules();showToast('منافع درج شدہ حصوں کے مطابق تقسیم ہوگیا۔');}
     function deleteBusinessTxn(id){if(!confirm('کیا یہ لین دین حذف کرنا ہے؟'))return;businessTransactions=businessTransactions.filter(t=>t.id!==id);saveBusinessData();renderBusinessModules();}
     function deletePartner(id){if(!confirm('کیا اس پارٹنر کا ریکارڈ حذف کرنا ہے؟'))return;businessPartners=businessPartners.filter(p=>p.id!==id);saveBusinessData();renderBusinessModules();}
+    function localDateInputValue(d=new Date()){const z=new Date(d.getTime()-d.getTimezoneOffset()*60000);return z.toISOString().slice(0,10);}
+    function saveHouseholdBudget(){const el=document.getElementById('householdBudget');const v=Number(el?.value||0);if(!Number.isFinite(v)||v<0){showToast('درست ماہانہ بجٹ درج کریں۔','⚠️');return;}householdMonthlyBudget=v;safeWriteStorage(HOUSEHOLD_BUDGET_KEY,String(v));renderExpenseModules();showToast('ماہانہ گھریلو بجٹ محفوظ ہوگیا۔');}
+    function addExpenseRecord(kind){
+      const household=kind==='household';
+      const detail=(document.getElementById(household?'householdItem':'personalExpenseDetail').value||'').trim();
+      const amount=Number(document.getElementById(household?'householdAmount':'personalExpenseAmount').value);
+      const category=document.getElementById(household?'householdCategory':'personalExpenseCategory').value;
+      const date=document.getElementById(household?'householdDate':'personalExpenseDate').value||localDateInputValue();
+      if(household){const b=document.getElementById('householdBudget').value;if(b!==''&&Number(b)>=0){householdMonthlyBudget=Number(b);safeWriteStorage(HOUSEHOLD_BUDGET_KEY,String(householdMonthlyBudget));}}
+      if(!detail){showToast('خرچے کی تفصیل درج کریں۔','⚠️');return;}
+      if(!Number.isFinite(amount)||amount<=0){showToast('درست رقم درج کریں۔','⚠️');return;}
+      const row={id:Date.now().toString()+Math.random().toString(36).slice(2,6),detail,category,amount,date,createdAt:new Date().toISOString()};
+      (household?householdExpenses:personalExpenses).unshift(row);saveBusinessData();
+      document.getElementById(household?'householdItem':'personalExpenseDetail').value='';document.getElementById(household?'householdAmount':'personalExpenseAmount').value='';
+      renderExpenseModules();showToast(household?'گھریلو خرچہ محفوظ ہوگیا۔':'ذاتی خرچہ محفوظ ہوگیا۔');
+    }
+    function deleteExpenseRecord(kind,id){if(!confirm('کیا یہ خرچے کا اندراج حذف کرنا چاہتے ہیں؟'))return;const arr=kind==='household'?householdExpenses:personalExpenses;const next=arr.filter(x=>String(x.id)!==String(id));if(kind==='household')householdExpenses=next;else personalExpenses=next;saveBusinessData();renderExpenseModules();}
+    function renderExpenseModules(){
+      const now=new Date(), month=localDateInputValue().slice(0,7), today=localDateInputValue();
+      const hh=householdExpenses.filter(x=>String(x.date||'').slice(0,7)===month), pp=personalExpenses.filter(x=>String(x.date||'').slice(0,7)===month);
+      const sum=a=>a.reduce((n,x)=>n+Number(x.amount||0),0), htotal=sum(hh), ptotal=sum(pp), pToday=sum(personalExpenses.filter(x=>x.date===today));
+      const set=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+      const budgetEl=document.getElementById('householdBudget');if(budgetEl&&document.activeElement!==budgetEl)budgetEl.value=householdMonthlyBudget||'';
+      set('householdBudgetView',money(householdMonthlyBudget));set('householdMonthTotal',money(htotal));set('householdRemaining',money(householdMonthlyBudget-htotal));set('householdCount',String(hh.length));set('personalMonthTotal',money(ptotal));set('personalTodayTotal',money(pToday));set('personalCount',String(personalExpenses.length));set('personalDailyAverage',money(ptotal/Math.max(1,now.getDate())));
+      const render=(arr,kind,id)=>{const el=document.getElementById(id);if(!el)return;const rows=[...arr].sort((a,b)=>String(b.date).localeCompare(String(a.date)));el.innerHTML=rows.length?rows.map(x=>`<div class="expense-record"><div class="receipt-row"><b>${escapeHtml(x.detail)}</b><strong class="val">${money(x.amount)}</strong></div><div class="receipt-row"><span>${escapeHtml(x.category||'دیگر')}</span><span>${escapeHtml(x.date||'')}</span></div><button class="btn btn-danger" style="margin-top:8px;width:auto;padding:6px 10px" onclick="deleteExpenseRecord('${kind}','${String(x.id).replace(/'/g,'')}')">اندراج حذف کریں</button></div>`).join(''):'<div class="card" style="color:var(--muted);font-size:12px">ابھی کوئی خرچہ درج نہیں کیا گیا۔</div>';};
+      render(hh,'household','householdExpenseList');render(pp,'personal','personalExpenseList');
+    }
     function renderBusinessModules(){
+      renderExpenseModules();
       const stock={};businessTransactions.forEach(t=>{if(!stock[t.name])stock[t.name]={qty:0,cost:0};stock[t.name].qty+=(t.type==='purchase'?t.qty:-t.qty);if(t.type==='purchase')stock[t.name].cost+=t.total;});
       const purchases=businessTransactions.filter(t=>t.type==='purchase').reduce((a,t)=>a+t.total,0), sales=businessTransactions.filter(t=>t.type==='sale').reduce((a,t)=>a+t.total,0), profit=businessTransactions.filter(t=>t.type==='sale').reduce((a,t)=>a+t.profit,0);
       document.getElementById('stockKinds').textContent=Object.keys(stock).filter(k=>stock[k].qty!==0).length;document.getElementById('purchaseTotal').textContent=money(purchases);document.getElementById('salesTotal').textContent=money(sales);document.getElementById('salesProfit').textContent=money(profit);document.getElementById('partnerCount').textContent=businessPartners.length;document.getElementById('partnerCapital').textContent=money(businessPartners.reduce((a,p)=>a+p.capital,0));
@@ -1932,7 +2247,8 @@
         appOwnerProfile: appOwnerProfile,
         customers: customerRecords,
         udhaar: udhaarRecords,
-        businessTransactions, businessPartners, partnerJobs
+        businessTransactions, businessPartners, partnerJobs,
+        householdExpenses, personalExpenses, householdMonthlyBudget
       };
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
@@ -1989,6 +2305,9 @@
           if (Array.isArray(parsed.businessTransactions)) businessTransactions = parsed.businessTransactions;
           if (Array.isArray(parsed.businessPartners)) businessPartners = parsed.businessPartners;
           if (Array.isArray(parsed.partnerJobs)) partnerJobs = parsed.partnerJobs;
+          if (Array.isArray(parsed.householdExpenses)) householdExpenses = parsed.householdExpenses;
+          if (Array.isArray(parsed.personalExpenses)) personalExpenses = parsed.personalExpenses;
+          if (parsed.householdMonthlyBudget !== undefined && Number.isFinite(Number(parsed.householdMonthlyBudget))) householdMonthlyBudget = Math.max(0,Number(parsed.householdMonthlyBudget));
           saveBusinessData();
           if (!commitStorageData()) {
             customerRecords = oldCustomers;
@@ -2049,6 +2368,7 @@
     window.addEventListener("DOMContentLoaded", () => {
       loadAppOwnerProfile();
       loadBusinessData();
+      const hd=document.getElementById('householdDate');if(hd)hd.value=localDateInputValue();const pd=document.getElementById('personalExpenseDate');if(pd)pd.value=localDateInputValue();
       loadStorageData();
       renderBusinessModules();
       refreshDashboardMetrics();
