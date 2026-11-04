@@ -341,7 +341,8 @@
       .card:hover, .metric-box:hover, .item-card:hover { transform: translateY(-2px); box-shadow: 0 5px 0 rgba(10,47,91,.035), 0 13px 25px rgba(12,40,82,.10); }
     }
     @media (max-width: 380px) { .backup-warning-card { padding: 11px; gap: 9px; } .backup-warning-icon { flex-basis: 34px; width: 34px; height: 34px; font-size: 19px; } .backup-warning-content h3 { font-size: 12.5px; } .backup-warning-content p { font-size: 11px; } }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
+    html.az-reduce *,html.az-reduce *::before,html.az-reduce *::after{ animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+
 
     /* Premium step-by-step guide with CSS 3D illustrations */
     .guide-shell{margin:14px 0 18px;border-radius:22px;overflow:hidden;background:linear-gradient(180deg,#f8fbff,#fff);border:1px solid #dbeafe;box-shadow:0 12px 30px rgba(15,23,42,.08);}
@@ -427,7 +428,8 @@
     .splash-logo{border-radius:31px;box-shadow:0 20px 50px rgba(56,189,248,.28),inset 0 2px 6px rgba(255,255,255,.8)}
     @media(min-width:600px){.app-container{padding:22px 20px 28px}.metric-grid{gap:12px}.card{padding:20px}.nav-item{font-size:11px}.nav-item span{font-size:20px}}
     @media(max-width:390px){.app-container{padding:12px 10px 20px}.top-bar{padding:11px 12px}.brand-icon{width:40px;height:40px}.brand-text h1{font-size:17px}.brand-text p{font-size:9px}.card{padding:13px;border-radius:17px}.metric-grid{gap:6px}.metric-box{padding:11px 5px}.metric-label{font-size:10px}.nav-item{font-size:9px;padding-left:1px;padding-right:1px}.nav-item span{font-size:18px}.screen-content>.card-title{padding:12px;font-size:13px}}
-    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+    html.az-reduce *,html.az-reduce *::before,html.az-reduce *::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+
 
 
     /* AZ Flow 0.1 — refined premium pass; presentation only, storage and app logic untouched */
@@ -490,7 +492,8 @@
     .receipt-box{border-radius:18px;overflow:hidden}
     @media(min-width:520px){.guide-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media(max-width:360px){.top-actions{gap:5px}.icon-btn{width:35px;height:35px}.brand-group{gap:8px}.brand-text h1{font-size:16px}.metric-val{font-size:12px}.btn{padding:9px 10px}.modal-box{padding:14px;border-radius:19px}}
-    @media(prefers-reduced-motion:reduce){.card,.item-card,.guide-item,.modal-box,.backup-warning-card{transition:none}}
+    html.az-reduce .card,html.az-reduce .item-card,html.az-reduce .guide-item,html.az-reduce .modal-box,html.az-reduce .backup-warning-card{transition:none}
+
 
 
     /* AZ Flow 0.1 — dedicated household and personal expense modules */
@@ -596,9 +599,8 @@ input:focus,select:focus,textarea:focus{
 h1,h2,h3,.card-title{letter-spacing:.1px}
 @keyframes azFloat5d{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
 .brand-icon{animation:azFloat5d 4s ease-in-out infinite}
-@media(prefers-reduced-motion:reduce){
- *,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}
-}
+html.az-reduce *,html.az-reduce *:before,html.az-reduce *:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}
+
 @media(max-width:380px){
  .app-container{padding-left:11px;padding-right:11px}
  .card{padding:13px}
@@ -729,7 +731,7 @@ html body .bottom-nav .nav-item:active .nav-ico{transform:translateY(2px) scale(
 .pin-reccode{font-size:30px;font-weight:900;letter-spacing:6px;direction:ltr;background:rgba(255,255,255,.1);border:1px dashed rgba(255,255,255,.5);border-radius:18px;padding:16px 8px;margin:14px 0;color:#fde68a}
 
 /* ===== AZ Flow motion layer: depth, 3D and micro-interactions ===== */
-@media (prefers-reduced-motion:no-preference){
+
   @keyframes azAurora{0%{background-position:0% 40%}50%{background-position:100% 60%}100%{background-position:0% 40%}}
   @keyframes azPopIn{0%{opacity:0;transform:perspective(900px) translateY(34px) rotateX(-16deg) scale(.92)}60%{opacity:1;transform:perspective(900px) translateY(-4px) rotateX(2deg) scale(1.01)}100%{opacity:1;transform:none}}
   @keyframes azFadeIn{from{opacity:0}to{opacity:1}}
@@ -761,7 +763,7 @@ html body .bottom-nav .nav-item:active .nav-ico{transform:translateY(2px) scale(
   html body #udhaarContainer>.item-card:nth-child(2),html body .expense-record:nth-child(2),html body #businessTxnList>.card:nth-child(2){animation-delay:.05s}
   html body #udhaarContainer>.item-card:nth-child(3),html body .expense-record:nth-child(3),html body #businessTxnList>.card:nth-child(3){animation-delay:.1s}
   html body #udhaarContainer>.item-card:nth-child(n+4),html body .expense-record:nth-child(n+4),html body #businessTxnList>.card:nth-child(n+4){animation-delay:.15s}
-}
+
 /* depth: layered shadows, glassy highlights, lift on hover / press (all devices) */
 html body .btn{position:relative;overflow:hidden}
 html body .btn:active{transform:translateY(2px) scale(.975)}
@@ -776,8 +778,24 @@ html body .metric-box:after{content:"";position:absolute;inset:auto 0 0 0;height
 html body .top-bar.scrolled{box-shadow:0 12px 34px rgba(3,17,38,.5)}
 html body .form-input:focus,html body .form-select:focus{box-shadow:0 0 0 4px rgba(2,132,199,.16),inset 0 2px 4px rgba(10,35,70,.04);transform:translateY(-1px);transition:box-shadow .2s,transform .2s}
 html body .item-card[style*="border-right"]{background-image:linear-gradient(100deg,rgba(255,255,255,0) 60%,rgba(2,132,199,.035))}
-@media(prefers-reduced-motion:reduce){.az-ripple{display:none}}
+html.az-reduce .az-ripple{display:none}
+
 html body #btnTypeLena,html body #btnTypeDena{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-size:11px;line-height:1.5;padding:9px 6px;white-space:normal;text-align:center}
+
+/* ===== Document viewer (receipts & statements) ===== */
+.az-doc-overlay{align-items:stretch!important;justify-content:center;padding:0!important;z-index:100050!important}
+.az-doc-box{display:flex;flex-direction:column;width:min(100%,720px);height:100%;max-height:100dvh;background:#0f172a;border-radius:0;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.az-doc-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(120deg,#031126,#0a2750 55%,#0c4a86);color:#fff;flex:none}
+.az-doc-head h3{font-size:15px;font-weight:900;color:#fff}
+.az-doc-head .close-btn{color:#fff;background:rgba(255,255,255,.14)}
+.az-doc-pages{flex:1;overflow:auto;padding:14px 10px 6px;background:radial-gradient(600px 300px at 50% 0,#1e3a5f,#0f172a);-webkit-overflow-scrolling:touch}
+.az-doc-pages img{display:block;width:100%;max-width:640px;margin:0 auto 14px;border-radius:8px;background:#fff;box-shadow:0 14px 34px rgba(0,0,0,.45)}
+.az-doc-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:#0f172a;border-top:1px solid rgba(255,255,255,.1);flex:none}
+.az-doc-actions .btn{padding:10px 4px;font-size:12px;min-height:44px}
+.record-actions .btn{flex:1 1 30%!important;font-size:11.5px!important;padding:9px 6px!important}
+@keyframes azDocIn{from{opacity:0;transform:translateY(40px) scale(.97)}to{opacity:1;transform:none}}
+.az-doc-overlay[style*="flex"] .az-doc-box{animation:azDocIn .35s cubic-bezier(.2,.9,.25,1.1)}
+html.az-reduce .az-doc-overlay .az-doc-box{animation:none}
 </style>
 </head>
 <body>
@@ -1061,7 +1079,7 @@ html body #btnTypeLena,html body #btnTypeDena{display:flex;flex-direction:column
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px"><button class="btn btn-outline" onclick="addBusinessTxn('purchase')">📦 سامان خریدیں</button><button class="btn btn-success" onclick="addBusinessTxn('sale')">🛒 سامان فروخت کریں</button></div>
       </div>
       <div class="card-title"><span>📦 اسٹاک کی تفصیل</span></div><div id="stockList"></div>
-      <div class="card-title" style="margin-top:18px"><span>🧾 خریداری اور فروخت کی تاریخ</span></div><div id="businessTxnList"></div>
+      <div class="card-title" style="margin-top:18px"><span>🧾 خریداری اور فروخت کی تاریخ</span><button class="btn btn-outline" style="width:auto;padding:7px 10px;font-size:11.5px" onclick="exportBusinessPDF()">📄 مکمل اسٹیٹمنٹ PDF</button></div><div id="businessTxnList"></div>
     </section>
 
     <section id="screenPartner" class="screen-content t-partner" style="display:none;">
@@ -1090,7 +1108,7 @@ html body #btnTypeLena,html body #btnTypeDena{display:flex;flex-direction:column
           <div class="wide"><button class="btn btn-primary" onclick="addExpenseRecord('household')">➕ گھریلو خرچہ محفوظ کریں</button></div>
         </div>
         <div class="expense-summary"><div><small>اس ماہ کا بجٹ</small><strong id="householdBudgetView">Rs. 0</strong></div><div><small>اس ماہ کا کل خرچہ</small><strong id="householdMonthTotal">Rs. 0</strong></div><div><small>بجٹ میں باقی</small><strong id="householdRemaining">Rs. 0</strong></div><div><small>درج اندراجات</small><strong id="householdCount">0</strong></div></div>
-        <h4 class="module-anchor-title">📋 گھریلو خرچوں کی تفصیل</h4><div id="householdExpenseList"></div>
+        <h4 class="module-anchor-title">📋 گھریلو خرچوں کی تفصیل</h4><button class="btn btn-outline" style="margin-bottom:10px" onclick="exportExpensePDF('household')">📄 گھریلو خرچوں کی مکمل اسٹیٹمنٹ PDF</button><div id="householdExpenseList"></div>
       </section>
     </section>
 
@@ -1106,7 +1124,7 @@ html body #btnTypeLena,html body #btnTypeDena{display:flex;flex-direction:column
           <div class="wide"><button class="btn btn-primary" onclick="addExpenseRecord('personal')">➕ ذاتی خرچہ محفوظ کریں</button></div>
         </div>
         <div class="expense-summary"><div><small>اس ماہ کا ذاتی خرچہ</small><strong id="personalMonthTotal">Rs. 0</strong></div><div><small>آج کا خرچہ</small><strong id="personalTodayTotal">Rs. 0</strong></div><div><small>کل اندراجات</small><strong id="personalCount">0</strong></div><div><small>اوسط یومیہ (اس ماہ)</small><strong id="personalDailyAverage">Rs. 0</strong></div></div>
-        <h4 class="module-anchor-title">📋 ذاتی خرچوں کی تفصیل</h4><div id="personalExpenseList"></div>
+        <h4 class="module-anchor-title">📋 ذاتی خرچوں کی تفصیل</h4><button class="btn btn-outline" style="margin-bottom:10px" onclick="exportExpensePDF('personal')">📄 ذاتی خرچوں کی مکمل اسٹیٹمنٹ PDF</button><div id="personalExpenseList"></div>
       </section>
     </section>
 
@@ -1116,7 +1134,12 @@ html body #btnTypeLena,html body #btnTypeDena{display:flex;flex-direction:column
       <div class="card-title">
         <span>⚙️ ایپ ترتیبات و بیک اپ</span>
       </div>
-      <div class="card pin-settings-card" id="pinSettingsCard">
+      <div class="card" id="motionSettingsCard">
+          <div class="card-title"><span>✨ اینیمیشن اور تھری ڈی ایفیکٹس</span><span class="pin-badge on" id="motionBadge">آن</span></div>
+          <p style="font-size:12px;line-height:1.9;color:var(--muted);margin-bottom:12px">ایپ کی حرکت والی اینیمیشنز، گنتی والے اعداد اور تھری ڈی اثرات۔ اگر آپ کا فون سست چلے یا بیٹری بچانی ہو تو آف کر دیں۔</p>
+          <div class="pin-actions"><button class="btn btn-primary" type="button" onclick="azMotionSet(true)">✨ آن کریں</button><button class="btn btn-outline" type="button" onclick="azMotionSet(false)">⏸️ آف کریں</button></div>
+        </div>
+        <div class="card pin-settings-card" id="pinSettingsCard">
         <div class="card-title"><span>🔐 ایپ لاک (PIN)</span><span class="pin-badge" id="pinBadge">بند</span></div>
         <p style="font-size:12px;line-height:1.9;color:var(--muted);margin-bottom:12px" id="pinStatusText">اپنے کسٹمر، ادھار اور کاروباری ریکارڈ کو دوسروں کی نظر سے بچانے کے لیے 4 ہندسوں کا PIN لگائیں۔</p>
         <div class="pin-actions">
@@ -1398,6 +1421,17 @@ html body #btnTypeLena,html body #btnTypeDena{display:flex;flex-direction:column
   <!-- AZ Flow 0.1: existing storage keys retained to preserve user data -->
   <!-- JAVASCRIPT LOGIC -->
   <script>
+    // ===== Motion preference (default ON; independent from the phone's animation setting) =====
+    (function () { try { if (localStorage.getItem("az_flow_motion_v1") === "off") document.documentElement.classList.add("az-reduce"); } catch (_) {} })();
+    function azMotionOn() { return !document.documentElement.classList.contains("az-reduce"); }
+    function azMotionRefresh() { const b = document.getElementById("motionBadge"); if (b) { b.textContent = azMotionOn() ? "آن" : "آف"; b.classList.toggle("on", azMotionOn()); } }
+    function azMotionSet(on) {
+      document.documentElement.classList.toggle("az-reduce", !on);
+      try { localStorage.setItem("az_flow_motion_v1", on ? "on" : "off"); } catch (_) {}
+      azMotionRefresh(); showToast(on ? "اینیمیشن آن ہو گئی ✨" : "اینیمیشن آف ہو گئی", on ? "✨" : "⏸️");
+    }
+    window.addEventListener("DOMContentLoaded", azMotionRefresh);
+
     // Storage Keys
     const MASTER_STORAGE_KEY = "az_flow_records_v16";
     const UDHAAR_STORAGE_KEY = "az_flow_udhaar_v16";
@@ -2104,6 +2138,7 @@ html body #btnTypeLena,html body #btnTypeDena{display:flex;flex-direction:column
             ${u.additionalDetails ? `<div style="font-size:11.5px;color:#475569;margin:8px 0;"><b>اضافی تفصیل:</b> ${escapeHtml(u.additionalDetails)}</div>` : ''}
             <div class="item-actions">
               <button class="btn btn-primary" onclick="viewUdhaarReceipt(${u.id})">🧾 رسید دیکھیں</button>
+              <button class="btn btn-outline" onclick="azRecordStatement('udhaar',${u.id})">📄 اسٹیٹمنٹ PDF</button>
               <button class="btn btn-whatsapp" onclick="sendUdhaarReceipt(${u.id})">🟢 رسید بھیجیں</button>
               <button class="btn btn-outline" style="border-color:${isSettled ? '#94a3b8' : '#10b981'}; color:${isSettled ? '#475569' : '#059669'};" onclick="toggleUdhaarSettled(${u.id})">
                 ${isSettled ? '↩️ دوبارہ ادھار کریں' : '✔️ وصول / ادا ہو گیا'}
@@ -2448,7 +2483,7 @@ table{border-radius:14px;overflow:hidden}
       const set=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
       const budgetEl=document.getElementById('householdBudget');if(budgetEl&&document.activeElement!==budgetEl)budgetEl.value=householdMonthlyBudget||'';
       set('householdBudgetView',money(householdMonthlyBudget));set('householdMonthTotal',money(htotal));set('householdRemaining',money(householdMonthlyBudget-htotal));set('householdCount',String(hh.length));set('personalMonthTotal',money(ptotal));set('personalTodayTotal',money(pToday));set('personalCount',String(personalExpenses.length));set('personalDailyAverage',money(ptotal/Math.max(1,now.getDate())));
-      const render=(arr,kind,id)=>{const el=document.getElementById(id);if(!el)return;const rows=[...arr].sort((a,b)=>String(b.date).localeCompare(String(a.date)));el.innerHTML=rows.length?rows.map(x=>`<div class="expense-record"><div class="receipt-row"><b>${escapeHtml(x.detail)}</b><strong class="val">${money(x.amount)}</strong></div><div class="receipt-row"><span>${escapeHtml(x.category||'دیگر')}</span><span>${escapeHtml(x.date||'')}</span></div><div class="record-actions"><button class="btn btn-edit" onclick="openRecordForm('${kind}','${String(x.id).replace(/'/g,'')}')">✏️ ترمیم</button><button class="btn btn-danger"  onclick="deleteExpenseRecord('${kind}','${String(x.id).replace(/'/g,'')}')">اندراج حذف کریں</button></div></div>`).join(''):'<div class="card" style="color:var(--muted);font-size:12px">ابھی کوئی خرچہ درج نہیں کیا گیا۔</div>';};
+      const render=(arr,kind,id)=>{const el=document.getElementById(id);if(!el)return;const rows=[...arr].sort((a,b)=>String(b.date).localeCompare(String(a.date)));el.innerHTML=rows.length?rows.map(x=>`<div class="expense-record"><div class="receipt-row"><b>${escapeHtml(x.detail)}</b><strong class="val">${money(x.amount)}</strong></div><div class="receipt-row"><span>${escapeHtml(x.category||'دیگر')}</span><span>${escapeHtml(x.date||'')}</span></div><div class="record-actions">${azBtns(kind,String(x.id).replace(/'/g,''),kind)}<button class="btn btn-danger"  onclick="deleteExpenseRecord('${kind}','${String(x.id).replace(/'/g,'')}')">اندراج حذف کریں</button></div></div>`).join(''):'<div class="card" style="color:var(--muted);font-size:12px">ابھی کوئی خرچہ درج نہیں کیا گیا۔</div>';};
       render(hh,'household','householdExpenseList');render(pp,'personal','personalExpenseList');
     }
     function renderBusinessModules(){
@@ -2457,9 +2492,9 @@ table{border-radius:14px;overflow:hidden}
       const purchases=businessTransactions.filter(t=>t.type==='purchase').reduce((a,t)=>a+t.total,0), sales=businessTransactions.filter(t=>t.type==='sale').reduce((a,t)=>a+t.total,0), profit=businessTransactions.filter(t=>t.type==='sale').reduce((a,t)=>a+t.profit,0);
       document.getElementById('stockKinds').textContent=Object.keys(stock).filter(k=>stock[k].qty!==0).length;document.getElementById('purchaseTotal').textContent=money(purchases);document.getElementById('salesTotal').textContent=money(sales);document.getElementById('salesProfit').textContent=money(profit);document.getElementById('partnerCount').textContent=businessPartners.length;document.getElementById('partnerCapital').textContent=money(businessPartners.reduce((a,p)=>a+p.capital,0));
       document.getElementById('stockList').innerHTML=Object.keys(stock).length?Object.entries(stock).map(([n,v])=>`<div class="card"><div class="receipt-row"><b>${escapeHtml(n)}</b><span class="val">مقدار: ${v.qty}</span></div><div class="receipt-row"><span>خریداری کی درج شدہ لاگت</span><span class="val">${money(v.cost)}</span></div></div>`).join(''):'<div class="card" style="color:var(--muted)">ابھی کوئی اسٹاک نہیں۔ سامان خریدنے کے لیے اوپر بٹن دبائیں۔</div>';
-      document.getElementById('partnerList').innerHTML=businessPartners.length?businessPartners.map(p=>`<div class="card"><div class="receipt-row"><b>${escapeHtml(p.name)}</b><span class="val">${p.share}% حصہ</span></div><div class="receipt-row"><span>سرمایہ</span><span class="val">${money(p.capital)}</span></div><div class="receipt-row"><span>درج شدہ منافع</span><span class="val">${money(p.profit)}</span></div><div class="record-actions"><button class="btn btn-edit" onclick="openRecordForm('partner','${p.id}')">✏️ ترمیم</button><button class="btn btn-danger" onclick="deletePartner('${p.id}')">پارٹنر حذف کریں</button></div></div>`).join(''):'<div class="card" style="color:var(--muted)">ابھی پارٹنر شامل نہیں کیا گیا۔</div>';
-      document.getElementById('partnerJobList').innerHTML=partnerJobs.length?partnerJobs.map(j=>`<div class=\"card\"><div class=\"receipt-row\"><b>${escapeHtml(j.detail)}</b><span class=\"val\">${money(j.profit)}</span></div><div class=\"receipt-row\"><span>کام درج کرنے والا</span><span class=\"val\">${escapeHtml(j.partnerName)}</span></div><div class=\"receipt-row\"><span>فیس / فروخت</span><span class=\"val\">${money(j.fee)}</span></div><div class=\"receipt-row\"><span>لاگت</span><span class=\"val\">${money(j.cost)}</span></div><div class=\"receipt-row bold\"><span>خالص منافع</span><span class=\"val\">${money(j.profit)}</span></div><div style=\"font-size:12px;line-height:1.8\">${(j.allocations||[]).map(a=>`${escapeHtml(a.name)} (${a.share}%): ${money(a.amount)}`).join('<br>')}</div><div style=\"font-size:10px;color:var(--muted)\">${new Date(j.date).toLocaleString()}</div><div class=\"record-actions\"><button class=\"btn btn-edit\" onclick=\"openRecordForm('job','${j.id}')\">✏️ ترمیم</button><button class=\"btn btn-danger\" style=\"margin-top:8px\" onclick=\"deletePartnerJob('${j.id}')\">کام حذف کریں</button></div></div>`).join(''):'<div class=\"card\" style=\"color:var(--muted)\">ابھی کوئی پارٹنرشپ کام درج نہیں۔</div>' ;
-      document.getElementById('businessTxnList').innerHTML=businessTransactions.length?businessTransactions.map(t=>`<div class="card"><div class="receipt-row"><b>${t.type==='purchase'?'📦 خریداری':'🛒 فروخت'}: ${escapeHtml(t.name)}</b><span class="val">${money(t.total)}</span></div><div class="receipt-row"><span>مقدار × فی یونٹ</span><span class="val">${t.qty} × ${money(t.unit)}</span></div>${t.type==='sale'?`<div class="receipt-row"><span>درج شدہ منافع</span><span class="val">${money(t.profit)}</span></div>`:''}<div style="font-size:10px;color:var(--muted)">${new Date(t.date).toLocaleString()}</div><div class="record-actions"><button class="btn btn-edit" onclick="openRecordForm('${t.type}','${t.id}')">✏️ ترمیم</button><button class="btn btn-danger" onclick="deleteBusinessTxn('${t.id}')">لین دین حذف کریں</button></div></div>`).join(''):'<div class="card" style="color:var(--muted)">ابھی کوئی خریداری یا فروخت درج نہیں۔</div>';
+      document.getElementById('partnerList').innerHTML=businessPartners.length?businessPartners.map(p=>`<div class="card"><div class="receipt-row"><b>${escapeHtml(p.name)}</b><span class="val">${p.share}% حصہ</span></div><div class="receipt-row"><span>سرمایہ</span><span class="val">${money(p.capital)}</span></div><div class="receipt-row"><span>درج شدہ منافع</span><span class="val">${money(p.profit)}</span></div><div class="record-actions">${azBtns('partner',p.id,'partner')}<button class="btn btn-danger" onclick="deletePartner('${p.id}')">پارٹنر حذف کریں</button></div></div>`).join(''):'<div class="card" style="color:var(--muted)">ابھی پارٹنر شامل نہیں کیا گیا۔</div>';
+      document.getElementById('partnerJobList').innerHTML=partnerJobs.length?partnerJobs.map(j=>`<div class=\"card\"><div class=\"receipt-row\"><b>${escapeHtml(j.detail)}</b><span class=\"val\">${money(j.profit)}</span></div><div class=\"receipt-row\"><span>کام درج کرنے والا</span><span class=\"val\">${escapeHtml(j.partnerName)}</span></div><div class=\"receipt-row\"><span>فیس / فروخت</span><span class=\"val\">${money(j.fee)}</span></div><div class=\"receipt-row\"><span>لاگت</span><span class=\"val\">${money(j.cost)}</span></div><div class=\"receipt-row bold\"><span>خالص منافع</span><span class=\"val\">${money(j.profit)}</span></div><div style=\"font-size:12px;line-height:1.8\">${(j.allocations||[]).map(a=>`${escapeHtml(a.name)} (${a.share}%): ${money(a.amount)}`).join('<br>')}</div><div style=\"font-size:10px;color:var(--muted)\">${new Date(j.date).toLocaleString()}</div><div class=\"record-actions\">${azBtns('job',j.id,'job')}<button class=\"btn btn-danger\" style=\"margin-top:8px\" onclick=\"deletePartnerJob('${j.id}')\">کام حذف کریں</button></div></div>`).join(''):'<div class=\"card\" style=\"color:var(--muted)\">ابھی کوئی پارٹنرشپ کام درج نہیں۔</div>' ;
+      document.getElementById('businessTxnList').innerHTML=businessTransactions.length?businessTransactions.map(t=>`<div class="card"><div class="receipt-row"><b>${t.type==='purchase'?'📦 خریداری':'🛒 فروخت'}: ${escapeHtml(t.name)}</b><span class="val">${money(t.total)}</span></div><div class="receipt-row"><span>مقدار × فی یونٹ</span><span class="val">${t.qty} × ${money(t.unit)}</span></div>${t.type==='sale'?`<div class="receipt-row"><span>درج شدہ منافع</span><span class="val">${money(t.profit)}</span></div>`:''}<div style="font-size:10px;color:var(--muted)">${new Date(t.date).toLocaleString()}</div><div class="record-actions">${azBtns(t.type,t.id,t.type)}<button class="btn btn-danger" onclick="deleteBusinessTxn('${t.id}')">لین دین حذف کریں</button></div></div>`).join(''):'<div class="card" style="color:var(--muted)">ابھی کوئی خریداری یا فروخت درج نہیں۔</div>';
     }
 
     // Export Data as JSON
@@ -2867,15 +2902,549 @@ table{border-radius:14px;overflow:hidden}
 
 
 
+    // =====================================================================
+    //  AZ Flow document engine: professional receipts & statements
+    //  Draws A4 pages on canvas (so Urdu is shaped by the phone itself),
+    //  then exports a real PDF / PNG that works offline and can be shared.
+    // =====================================================================
+    const AZD = {
+      W: 794, H: 1123, M: 38, S: 2,
+      FONT: "'Noto Nastaliq Urdu','Noto Naskh Arabic','Noto Sans Arabic','Segoe UI',Tahoma,Arial,sans-serif",
+      C: { ink: "#0f172a", mute: "#64748b", line: "#dbe4ee", head: "#06152e", head2: "#0c3a6b", accent: "#0284c7", soft: "#f1f5f9", zebra: "#f8fafc", good: "#059669", bad: "#dc2626", warn: "#d97706" }
+    };
+    let azdLast = null;
+
+    const azdMoney = n => "\u2066Rs. " + Number(n || 0).toLocaleString("en-US", { maximumFractionDigits: 2 }) + "\u2069";
+    const azdNum = n => "\u2066" + Number(n || 0).toLocaleString("en-US", { maximumFractionDigits: 2 }) + "\u2069";
+    const azdIsRtl = t => /[\u0590-\u08FF]/.test(String(t));
+    function azdDate(v) {
+      if (!v) return "—";
+      if (typeof v === "string" && /^\d{1,2}\/\d{1,2}\/\d{4}$/.test(v)) return v;
+      const d = new Date(v); if (isNaN(d)) return String(v);
+      return String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0") + "/" + d.getFullYear();
+    }
+    const azdTime = () => { const d = new Date(); return azdDate(d) + "  " + String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"); };
+
+    function azdFont(ctx, size, weight) { ctx.font = (weight || 600) + " " + size + "px " + AZD.FONT; }
+
+    // draw one line of text; x is the anchor (right edge for rtl, left edge for ltr unless align=center)
+    function azdText(ctx, text, x, y, o = {}) {
+      text = String(text ?? "");
+      const rtl = o.dir ? o.dir === "rtl" : azdIsRtl(text);
+      azdFont(ctx, o.size || 14, o.weight || 600);
+      ctx.fillStyle = o.color || AZD.C.ink;
+      ctx.textBaseline = "middle";
+      ctx.direction = rtl ? "rtl" : "ltr";
+      ctx.textAlign = o.align || (rtl ? "right" : "left");
+      ctx.fillText(text, x, y);
+    }
+
+    function azdWrap(ctx, text, maxW, size, weight) {
+      azdFont(ctx, size, weight);
+      const out = [];
+      String(text ?? "").split(/\n/).forEach(par => {
+        const words = par.split(/\s+/).filter(Boolean); let line = "";
+        if (!words.length) { out.push(""); return; }
+        words.forEach(w => {
+          const t = line ? line + " " + w : w;
+          if (ctx.measureText(t).width <= maxW || !line) line = t; else { out.push(line); line = w; }
+        });
+        out.push(line);
+      });
+      return out;
+    }
+
+    function azdRound(ctx, x, y, w, h, r) {
+      ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
+    }
+
+    async function azdLogo() {
+      const src = document.querySelector(".splash-logo img")?.src; if (!src) return null;
+      return await new Promise(res => { const im = new Image(); im.onload = () => res(im); im.onerror = () => res(null); im.src = src; });
+    }
+
+    // spec: { title, kind, docNo, date, blocks:[...] }
+    async function azdRender(spec) {
+      try { await Promise.race([document.fonts.load("700 16px 'Noto Nastaliq Urdu'"), new Promise(r => setTimeout(r, 1600))]); } catch (_) {}
+      const { W, H, M, S, C } = AZD; const logo = await azdLogo();
+      const pages = []; let cv, ctx, y;
+      const owner = (appOwnerProfile && (appOwnerProfile.name || "")) || "";
+      const ownerPhone = (appOwnerProfile && (appOwnerProfile.phone || "")) || "";
+      const bottomLimit = H - 64;
+
+      function newPage() {
+        cv = document.createElement("canvas"); cv.width = W * S; cv.height = H * S; ctx = cv.getContext("2d"); ctx.scale(S, S);
+        ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, W, H);
+        const first = pages.length === 0;
+        const hh = first ? 128 : 58;
+        const g = ctx.createLinearGradient(0, 0, W, hh); g.addColorStop(0, C.head); g.addColorStop(.6, C.head2); g.addColorStop(1, C.accent);
+        ctx.fillStyle = g; ctx.fillRect(0, 0, W, hh);
+        ctx.fillStyle = "rgba(255,255,255,.07)"; ctx.beginPath(); ctx.arc(W - 40, -10, first ? 110 : 60, 0, 7); ctx.fill();
+        ctx.fillStyle = "#fbbf24"; ctx.fillRect(0, hh, W, 4);
+        if (first) {
+          if (logo) { ctx.save(); azdRound(ctx, W - M - 64, 26, 64, 64, 16); ctx.clip(); ctx.drawImage(logo, W - M - 64, 26, 64, 64); ctx.restore(); }
+          else { ctx.fillStyle = "rgba(255,255,255,.18)"; azdRound(ctx, W - M - 64, 26, 64, 64, 16); ctx.fill(); azdText(ctx, "AZ", W - M - 32, 58, { size: 22, weight: 900, color: "#fff", align: "center", dir: "ltr" }); }
+          azdText(ctx, spec.title, W - M - 80, 46, { size: 25, weight: 900, color: "#fff" });
+          azdText(ctx, spec.subtitle || "AZ Flow — کھاتہ اور کاروباری ریکارڈ", W - M - 80, 82, { size: 12.5, weight: 600, color: "#bae6fd" });
+          azdText(ctx, "AZ Flow", M, 40, { size: 24, weight: 900, color: "#fff", dir: "ltr" });
+          if (spec.docNo) azdText(ctx, "No: " + spec.docNo, M, 74, { size: 13, weight: 700, color: "#e0f2fe", dir: "ltr" });
+          azdText(ctx, "Date: " + (spec.date || azdDate(new Date())), M, 98, { size: 12, weight: 600, color: "#bae6fd", dir: "ltr" });
+          y = hh + 24;
+        } else {
+          azdText(ctx, spec.title, W - M, 30, { size: 17, weight: 800, color: "#fff" });
+          azdText(ctx, "AZ Flow" + (spec.docNo ? "  •  " + spec.docNo : ""), M, 30, { size: 13, weight: 700, color: "#e0f2fe", dir: "ltr" });
+          y = hh + 22;
+        }
+        pages.push(cv);
+      }
+      const need = h => { if (y + h > bottomLimit) newPage(); };
+      newPage();
+
+      // issuer strip (first page)
+      if (owner || ownerPhone) {
+        ctx.fillStyle = C.soft; azdRound(ctx, M, y, W - 2 * M, 46, 12); ctx.fill();
+        azdText(ctx, "جاری کنندہ:  " + (owner || "—"), W - M - 14, y + 23, { size: 13.5, weight: 800 });
+        if (ownerPhone) azdText(ctx, "\u2066" + ownerPhone + "\u2069", M + 14, y + 23, { size: 13.5, weight: 700, color: C.accent, dir: "ltr" });
+        y += 62;
+      }
+
+      for (const b of spec.blocks) {
+        if (b.type === "section") {
+          need(48); ctx.fillStyle = C.accent; azdRound(ctx, W - M - 5, y + 4, 5, 26, 3); ctx.fill();
+          azdText(ctx, b.text, W - M - 16, y + 17, { size: 16, weight: 900, color: C.head }); y += 44;
+        }
+        else if (b.type === "kv") {
+          const colW = (W - 2 * M);
+          const rows = b.rows.filter(r => r && r[1] !== undefined && r[1] !== null && String(r[1]) !== "");
+          // measure
+          const sized = rows.map(r => { const lines = azdWrap(ctx, r[1], colW * .56 - 24, 14, 700); return { r, lines, h: Math.max(38, lines.length * 26 + 12) }; });
+          let i = 0;
+          while (i < sized.length) {
+            need(sized[i].h + 10);
+            const startY = y; let seg = 0, j = i;
+            while (j < sized.length && startY + seg + sized[j].h <= bottomLimit) { seg += sized[j].h; j++; }
+            if (j === i) { newPage(); continue; }
+            ctx.fillStyle = "#fff"; ctx.strokeStyle = C.line; ctx.lineWidth = 1; azdRound(ctx, M, startY, colW, seg, 14); ctx.fill(); ctx.stroke();
+            let yy = startY;
+            for (let k = i; k < j; k++) {
+              const it = sized[k]; if (k > i) { ctx.strokeStyle = C.line; ctx.beginPath(); ctx.moveTo(M + 12, yy); ctx.lineTo(W - M - 12, yy); ctx.stroke(); }
+              const o = it.r[2] || {};
+              azdText(ctx, it.r[0], W - M - 16, yy + it.h / 2, { size: 13, weight: 700, color: C.mute });
+              it.lines.forEach((ln, li) => {
+                const cy = yy + it.h / 2 + (li - (it.lines.length - 1) / 2) * 26;
+                azdText(ctx, ln, M + 16, cy, { size: 14, weight: o.bold === false ? 600 : 800, color: o.color || C.ink, align: "left", dir: azdIsRtl(ln) ? "rtl" : "ltr" });
+              });
+              yy += it.h;
+            }
+            y = startY + seg + 14; i = j;
+          }
+        }
+        else if (b.type === "table") {
+          const cols = b.head.length, tw = W - 2 * M;
+          const wr = b.widths || b.head.map(() => 1), sumW = wr.reduce((a, c) => a + c, 0);
+          const cw = wr.map(w => tw * w / sumW);
+          const xs = []; let acc = W - M; cw.forEach(w => { xs.push(acc); acc -= w; });  // right edge of each column (RTL order)
+          const drawHead = () => {
+            ctx.fillStyle = C.head; azdRound(ctx, M, y, tw, 36, 10); ctx.fill();
+            b.head.forEach((h, c) => azdText(ctx, h, xs[c] - cw[c] / 2, y + 18, { size: 12.5, weight: 800, color: "#fff", align: "center" }));
+            y += 38;
+          };
+          need(36 + 44); drawHead();
+          b.rows.forEach((row, ri) => {
+            const cells = row.map((cell, c) => {
+              const o = (cell && typeof cell === "object" && !Array.isArray(cell)) ? cell : { t: cell };
+              const t = o.t === undefined || o.t === null || o.t === "" ? "—" : String(o.t);
+              return { o, lines: azdWrap(ctx, t, cw[c] - 14, 12.5, o.bold ? 800 : 600) };
+            });
+            const h = Math.max(36, Math.max(...cells.map(c => c.lines.length)) * 24 + 10);
+            if (y + h > bottomLimit) { newPage(); drawHead(); }
+            if (b.totalRow && ri === b.rows.length - 1) { ctx.fillStyle = "#e0f2fe"; azdRound(ctx, M, y, tw, h, 8); ctx.fill(); }
+            else if (ri % 2 === 1) { ctx.fillStyle = C.zebra; ctx.fillRect(M, y, tw, h); }
+            cells.forEach((cell, c) => {
+              cell.lines.forEach((ln, li) => {
+                const cy = y + h / 2 + (li - (cell.lines.length - 1) / 2) * 24;
+                azdText(ctx, ln, xs[c] - cw[c] / 2, cy, { size: 12.5, weight: cell.o.bold ? 800 : 600, color: cell.o.color || C.ink, align: "center", dir: azdIsRtl(ln) ? "rtl" : "ltr" });
+              });
+            });
+            ctx.strokeStyle = C.line; ctx.beginPath(); ctx.moveTo(M, y + h); ctx.lineTo(W - M, y + h); ctx.stroke();
+            y += h;
+          });
+          y += 18;
+        }
+        else if (b.type === "total") {
+          need(86); const col = b.color || C.good;
+          const g = ctx.createLinearGradient(M, y, W - M, y + 74); g.addColorStop(0, col); g.addColorStop(1, C.head2);
+          ctx.fillStyle = g; azdRound(ctx, M, y, W - 2 * M, 74, 18); ctx.fill();
+          azdText(ctx, b.label, W - M - 22, y + 37, { size: 16, weight: 800, color: "#fff" });
+          azdText(ctx, b.value, M + 22, y + 37, { size: 27, weight: 900, color: "#fff", align: "left", dir: "ltr" });
+          y += 92;
+        }
+        else if (b.type === "summary") {
+          const n = b.items.length, gap = 10, w = (W - 2 * M - gap * (n - 1)) / n; need(78);
+          b.items.forEach((it, i) => {
+            const x = W - M - (i + 1) * w - i * gap;
+            ctx.fillStyle = "#fff"; ctx.strokeStyle = C.line; azdRound(ctx, x, y, w, 68, 14); ctx.fill(); ctx.stroke();
+            ctx.fillStyle = it.color || C.accent; azdRound(ctx, x + w - 5, y + 12, 4, 44, 2); ctx.fill();
+            azdText(ctx, it.label, x + w / 2, y + 20, { size: 11.5, weight: 700, color: C.mute, align: "center" });
+            azdText(ctx, it.value, x + w / 2, y + 46, { size: 16, weight: 900, color: it.color || C.ink, align: "center", dir: "ltr" });
+          });
+          y += 84;
+        }
+        else if (b.type === "badge") {
+          need(44); azdFont(ctx, 14, 800); const w = ctx.measureText(b.text).width + 36;
+          ctx.fillStyle = b.bg || "#dcfce7"; azdRound(ctx, W - M - w, y, w, 32, 16); ctx.fill();
+          azdText(ctx, b.text, W - M - w / 2, y + 16, { size: 14, weight: 800, color: b.color || C.good, align: "center" }); y += 48;
+        }
+        else if (b.type === "note") {
+          const lines = azdWrap(ctx, b.text, W - 2 * M - 8, 12, 600); need(lines.length * 22 + 10);
+          lines.forEach((ln, i) => azdText(ctx, ln, W - M, y + 11 + i * 22, { size: 12, weight: 600, color: C.mute })); y += lines.length * 22 + 12;
+        }
+        else if (b.type === "sign") {
+          need(80); ctx.strokeStyle = "#94a3b8"; ctx.setLineDash([4, 4]);
+          [[W - M - 190, W - M], [M, M + 190]].forEach(([a, z]) => { ctx.beginPath(); ctx.moveTo(a, y + 50); ctx.lineTo(z, y + 50); ctx.stroke(); });
+          ctx.setLineDash([]);
+          azdText(ctx, b.left || "دستخط / مہر (وصول کنندہ)", W - M - 95, y + 68, { size: 12, color: C.mute, align: "center" });
+          azdText(ctx, b.right || "دستخط (ادا کنندہ)", M + 95, y + 68, { size: 12, color: C.mute, align: "center" });
+          y += 90;
+        }
+        else if (b.type === "gap") { y += b.h || 12; }
+      }
+
+      // footer on every page
+      const total = pages.length;
+      pages.forEach((p, i) => {
+        const c = p.getContext("2d"); c.setTransform(S, 0, 0, S, 0, 0);
+        c.strokeStyle = C.line; c.lineWidth = 1; c.beginPath(); c.moveTo(M, H - 50); c.lineTo(W - M, H - 50); c.stroke();
+        azdText(c, "AZ Flow  •  Powered by Ansar AZ", W / 2, H - 30, { size: 11, weight: 700, color: C.mute, align: "center", dir: "ltr" });
+        azdText(c, "صفحہ " + (i + 1) + " / " + total, W - M, H - 30, { size: 11.5, weight: 700, color: C.mute });
+        azdText(c, azdTime(), M, H - 30, { size: 10.5, weight: 600, color: "#94a3b8", dir: "ltr" });
+      });
+      return pages;
+    }
+
+    // ---- minimal PDF writer: one JPEG page image per A4 page ----
+    function azdPdfBlob(pages) {
+      const enc = new TextEncoder(), parts = [], offs = []; let len = 0;
+      const push = u => { parts.push(u); len += u.length; };
+      const str = t => push(enc.encode(t));
+      const PW = 595.28, PH = 841.89, n = pages.length;
+      str("%PDF-1.4\n");
+      offs[1] = len; str("1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n");
+      offs[2] = len; str("2 0 obj\n<< /Type /Pages /Kids [" + pages.map((_, i) => (3 + i * 3) + " 0 R").join(" ") + "] /Count " + n + " >>\nendobj\n");
+      pages.forEach((cv, i) => {
+        const pObj = 3 + i * 3, cObj = pObj + 1, iObj = pObj + 2;
+        const b64 = cv.toDataURL("image/jpeg", 0.92).split(",")[1], bin = atob(b64), img = new Uint8Array(bin.length);
+        for (let k = 0; k < bin.length; k++) img[k] = bin.charCodeAt(k);
+        offs[pObj] = len; str(pObj + " 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 " + PW + " " + PH + "] /Resources << /XObject << /Im0 " + iObj + " 0 R >> >> /Contents " + cObj + " 0 R >>\nendobj\n");
+        const content = "q " + PW + " 0 0 " + PH + " 0 0 cm /Im0 Do Q";
+        offs[cObj] = len; str(cObj + " 0 obj\n<< /Length " + content.length + " >>\nstream\n" + content + "\nendstream\nendobj\n");
+        offs[iObj] = len; str(iObj + " 0 obj\n<< /Type /XObject /Subtype /Image /Width " + cv.width + " /Height " + cv.height + " /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length " + img.length + " >>\nstream\n");
+        push(img); str("\nendstream\nendobj\n");
+      });
+      const total = 3 + n * 3, xref = len;
+      str("xref\n0 " + total + "\n0000000000 65535 f \n");
+      for (let i = 1; i < total; i++) str(String(offs[i]).padStart(10, "0") + " 00000 n \n");
+      str("trailer\n<< /Size " + total + " /Root 1 0 R >>\nstartxref\n" + xref + "\n%%EOF");
+      return new Blob(parts, { type: "application/pdf" });
+    }
+
+    function azdPngBlob(pages) {
+      return new Promise(res => {
+        if (pages.length === 1) return pages[0].toBlob(res, "image/png");
+        const big = document.createElement("canvas"); big.width = pages[0].width; big.height = pages[0].height * pages.length;
+        const c = big.getContext("2d"); pages.forEach((p, i) => c.drawImage(p, 0, i * p.height)); big.toBlob(res, "image/png");
+      });
+    }
+
+    function azdSave(blob, name) {
+      const url = URL.createObjectURL(blob), a = document.createElement("a");
+      a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 4000);
+    }
+
+    // ---- viewer ----
+    function azdEnsureModal() {
+      if (document.getElementById("modalDoc")) return;
+      const m = document.createElement("div"); m.id = "modalDoc"; m.className = "modal-overlay az-doc-overlay";
+      m.setAttribute("role", "dialog"); m.setAttribute("aria-modal", "true");
+      m.innerHTML = `<div class="az-doc-box">
+        <div class="az-doc-head"><h3 id="azdTitle"></h3><button class="close-btn" type="button" aria-label="بند کریں" onclick="azdClose()">&times;</button></div>
+        <div class="az-doc-pages" id="azdPages"></div>
+        <div class="az-doc-actions">
+          <button class="btn btn-success" type="button" onclick="azdDownloadPdf()">📄 PDF ڈاؤنلوڈ</button>
+          <button class="btn btn-whatsapp" type="button" onclick="azdWhatsApp()">🟢 WhatsApp</button>
+          <button class="btn btn-primary" type="button" onclick="azdDownloadPng()">🖼️ تصویر (PNG)</button>
+        </div></div>`;
+      m.addEventListener("mousedown", e => { if (e.target === m) azdClose(); });
+      document.body.appendChild(m);
+    }
+    function azdClose() { const m = document.getElementById("modalDoc"); if (m) m.style.display = "none"; azdLast = null; }
+
+    async function azdOpen(spec, meta = {}) {
+      azdEnsureModal(); showToast("دستاویز تیار ہو رہی ہے…", "⏳");
+      let pages;
+      try { pages = await azdRender(spec); } catch (e) { showToast("دستاویز نہیں بن سکی؛ دوبارہ کوشش کریں۔", "❌"); return; }
+      azdLast = { spec, pages, meta, file: meta.file || ("AZ-Flow-" + Date.now()) };
+      document.getElementById("azdTitle").textContent = spec.title;
+      document.getElementById("azdPages").innerHTML = pages.map((p, i) => `<img alt="صفحہ ${i + 1}" src="${p.toDataURL("image/jpeg", 0.85)}">`).join("");
+      document.getElementById("modalDoc").style.display = "flex";
+      document.getElementById("azdPages").scrollTop = 0;
+    }
+
+    async function azdShareOrSave(kind) {
+      if (!azdLast) return;
+      const isPdf = kind === "pdf";
+      const blob = isPdf ? azdPdfBlob(azdLast.pages) : await azdPngBlob(azdLast.pages);
+      const name = azdLast.file + (isPdf ? ".pdf" : ".png");
+      return { blob, name };
+    }
+    async function azdDownloadPdf() { const f = await azdShareOrSave("pdf"); if (!f) return; azdSave(f.blob, f.name); showToast("PDF ڈاؤنلوڈ ہو گئی ✓", "📄"); }
+    async function azdDownloadPng() { const f = await azdShareOrSave("png"); if (!f) return; azdSave(f.blob, f.name); showToast("تصویر محفوظ ہو گئی ✓", "🖼️"); }
+    async function azdWhatsApp() {
+      if (!azdLast) return;
+      const f = await azdShareOrSave("pdf"), meta = azdLast.meta;
+      const file = new File([f.blob], f.name, { type: "application/pdf" });
+      const text = azdSummaryText(azdLast.spec);
+      try {
+        if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title: azdLast.spec.title, text }); return; }
+      } catch (e) { if (e && e.name === "AbortError") return; }
+      azdSave(f.blob, f.name); showToast("PDF محفوظ ہو گئی؛ WhatsApp میں اٹیچ کر کے بھیجیں۔", "📎");
+      setTimeout(() => openWhatsAppReceipt(meta.phone || "", text), 600);
+    }
+    function azdSummaryText(spec) {
+      let t = "🧾 *AZ Flow — " + spec.title + "*\n━━━━━━━━━━━━━━━━━━";
+      (spec.blocks || []).forEach(b => { if (b.type === "kv") b.rows.forEach(r => { if (r && r[1] !== undefined && String(r[1]) !== "") t += "\n" + r[0] + ": " + String(r[1]).replace(/[\u2066\u2069]/g, ""); }); if (b.type === "total") t += "\n*" + b.label + ": " + String(b.value).replace(/[\u2066\u2069]/g, "") + "*"; });
+      return t + senderReceiptText() + "\n\n✨ *Powered by Ansar AZ*";
+    }
+
+    // =========================== document builders ===========================
+    const azdKindName = { customer: "کسٹمر", udhaar: "ادھار", purchase: "خریداری", sale: "فروخت", partner: "پارٹنر", job: "پارٹنرشپ کام", household: "گھریلو خرچہ", personal: "ذاتی خرچہ" };
+    const sameText = (a, b) => String(a || "").trim().toLowerCase() === String(b || "").trim().toLowerCase();
+    const cleanPhone = p => String(p || "").replace(/\D/g, "");
+
+    function azdBuildReceipt(kind, id) {
+      const sid = String(id);
+      if (kind === "customer") {
+        const r = customerRecords.find(x => String(x.id) === sid); if (!r) return null;
+        const amount = Number(r.amount) || 0, paid = Number(r.paidAmount ?? r.amount) || 0, bal = Number(r.balanceAmount ?? Math.max(0, amount - paid)) || 0;
+        const done = r.status === "مکمل ہو گیا";
+        return { spec: { title: "ادائیگی کی رسید", docNo: "AZ-" + r.id, date: azdDate(r.date), blocks: [
+          { type: "section", text: "کسٹمر کی تفصیل" },
+          { type: "kv", rows: [["کسٹمر کا نام", r.name], ["موبائل", [r.phone1, r.phone2, r.phone3].filter(Boolean).join(" ، ")], ["رسید کی تاریخ", azdDate(r.date)], ["کام / سروس", r.work || "عام سروس"], ["ادائیگی کا طریقہ", r.paymentType], ["حالت", r.status], ["اگلی ادائیگی کی تاریخ", r.dueDate ? azdDate(r.dueDate) : ""], ["اضافی تفصیل", r.additionalDetails]] },
+          { type: "section", text: "حساب کی صورتحال" },
+          { type: "summary", items: [{ label: "کل رقم", value: azdMoney(amount), color: AZD.C.accent }, { label: "وصول شدہ", value: azdMoney(paid), color: AZD.C.good }, { label: "باقی", value: azdMoney(bal), color: bal > 0 ? AZD.C.warn : AZD.C.good }] },
+          { type: "badge", text: bal > 0 ? "⏳ بقایا رقم باقی ہے" : "✅ ادائیگی مکمل", bg: bal > 0 ? "#fef3c7" : "#dcfce7", color: bal > 0 ? "#b45309" : AZD.C.good },
+          { type: "total", label: bal > 0 ? "واجب الادا بقایا رقم" : "کل وصول شدہ رقم", value: azdMoney(bal > 0 ? bal : paid), color: bal > 0 ? AZD.C.warn : AZD.C.good },
+          { type: "note", text: "یہ کمپیوٹر سے تیار کردہ رسید ہے۔ ادائیگی کا ریکارڈ AZ Flow میں محفوظ ہے۔" }, { type: "sign" }] }, meta: { phone: r.phone1, file: "AZ-Flow-Receipt-" + r.id } };
+      }
+      if (kind === "udhaar") {
+        const u = udhaarRecords.find(x => String(x.id) === sid); if (!u) return null;
+        const lena = u.type === "lena";
+        return { spec: { title: "ادھار کی رسید", docNo: "AZ-U-" + u.id, date: azdDate(u.date), blocks: [
+          { type: "section", text: "کھاتے کی تفصیل" },
+          { type: "kv", rows: [["شخص / پارٹی", u.personName], ["موبائل", u.phone], ["کھاتے کی قسم", lena ? "رقم وصول کرنی ہے (لینا ہے)" : "رقم ادا کرنی ہے (دینا ہے)", { color: lena ? AZD.C.good : AZD.C.bad }], ["درج تاریخ", azdDate(u.date)], ["مد / تفصیل", u.details], ["واپسی کا وعدہ", u.dueDate ? azdDate(u.dueDate) : ""], ["اضافی تفصیل / شرائط", u.additionalDetails], ["حالت", u.settled ? "ادائیگی مکمل" : "بقایا"]] },
+          { type: "total", label: lena ? "وصول کرنے والی رقم" : "ادا کرنے والی رقم", value: azdMoney(u.amount), color: lena ? AZD.C.good : AZD.C.bad },
+          { type: "badge", text: u.settled ? "✅ ادائیگی مکمل ہو چکی ہے" : "⏳ ادائیگی باقی ہے", bg: u.settled ? "#dcfce7" : "#fef3c7", color: u.settled ? AZD.C.good : "#b45309" },
+          { type: "sign" }] }, meta: { phone: u.phone, file: "AZ-Flow-Udhaar-" + u.id } };
+      }
+      if (kind === "purchase" || kind === "sale") {
+        const t = businessTransactions.find(x => String(x.id) === sid); if (!t) return null; const sale = t.type === "sale";
+        return { spec: { title: sale ? "فروخت کی رسید" : "خریداری کی رسید", docNo: (sale ? "AZ-S-" : "AZ-B-") + String(t.id).slice(-6), date: azdDate(t.date), blocks: [
+          { type: "section", text: "لین دین کی تفصیل" },
+          { type: "kv", rows: [["سامان", t.name], ["قسم", sale ? "فروخت" : "خریداری"], ["تاریخ", azdDate(t.date)], ["مقدار", azdNum(t.qty)], [sale ? "فی یونٹ فروخت قیمت" : "فی یونٹ خریداری قیمت", azdMoney(t.unit)], sale ? ["فی یونٹ خریداری لاگت", azdMoney(t.cost)] : null].filter(Boolean) },
+          { type: "total", label: sale ? "کل فروخت" : "کل خریداری", value: azdMoney(t.total), color: sale ? AZD.C.good : AZD.C.accent },
+          sale ? { type: "summary", items: [{ label: "منافع / نقصان", value: azdMoney(t.profit), color: t.profit >= 0 ? AZD.C.good : AZD.C.bad }] } : { type: "gap" }, { type: "sign" }] }, meta: { file: "AZ-Flow-" + (sale ? "Sale-" : "Purchase-") + String(t.id).slice(-6) } };
+      }
+      if (kind === "partner") {
+        const p = businessPartners.find(x => String(x.id) === sid); if (!p) return null;
+        return { spec: { title: "پارٹنر کارڈ", docNo: "AZ-PR-" + String(p.id).slice(-6), blocks: [
+          { type: "section", text: "پارٹنر کی تفصیل" },
+          { type: "kv", rows: [["پارٹنر کا نام", p.name], ["سرمایہ", azdMoney(p.capital)], ["منافع کا حصہ", azdNum(p.share) + " %"], ["اب تک درج شدہ منافع", azdMoney(p.profit), { color: AZD.C.good }]] },
+          { type: "total", label: "درج شدہ منافع", value: azdMoney(p.profit), color: AZD.C.good }, { type: "sign", left: "دستخط (پارٹنر)", right: "دستخط (مینیجر)" }] }, meta: { file: "AZ-Flow-Partner-" + String(p.id).slice(-6) } };
+      }
+      if (kind === "job") {
+        const j = partnerJobs.find(x => String(x.id) === sid); if (!j) return null;
+        return { spec: { title: "پارٹنرشپ کام کی رسید", docNo: "AZ-P-" + String(j.id).slice(-6), date: azdDate(j.date), blocks: [
+          { type: "section", text: "کام کی تفصیل" },
+          { type: "kv", rows: [["کام", j.detail], ["کام درج کرنے والا", j.partnerName], ["تاریخ", azdDate(j.date)], ["کل فیس / فروخت", azdMoney(j.fee)], ["کل لاگت", azdMoney(j.cost)]] },
+          { type: "total", label: "خالص منافع", value: azdMoney(j.profit), color: j.profit >= 0 ? AZD.C.good : AZD.C.bad },
+          { type: "section", text: "منافع کی تقسیم" },
+          { type: "table", head: ["پارٹنر", "حصہ %", "رقم"], widths: [3, 1.2, 2], rows: (j.allocations || []).map(a => [a.name, azdNum(a.share) + "%", { t: azdMoney(a.amount), bold: true, color: AZD.C.good }]) },
+          { type: "sign", left: "دستخط (پارٹنر)", right: "دستخط (مینیجر)" }] }, meta: { file: "AZ-Flow-Job-" + String(j.id).slice(-6) } };
+      }
+      if (kind === "household" || kind === "personal") {
+        const arr = kind === "household" ? householdExpenses : personalExpenses; const x = arr.find(e => String(e.id) === sid); if (!x) return null;
+        return { spec: { title: kind === "household" ? "گھریلو خرچے کا واؤچر" : "ذاتی خرچے کا واؤچر", docNo: (kind === "household" ? "AZ-H-" : "AZ-X-") + String(x.id).slice(-6), date: azdDate(x.date), blocks: [
+          { type: "section", text: "خرچے کی تفصیل" },
+          { type: "kv", rows: [["تفصیل", x.detail], ["قسم", x.category || "دیگر"], ["تاریخ", azdDate(x.date)], ["کھاتہ", kind === "household" ? "گھریلو" : "ذاتی"]] },
+          { type: "total", label: "خرچ کی رقم", value: azdMoney(x.amount), color: AZD.C.bad }, { type: "sign", left: "دستخط (وصول کنندہ)", right: "دستخط" }] }, meta: { file: "AZ-Flow-Expense-" + String(x.id).slice(-6) } };
+      }
+      return null;
+    }
+
+    function azdBuildStatement(kind, id) {
+      const sid = String(id), C = AZD.C;
+      if (kind === "customer") {
+        const r = customerRecords.find(x => String(x.id) === sid); if (!r) return null;
+        const list = customerRecords.filter(x => sameText(x.name, r.name) || (cleanPhone(r.phone1) && cleanPhone(x.phone1) === cleanPhone(r.phone1))).sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+        let tA = 0, tP = 0, tB = 0;
+        const rows = list.map((x, i) => { const a = Number(x.amount) || 0, p = Number(x.paidAmount ?? x.amount) || 0, b = Number(x.balanceAmount ?? Math.max(0, a - p)) || 0; tA += a; tP += p; tB += b;
+          return [String(i + 1), azdDate(x.date), x.work || "عام سروس", azdMoney(a), azdMoney(p), { t: azdMoney(b), color: b > 0 ? C.warn : C.good, bold: true }, x.status === "مکمل ہو گیا" ? "مکمل" : "جاری"]; });
+        rows.push([{ t: "کل", bold: true }, "", "", { t: azdMoney(tA), bold: true }, { t: azdMoney(tP), bold: true, color: C.good }, { t: azdMoney(tB), bold: true, color: C.warn }, ""]);
+        return { spec: { title: "کسٹمر کی مکمل اسٹیٹمنٹ", docNo: "ST-" + r.id, blocks: [
+          { type: "kv", rows: [["کسٹمر", r.name], ["موبائل", [r.phone1, r.phone2, r.phone3].filter(Boolean).join(" ، ")], ["کل ریکارڈ", azdNum(list.length)]] },
+          { type: "summary", items: [{ label: "کل رقم", value: azdMoney(tA), color: C.accent }, { label: "کل وصول", value: azdMoney(tP), color: C.good }, { label: "کل باقی", value: azdMoney(tB), color: tB > 0 ? C.warn : C.good }] },
+          { type: "section", text: "تمام اندراجات" },
+          { type: "table", head: ["#", "تاریخ", "کام", "رقم", "وصول", "باقی", "حالت"], widths: [.6, 1.3, 3, 1.7, 1.7, 1.7, 1], rows, totalRow: true }, { type: "sign" }] }, meta: { phone: r.phone1, file: "AZ-Flow-Statement-" + String(r.name).replace(/\s+/g, "_") } };
+      }
+      if (kind === "udhaar") {
+        const u = udhaarRecords.find(x => String(x.id) === sid); if (!u) return null;
+        const list = udhaarRecords.filter(x => sameText(x.personName, u.personName) || (cleanPhone(u.phone) && cleanPhone(x.phone) === cleanPhone(u.phone))).sort((a, b) => (a.createdAt || a.id || 0) - (b.createdAt || b.id || 0));
+        let run = 0, rec = 0, pay = 0;
+        const rows = list.map(x => { const a = Number(x.amount) || 0, lena = x.type === "lena"; if (!x.settled) { run += lena ? a : -a; if (lena) rec += a; else pay += a; }
+          return [azdDate(x.date), x.details || "—", { t: lena ? "لینا" : "دینا", color: lena ? C.good : C.bad, bold: true }, azdMoney(a), x.settled ? "مکمل" : "بقایا", { t: azdMoney(Math.abs(run)) + (run >= 0 ? " ⬇" : " ⬆"), bold: true, color: run >= 0 ? C.good : C.bad }]; });
+        return { spec: { title: "ادھار کھاتے کی مکمل اسٹیٹمنٹ", docNo: "ST-U-" + u.id, blocks: [
+          { type: "kv", rows: [["شخص / پارٹی", u.personName], ["موبائل", u.phone], ["کل اندراجات", azdNum(list.length)]] },
+          { type: "summary", items: [{ label: "وصول کرنا ہے", value: azdMoney(rec), color: C.good }, { label: "ادا کرنا ہے", value: azdMoney(pay), color: C.bad }, { label: "خالص بیلنس", value: azdMoney(Math.abs(rec - pay)), color: rec - pay >= 0 ? C.good : C.bad }] },
+          { type: "section", text: "کھاتے کی تفصیل (بقایا اندراجات کا چلتا بیلنس)" },
+          { type: "table", head: ["تاریخ", "تفصیل", "قسم", "رقم", "حالت", "بیلنس"], widths: [1.4, 3, 1, 1.8, 1.1, 2], rows },
+          { type: "total", label: rec - pay >= 0 ? "آپ کو کل وصول کرنا ہے" : "آپ کو کل ادا کرنا ہے", value: azdMoney(Math.abs(rec - pay)), color: rec - pay >= 0 ? C.good : C.bad }, { type: "sign" }] }, meta: { phone: u.phone, file: "AZ-Flow-Udhaar-Statement-" + String(u.personName).replace(/\s+/g, "_") } };
+      }
+      if (kind === "purchase" || kind === "sale") {
+        const t = businessTransactions.find(x => String(x.id) === sid); if (!t) return null;
+        const list = businessTransactions.filter(x => sameText(x.name, t.name)).sort((a, b) => new Date(a.date) - new Date(b.date));
+        let stock = 0, bQ = 0, bA = 0, sQ = 0, sA = 0, pr = 0;
+        const rows = list.map(x => { const bq = x.type === "purchase"; stock += bq ? x.qty : -x.qty; if (bq) { bQ += x.qty; bA += x.total; } else { sQ += x.qty; sA += x.total; pr += x.profit; }
+          return [azdDate(x.date), { t: bq ? "خریداری" : "فروخت", bold: true, color: bq ? C.accent : C.good }, azdNum(x.qty), azdMoney(x.unit), azdMoney(x.total), bq ? "—" : { t: azdMoney(x.profit), color: x.profit >= 0 ? C.good : C.bad }, { t: azdNum(stock), bold: true }]; });
+        return { spec: { title: "سامان کی مکمل اسٹیٹمنٹ", docNo: "ST-B-" + String(t.id).slice(-6), blocks: [
+          { type: "kv", rows: [["سامان", t.name], ["کل اندراجات", azdNum(list.length)]] },
+          { type: "summary", items: [{ label: "کل خریداری", value: azdMoney(bA), color: C.accent }, { label: "کل فروخت", value: azdMoney(sA), color: C.good }, { label: "منافع", value: azdMoney(pr), color: pr >= 0 ? C.good : C.bad }, { label: "موجودہ اسٹاک", value: azdNum(stock), color: C.head }] },
+          { type: "section", text: "خریداری و فروخت کی تفصیل" },
+          { type: "table", head: ["تاریخ", "قسم", "مقدار", "فی یونٹ", "کل رقم", "منافع", "اسٹاک"], widths: [1.4, 1.2, 1, 1.6, 1.8, 1.6, 1], rows }, { type: "sign" }] }, meta: { file: "AZ-Flow-Item-" + String(t.name).replace(/\s+/g, "_") } };
+      }
+      if (kind === "partner") {
+        const p = businessPartners.find(x => String(x.id) === sid); if (!p) return null;
+        let tot = 0;
+        const rows = partnerJobs.map(j => { const a = (j.allocations || []).find(z => String(z.partnerId) === sid); if (!a) return null; tot += Number(a.amount) || 0;
+          return [azdDate(j.date), j.detail, azdMoney(j.fee), azdMoney(j.cost), azdMoney(j.profit), azdNum(a.share) + "%", { t: azdMoney(a.amount), bold: true, color: C.good }]; }).filter(Boolean);
+        return { spec: { title: "پارٹنر کی مکمل اسٹیٹمنٹ", docNo: "ST-PR-" + String(p.id).slice(-6), blocks: [
+          { type: "kv", rows: [["پارٹنر", p.name], ["منافع کا حصہ", azdNum(p.share) + " %"]] },
+          { type: "summary", items: [{ label: "سرمایہ", value: azdMoney(p.capital), color: C.accent }, { label: "کاموں سے حصہ", value: azdMoney(tot), color: C.good }, { label: "کل درج شدہ منافع", value: azdMoney(p.profit), color: C.good }] },
+          { type: "section", text: "کاموں میں حصہ" },
+          rows.length ? { type: "table", head: ["تاریخ", "کام", "فیس", "لاگت", "منافع", "حصہ", "رقم"], widths: [1.3, 2.6, 1.5, 1.5, 1.5, 1, 1.7], rows } : { type: "note", text: "اس پارٹنر کے نام ابھی کوئی کام درج نہیں۔" },
+          { type: "sign", left: "دستخط (پارٹنر)", right: "دستخط (مینیجر)" }] }, meta: { file: "AZ-Flow-Partner-Statement-" + String(p.name).replace(/\s+/g, "_") } };
+      }
+      if (kind === "job") {
+        const j = partnerJobs.find(x => String(x.id) === sid); if (!j) return null;
+        const rows = (j.allocations || []).map(a => { const p = businessPartners.find(z => String(z.id) === String(a.partnerId)); return [a.name, p ? azdMoney(p.capital) : "—", azdNum(a.share) + "%", { t: azdMoney(a.amount), bold: true, color: C.good }, p ? azdMoney(p.profit) : "—"]; });
+        return { spec: { title: "پارٹنرشپ کام کی مکمل اسٹیٹمنٹ", docNo: "ST-P-" + String(j.id).slice(-6), date: azdDate(j.date), blocks: [
+          { type: "kv", rows: [["کام", j.detail], ["کام درج کرنے والا", j.partnerName], ["تاریخ", azdDate(j.date)]] },
+          { type: "summary", items: [{ label: "کل فیس", value: azdMoney(j.fee), color: C.accent }, { label: "کل لاگت", value: azdMoney(j.cost), color: C.bad }, { label: "خالص منافع", value: azdMoney(j.profit), color: j.profit >= 0 ? C.good : C.bad }] },
+          { type: "section", text: "پارٹنرز میں تقسیم" },
+          { type: "table", head: ["پارٹنر", "سرمایہ", "حصہ %", "اس کام کا منافع", "کل درج منافع"], widths: [2.4, 1.8, 1.1, 2, 2], rows }, { type: "sign", left: "دستخط (پارٹنر)", right: "دستخط (مینیجر)" }] }, meta: { file: "AZ-Flow-Job-Statement-" + String(j.id).slice(-6) } };
+      }
+      if (kind === "household" || kind === "personal") {
+        const arr = kind === "household" ? householdExpenses : personalExpenses; const x = arr.find(e => String(e.id) === sid); if (!x) return null;
+        const list = arr.filter(e => (e.category || "دیگر") === (x.category || "دیگر")).sort((a, b) => String(a.date).localeCompare(String(b.date)));
+        let run = 0; const rows = list.map((e, i) => { run += Number(e.amount) || 0; return [String(i + 1), azdDate(e.date), e.detail, azdMoney(e.amount), { t: azdMoney(run), bold: true }]; });
+        const month = localDateInputValue().slice(0, 7), all = arr.reduce((a, e) => a + (Number(e.amount) || 0), 0), mth = list.filter(e => String(e.date).slice(0, 7) === month).reduce((a, e) => a + (Number(e.amount) || 0), 0);
+        return { spec: { title: (kind === "household" ? "گھریلو" : "ذاتی") + " خرچے کی مکمل اسٹیٹمنٹ", docNo: "ST-" + (kind === "household" ? "H" : "X") + "-" + String(x.id).slice(-6), blocks: [
+          { type: "kv", rows: [["قسم (کیٹیگری)", x.category || "دیگر"], ["اندراجات", azdNum(list.length)]] },
+          { type: "summary", items: [{ label: "اس قسم کا کل خرچ", value: azdMoney(run), color: C.bad }, { label: "اس ماہ (اس قسم)", value: azdMoney(mth), color: C.warn }, { label: "تمام اقسام کا کل", value: azdMoney(all), color: C.head }] },
+          { type: "section", text: "خرچوں کی تفصیل" },
+          { type: "table", head: ["#", "تاریخ", "تفصیل", "رقم", "چلتا کل"], widths: [.6, 1.4, 3.4, 1.8, 1.9], rows }, { type: "sign" }] }, meta: { file: "AZ-Flow-Expense-Statement-" + String(x.category || "other").replace(/\s+/g, "_") } };
+      }
+      return null;
+    }
+
+    function azRecordReceipt(kind, id) { const d = azdBuildReceipt(kind, id); if (!d) { showToast("ریکارڈ نہیں ملا۔", "⚠️"); return; } azdOpen(d.spec, d.meta); }
+    function azRecordStatement(kind, id) { const d = azdBuildStatement(kind, id); if (!d) { showToast("ریکارڈ نہیں ملا۔", "⚠️"); return; } azdOpen(d.spec, d.meta); }
+
+    // ---- route every existing receipt / PDF button through the new engine ----
+    window.viewCustomerReceipt = id => azRecordReceipt("customer", id);
+    window.viewUdhaarReceipt = id => azRecordReceipt("udhaar", id);
+    window.viewPartnerJobReceipt = id => azRecordReceipt("job", id);
+    window.exportPartnerPDF = id => azRecordStatement("job", id);
+    window.sendUdhaarReceipt = id => azRecordReceipt("udhaar", id);
+    window.sendCustomerWhatsAppReceipt = id => azRecordReceipt("customer", id);
+
+    window.exportCustomerPDF = function (id) {
+      if (id) return azRecordStatement("customer", id);
+      const C = AZD.C; let tA = 0, tP = 0, tB = 0;
+      const rows = customerRecords.map((x, i) => { const a = Number(x.amount) || 0, p = Number(x.paidAmount ?? x.amount) || 0, b = Number(x.balanceAmount ?? Math.max(0, a - p)) || 0; tA += a; tP += p; tB += b;
+        return [String(i + 1), x.name, azdDate(x.date), x.work || "—", azdMoney(a), azdMoney(p), { t: azdMoney(b), bold: true, color: b > 0 ? C.warn : C.good }]; });
+      rows.push([{ t: "کل", bold: true }, "", "", "", { t: azdMoney(tA), bold: true }, { t: azdMoney(tP), bold: true }, { t: azdMoney(tB), bold: true }]);
+      azdOpen({ title: "تمام کسٹمرز کی اسٹیٹمنٹ", docNo: "ST-ALL-C", blocks: [
+        { type: "summary", items: [{ label: "کل رقم", value: azdMoney(tA), color: C.accent }, { label: "کل وصول", value: azdMoney(tP), color: C.good }, { label: "کل باقی", value: azdMoney(tB), color: C.warn }] },
+        { type: "section", text: "تمام کسٹمر اندراجات" }, { type: "table", head: ["#", "کسٹمر", "تاریخ", "کام", "رقم", "وصول", "باقی"], widths: [.6, 2, 1.3, 2.4, 1.6, 1.6, 1.6], rows, totalRow: true }] }, { file: "AZ-Flow-All-Customers" });
+    };
+    window.exportUdhaarPDF = function () {
+      const C = AZD.C; let rec = 0, pay = 0;
+      const rows = udhaarRecords.map((u, i) => { const a = Number(u.amount) || 0, lena = u.type === "lena"; if (!u.settled) { if (lena) rec += a; else pay += a; }
+        return [String(i + 1), u.personName, azdDate(u.date), u.details || "—", { t: lena ? "لینا" : "دینا", bold: true, color: lena ? C.good : C.bad }, azdMoney(a), u.settled ? "مکمل" : "بقایا"]; });
+      azdOpen({ title: "مکمل ادھار اسٹیٹمنٹ", docNo: "ST-ALL-U", blocks: [
+        { type: "summary", items: [{ label: "وصول کرنا ہے", value: azdMoney(rec), color: C.good }, { label: "ادا کرنا ہے", value: azdMoney(pay), color: C.bad }, { label: "خالص", value: azdMoney(Math.abs(rec - pay)), color: rec - pay >= 0 ? C.good : C.bad }] },
+        { type: "section", text: "تمام ادھار اندراجات" }, { type: "table", head: ["#", "نام", "تاریخ", "تفصیل", "قسم", "رقم", "حالت"], widths: [.6, 2, 1.3, 2.6, 1, 1.7, 1.1], rows }] }, { file: "AZ-Flow-All-Udhaar" });
+    };
+    window.exportPartnerStatement = function () {
+      const C = AZD.C;
+      const prow = businessPartners.map(p => [p.name, azdMoney(p.capital), azdNum(p.share) + "%", { t: azdMoney(p.profit), bold: true, color: C.good }]);
+      const jrow = partnerJobs.map(j => [azdDate(j.date), j.detail, j.partnerName, azdMoney(j.fee), azdMoney(j.cost), { t: azdMoney(j.profit), bold: true, color: C.good }]);
+      const cap = businessPartners.reduce((a, p) => a + (Number(p.capital) || 0), 0), pr = businessPartners.reduce((a, p) => a + (Number(p.profit) || 0), 0);
+      azdOpen({ title: "مکمل پارٹنرشپ اسٹیٹمنٹ", docNo: "ST-ALL-P", blocks: [
+        { type: "summary", items: [{ label: "پارٹنرز", value: azdNum(businessPartners.length), color: C.head }, { label: "کل سرمایہ", value: azdMoney(cap), color: C.accent }, { label: "کل منافع", value: azdMoney(pr), color: C.good }] },
+        { type: "section", text: "پارٹنرز" }, businessPartners.length ? { type: "table", head: ["پارٹنر", "سرمایہ", "حصہ", "درج شدہ منافع"], widths: [3, 2, 1.2, 2.4], rows: prow } : { type: "note", text: "ابھی کوئی پارٹنر درج نہیں۔" },
+        { type: "section", text: "پارٹنرشپ کام" }, partnerJobs.length ? { type: "table", head: ["تاریخ", "کام", "درج کنندہ", "فیس", "لاگت", "منافع"], widths: [1.3, 2.6, 1.7, 1.5, 1.5, 1.6], rows: jrow } : { type: "note", text: "ابھی کوئی کام درج نہیں۔" }, { type: "sign", left: "دستخط (پارٹنر)", right: "دستخط (مینیجر)" }] }, { file: "AZ-Flow-Partnership" });
+    };
+    // generic fallback used by any remaining caller: rows[0] is the header; a change in column count starts a new table
+    window.buildPrintableReport = function (title, rows) {
+      const blocks = []; let cur = null;
+      rows.forEach(r => { if (!cur || cur.head.length !== r.length) { cur = { type: "table", head: r.map(String), rows: [] }; blocks.push(cur); } else cur.rows.push(r.map(c => c ?? "—")); });
+      azdOpen({ title, blocks }, { file: "AZ-Flow-Report" });
+    };
+
+    // action row helper used by every record card
+    function azBtns(kind, id, edit) {
+      const q = "'" + String(id).replace(/'/g, "") + "'";
+      return `${edit ? `<button class="btn btn-edit" type="button" onclick="openRecordForm('${edit}',${q})">✏️ ترمیم</button>` : ""}<button class="btn btn-primary" type="button" onclick="azRecordReceipt('${kind}',${q})">🧾 رسید</button><button class="btn btn-outline" type="button" onclick="azRecordStatement('${kind}',${q})">📄 اسٹیٹمنٹ PDF</button>`;
+    }
+    function azActions(kind, id, edit) {
+      const q = "'" + String(id).replace(/'/g, "") + "'";
+      return `<div class="record-actions az-doc-actions-row">${edit ? `<button class="btn btn-edit" type="button" onclick="openRecordForm('${edit}',${q})">✏️ ترمیم</button>` : ""}<button class="btn btn-primary" type="button" onclick="azRecordReceipt('${kind}',${q})">🧾 رسید</button><button class="btn btn-outline" type="button" onclick="azRecordStatement('${kind}',${q})">📄 اسٹیٹمنٹ PDF</button></div>`;
+    }
+
+
+    window.exportBusinessPDF = function () {
+      const C = AZD.C; let bA = 0, sA = 0, pr = 0;
+      const list = [...businessTransactions].sort((a, b) => new Date(a.date) - new Date(b.date));
+      const rows = list.map((t, i) => { const bq = t.type === "purchase"; if (bq) bA += t.total; else { sA += t.total; pr += t.profit; }
+        return [String(i + 1), azdDate(t.date), t.name, { t: bq ? "خریداری" : "فروخت", bold: true, color: bq ? C.accent : C.good }, azdNum(t.qty), azdMoney(t.unit), azdMoney(t.total), bq ? "—" : { t: azdMoney(t.profit), color: t.profit >= 0 ? C.good : C.bad }]; });
+      azdOpen({ title: "دکانداری کی مکمل اسٹیٹمنٹ", docNo: "ST-ALL-B", blocks: [
+        { type: "summary", items: [{ label: "کل خریداری", value: azdMoney(bA), color: C.accent }, { label: "کل فروخت", value: azdMoney(sA), color: C.good }, { label: "منافع", value: azdMoney(pr), color: pr >= 0 ? C.good : C.bad }] },
+        { type: "section", text: "خریداری اور فروخت" }, rows.length ? { type: "table", head: ["#", "تاریخ", "سامان", "قسم", "مقدار", "فی یونٹ", "کل رقم", "منافع"], widths: [.5, 1.3, 2.2, 1.1, .9, 1.4, 1.6, 1.4], rows } : { type: "note", text: "ابھی کوئی اندراج نہیں۔" }, { type: "sign" }] }, { file: "AZ-Flow-Shop-Statement" });
+    };
+    window.exportExpensePDF = function (kind) {
+      const C = AZD.C, arr = kind === "household" ? householdExpenses : personalExpenses;
+      const list = [...arr].sort((a, b) => String(a.date).localeCompare(String(b.date))); let run = 0;
+      const rows = list.map((e, i) => { run += Number(e.amount) || 0; return [String(i + 1), azdDate(e.date), e.category || "دیگر", e.detail, azdMoney(e.amount), { t: azdMoney(run), bold: true }]; });
+      const byCat = {}; list.forEach(e => { const k = e.category || "دیگر"; byCat[k] = (byCat[k] || 0) + (Number(e.amount) || 0); });
+      const month = localDateInputValue().slice(0, 7), mth = list.filter(e => String(e.date).slice(0, 7) === month).reduce((a, e) => a + (Number(e.amount) || 0), 0);
+      azdOpen({ title: (kind === "household" ? "گھریلو" : "ذاتی") + " خرچوں کی مکمل اسٹیٹمنٹ", docNo: "ST-ALL-" + (kind === "household" ? "H" : "X"), blocks: [
+        { type: "summary", items: [{ label: "کل خرچ", value: azdMoney(run), color: C.bad }, { label: "اس ماہ", value: azdMoney(mth), color: C.warn }, { label: "اندراجات", value: azdNum(list.length), color: C.head }] },
+        { type: "section", text: "اقسام کے حساب سے" }, Object.keys(byCat).length ? { type: "table", head: ["قسم", "کل رقم"], widths: [3, 2], rows: Object.entries(byCat).map(([k, v]) => [k, { t: azdMoney(v), bold: true }]) } : { type: "note", text: "ابھی کوئی خرچہ درج نہیں۔" },
+        { type: "section", text: "تمام اندراجات" }, rows.length ? { type: "table", head: ["#", "تاریخ", "قسم", "تفصیل", "رقم", "چلتا کل"], widths: [.5, 1.3, 1.8, 3, 1.6, 1.7], rows } : { type: "note", text: "—" }, { type: "sign" }] }, { file: "AZ-Flow-" + (kind === "household" ? "Household" : "Personal") + "-Statement" });
+    };
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && document.getElementById("modalDoc")?.style.display === "flex") azdClose(); });
+
     // ===== Motion layer: count-up numbers, ripple, scroll depth, nav centering =====
     (function () {
-      const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const isReduce = () => !azMotionOn();
 
       // 1) Count-up for key figures
       const NUM_SEL = ".metric-val,#udhaarNetBalance,#analyticsUdhaarNet,[id$='Total'],[id$='Balance'],[id$='Remaining'],[id$='Capital'],[id$='Profit'],[id$='Net']";
       const RX = /^([^\d\-]*)(-?[\d,]+(?:\.\d+)?)(.*)$/s;
       function animateNumber(el) {
-        if (reduce || el.__azWriting) return;
+        if (isReduce() || el.__azWriting) return;
         const txt = el.textContent.trim();
         if (el.__azLast === txt) return;
         const m = RX.exec(txt); if (!m) { el.__azLast = txt; return; }
@@ -2910,7 +3479,7 @@ table{border-radius:14px;overflow:hidden}
 
       // 2) Material-style ripple on buttons
       document.addEventListener("pointerdown", e => {
-        if (reduce) return;
+        if (isReduce()) return;
         const b = e.target.closest && e.target.closest(".btn");
         if (!b || b.disabled) return;
         const r = b.getBoundingClientRect(), d = document.createElement("span");
@@ -2929,7 +3498,7 @@ table{border-radius:14px;overflow:hidden}
       function centerActiveNav() {
         const nav = document.querySelector(".bottom-nav"), a = nav && nav.querySelector(".nav-item.active"); if (!a) return;
         const target = a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2;
-        nav.scrollTo({ left: target, behavior: reduce ? "auto" : "smooth" });
+        nav.scrollTo({ left: target, behavior: isReduce() ? "auto" : "smooth" });
       }
       const _switch = window.switchTab;
       if (typeof _switch === "function") {
